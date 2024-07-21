@@ -37,7 +37,7 @@ http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 		class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-
+	
 	<!-- AdminDao Bean -->
 	<bean id="adminDao" class="com.carshowroom.dao.AdminDao">
 		<property name="jdbcTemplate" ref="jdbcTemplate" />

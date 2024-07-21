@@ -27,6 +27,11 @@ public class FeedbackDao {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 	
+	public void save(Feedback feedback) {
+		String sql = "INSERT INTO feedbacks (user_id, description, rate) VALUES (?,?,?)";
+		jdbcTemplate.update(sql,feedback.getUserId(),feedback.getDescription(),feedback.getRate().getValue());
+	}
+	
 	public List<Feedback> findAll(int page, int pageSize){
 		int offset = (page - 1) * pageSize;
 		String sql = "SELECT * FROM feedbacks ORDER BY id DESC LIMIT ? OFFSET ?";

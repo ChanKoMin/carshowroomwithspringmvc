@@ -10,8 +10,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.carshowroom.dao.AdminDao;
 import com.carshowroom.dao.UserDao;
@@ -44,7 +42,7 @@ public class LoginController {
 	public String login(@ModelAttribute("admin") @Valid Admin admin, BindingResult adminResult,
 			@ModelAttribute("user") @Valid User user, BindingResult userResult, HttpSession session ,Model m) {
 		if (adminResult.hasErrors() || userResult.hasErrors()) {
-			return "user/login";
+			return "redirect:/";
 		}
 
 		try {

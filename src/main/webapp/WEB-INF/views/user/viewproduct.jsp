@@ -30,8 +30,8 @@
 						<i class="bi bi-plus"></i>
 					</button>
 				</div>
-				<button class="btn btn-primary" id="addToCart">Add To Cart
-				</button>
+				<button class="btn btn-primary" id="addToCart">Add To
+					Cart</button>
 			</div>
 		</div>
 		<div class="d-flex my-5 justify-content-evenly">
@@ -119,10 +119,6 @@ let totalCount = 0;
 addToCartButton.addEventListener("click", () => {
   totalCount++;
   cartCount.textContent = totalCount;
-  //console.log(totalCount);
-  // if (!cartCount === 0) {
-  //   cartCount.classList.add("d-inline");
-  // }
 });
 </script>
 <c:import url="footer.jsp"></c:import>

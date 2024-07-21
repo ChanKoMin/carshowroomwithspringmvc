@@ -99,7 +99,6 @@ public class AdminController {
 			return "admin/edit-profile";
 		}
 		adminDao.update(admin);
-		System.out.println(admin.toString());
 		ra.addFlashAttribute("updatedSuccessfully", "Account updated successfully!");
 		return "redirect:/admin-profile";
 	}

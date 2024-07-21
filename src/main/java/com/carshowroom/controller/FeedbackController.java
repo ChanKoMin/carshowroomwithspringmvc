@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -27,6 +29,12 @@ public class FeedbackController {
 	@Autowired
 	public void setAdminDao(AdminDao adminDao) {
 		this.adminDao = adminDao;
+	}
+	
+	@PostMapping("/feedback")
+	public String saveFeedback(@ModelAttribute("feedback") Feedback feedback, Model m) {
+		fbDao.save(feedback);
+		return "redirect:/home";
 	}
 
 	@RequestMapping("/feedbacks")

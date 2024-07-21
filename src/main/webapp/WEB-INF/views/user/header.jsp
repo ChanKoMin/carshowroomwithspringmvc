@@ -48,9 +48,19 @@
 						</a></li>
 						<li class="nav-item"><a
 							href="${pageContext.request.contextPath}/profile"
-							class="nav-link"> <img
-								src="${pageContext.request.contextPath}/assets/images/batman.jpg"
-								width="50px" height="50px" class="profile border-1" alt="" />
+							class="nav-link"> <c:set var="defaultImage"
+									value="${pageContext.request.contextPath}/assets/images/profile.png" />
+								<c:choose>
+									<c:when test="${not empty user.image}">
+										<img class="profile border-1" width="50px" height="50px"
+											src="${pageContext.request.contextPath}/assets/images/${user.image}"
+											alt="${user.name}'s image" />
+									</c:when>
+									<c:otherwise>
+										<img class="profile border-1" width="50px" height="50px" src="${defaultImage}"
+											alt="Default image" />
+									</c:otherwise>
+								</c:choose>
 						</a></li>
 					</ul>
 				</div>

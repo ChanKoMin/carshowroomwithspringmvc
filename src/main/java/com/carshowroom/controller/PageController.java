@@ -26,9 +26,6 @@ public class PageController {
 		return "user/cart";
 	}
 
-	@RequestMapping("/profile")
-	public String showProfilePage() {
-		return "user/profile";
-	}
+	
 
 }

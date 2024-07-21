@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.carshowroom.dao.AdminDao;
-import com.carshowroom.dao.BrandDao;
 import com.carshowroom.model.Admin;
 
 @Controller

@@ -6,8 +6,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -40,6 +38,11 @@ public class UserDao {
 			return stmt;
 		});
 	}
+	
+	public void update(User user) {
+        String sql = "UPDATE users SET name = ?, email = ?, password = ?, contact_number = ?, address = ?, image = ?, role = ? WHERE id = ?";
+        jdbcTemplate.update(sql, user.getName(), user.getEmail(), user.getPassword(), user.getContact_number(), user.getAddress(),user.getImage(),user.getRole().name(),user.getId());
+    }
 
 	@SuppressWarnings("deprecation")
 	public User findByEmailAndPassword(String email, String password) {
@@ -85,6 +88,18 @@ public class UserDao {
 			}
 
 		}, pageSize, offset);
+	}
+	
+	@SuppressWarnings("deprecation")
+	public User findByEmail(String email) {
+		String sql = "SELECT * FROM users WHERE email = ?";
+		return jdbcTemplate.queryForObject(sql, new Object[] {email}, new UserRowMapper());
+	}
+	
+	@SuppressWarnings("deprecation")
+	public User findById(int id) {
+		String sql = "SELECT * FROM users WHERE id = ?";
+		return jdbcTemplate.queryForObject(sql, new Object[] {id}, new UserRowMapper());
 	}
 	
 	public int userCount() {
