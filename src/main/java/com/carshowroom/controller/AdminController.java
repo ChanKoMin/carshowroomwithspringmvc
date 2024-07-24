@@ -1,5 +1,6 @@
 package com.carshowroom.controller;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,9 +62,18 @@ public class AdminController {
 	public void setFeedbackDao(FeedbackDao fbDao) {
 		this.fbDao = fbDao;
 	}
+	
+	private boolean isAuthenticated(HttpSession session) {
+		return session != null && session.getAttribute("admin") != null;
+	}
 
 	@GetMapping("/dashboard")
-	public String showAdminDashboard(Model m) {
+	public String showAdminDashboard(Model m, HttpSession session) {
+		if (!isAuthenticated(session)) {
+			return "redirect:/";
+		}
+		Admin adm = (Admin) session.getAttribute("admin");
+		m.addAttribute("admin", adm);
 		Admin admin = adminDao.showAdmin();
 		int totalBrands = brandDao.brandCount();
 		int totalCars = carDao.carCount();
@@ -79,14 +89,24 @@ public class AdminController {
 	}
 
 	@RequestMapping("/admin-profile")
-	public String showAdminProfilePage(Model m) {
+	public String showAdminProfilePage(Model m, HttpSession session) {
+		if (!isAuthenticated(session)) {
+			return "redirect:/";
+		}
+		Admin adm = (Admin) session.getAttribute("admin");
+		m.addAttribute("admin", adm);
 		Admin admin = adminDao.showAdmin();
 		m.addAttribute("admin", admin);
 		return "admin/profile";
 	}
 
 	@RequestMapping("/admin-edit/{id}")
-	public String showAdminEditPage(@PathVariable int id, Model m) {
+	public String showAdminEditPage(@PathVariable int id, Model m, HttpSession session) {
+		if (!isAuthenticated(session)) {
+			return "redirect:/";
+		}
+		Admin adm = (Admin) session.getAttribute("admin");
+		m.addAttribute("admin", adm);
 		Admin admin = adminDao.findById(id);
 		m.addAttribute("admin", admin);
 		return "admin/edit-profile";
@@ -94,10 +114,15 @@ public class AdminController {
 
 	@PostMapping("/profile/update")
 	public String updateProfile(@ModelAttribute("admin") @Valid Admin admin, BindingResult result,
-			RedirectAttributes ra) {
+			RedirectAttributes ra,Model m,HttpSession session) {
 		if (result.hasErrors()) {
 			return "admin/edit-profile";
 		}
+		if (!isAuthenticated(session)) {
+			return "redirect:/";
+		}
+		Admin adm = (Admin) session.getAttribute("admin");
+		m.addAttribute("admin", adm);
 		adminDao.update(admin);
 		ra.addFlashAttribute("updatedSuccessfully", "Account updated successfully!");
 		return "redirect:/admin-profile";

@@ -28,9 +28,10 @@ public class Car {
 	private String carDescription;
 	@Size(min = 1, message = "Car price must be required")
 	private String carPrice;
-    @NotBlank(message = "Image must not be blank")
+	@NotBlank(message = "Image must not be blank")
 	private String carImage;
 	private Brand brand;
+	private int count;
 	private LocalDateTime createdAt;
 
 	public Car() {
@@ -155,6 +156,14 @@ public class Car {
 
 	public void setBrand(Brand brand) {
 		this.brand = brand;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
 	}
 
 	public LocalDateTime getCreatedAt() {

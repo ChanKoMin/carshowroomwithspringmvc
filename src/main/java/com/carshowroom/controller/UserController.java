@@ -62,7 +62,7 @@ public class UserController {
 	public void setBrandDao(BrandDao brandDao) {
 		this.brandDao = brandDao;
 	}
-	
+
 	@Autowired
 	public void setFeedbackDao(FeedbackDao fbDao) {
 		this.fbDao = fbDao;
@@ -70,6 +70,10 @@ public class UserController {
 
 	private boolean isAuthenticated(HttpSession session) {
 		return session != null && session.getAttribute("user") != null;
+	}
+
+	private boolean isAuthenticatedAdm(HttpSession session) {
+		return session != null && session.getAttribute("admin") != null;
 	}
 
 	@RequestMapping("/home")
@@ -191,10 +195,10 @@ public class UserController {
 	}
 
 	@PostMapping("/post-feedback")
-	public String postFeedback(@RequestParam("description") String description,
-			@RequestParam("rate") int rate, HttpSession session, Model model) {
+	public String postFeedback(@RequestParam("description") String description, @RequestParam("rate") int rate,
+			HttpSession session, Model model) {
 		User user = (User) session.getAttribute("user");
-		if(user == null) {
+		if (user == null) {
 			return "redirect:/";
 		}
 		Feedback fb = new Feedback();
@@ -204,10 +208,30 @@ public class UserController {
 		fbDao.save(fb);
 		return "redirect:/home";
 	}
+	
+	
+	
+	@RequestMapping("/cart")
+	public String showCartPage(Model m, HttpSession session, RedirectAttributes ra) {
+		if (!isAuthenticated(session)) {
+			ra.addFlashAttribute("message", "Please login first.");
+			return "redirect:/";
+		}
+		User user = (User) session.getAttribute("user");
+		if(user == null) {
+			return "redirect:/";
+		}
+		return "user/cart";
+	}
 
 	@RequestMapping("/users")
 	public String showUserPage(@RequestParam(name = "page", defaultValue = "1") int page,
-			@RequestParam(name = "size", defaultValue = "5") int pageSize, Model m) {
+			@RequestParam(name = "size", defaultValue = "5") int pageSize, Model m, HttpSession session) {
+		if (!isAuthenticatedAdm(session)) {
+			return "redirect:/";
+		}
+		Admin adm = (Admin) session.getAttribute("admin");
+		m.addAttribute("admin", adm);
 		List<User> users = userDao.findAll(page, pageSize);
 		Admin admin = adminDao.showAdmin();
 		int totalUsers = userDao.userCount();

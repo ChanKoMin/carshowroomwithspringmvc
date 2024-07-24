@@ -27,7 +27,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
+					<!-- <tr>
 						<td><img
 							src="${pageContext.request.contextPath}/assets/images/car-8.png"
 							class="w-25" alt="" /></td>
@@ -47,51 +47,17 @@
 						<td class="align-middle">$36,789</td>
 						<td class="align-middle"><a href="#" class="btn btn-danger">Remove</a>
 						</td>
-					</tr>
-					<tr>
-						<td><img
-							src="${pageContext.request.contextPath}/assets/images/car-7.png"
-							class="w-25" alt="" /></td>
-						<td class="align-middle">Honda</td>
-						<td class="align-middle">
-							<div
-								class="border rounded-4 w-75 text-center d-flex justify-content-around bg-primary align-items-center">
-								<button class="btn text-white" id="decrement-btn">
-									<i class="bi bi-dash"></i>
-								</button>
-								<div id="counter-value" class="mx-2 text-white">1</div>
-								<button class="btn text-white" id="increment-btn">
-									<i class="bi bi-plus"></i>
-								</button>
-							</div>
-						</td>
-						<td class="align-middle">$26,789</td>
-						<td class="align-middle"><a href="#" class="btn btn-danger">Remove</a>
-						</td>
-					</tr>
-					<tr>
-						<td><img
-							src="${pageContext.request.contextPath}/assets/images/car-6.png"
-							class="w-25" alt="" /></td>
-						<td class="align-middle">Mercedes</td>
-						<td class="align-middle">
-							<div
-								class="border rounded-4 w-75 text-center d-flex justify-content-around bg-primary align-items-center">
-								<button class="btn text-white" id="decrement-btn">
-									<i class="bi bi-dash"></i>
-								</button>
-								<div id="counter-value" class="mx-2 text-white">1</div>
-								<button class="btn text-white" id="increment-btn">
-									<i class="bi bi-plus"></i>
-								</button>
-							</div>
-						</td>
-						<td class="align-middle">$46,989</td>
-						<td class="align-middle"><a href="#" class="btn btn-danger">Remove</a>
-						</td>
-					</tr>
+					</tr> -->
+					<c:forEach var="car" items="${carDetails}">
+						<tr>
+							<td>${car.carImage}</td>
+							<td>${car.carName}</td>
+							<td>${car.carPrice}</td>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
+
 		</div>
 		<div class="col-1"></div>
 		<div class="col-3">
@@ -127,11 +93,10 @@
 				</tfoot>
 			</table>
 			<button id="checkoutBtn" type="submit"
-				class="btn w-100 btn-primary text-uppercase">
-				Proceed to checkout</button>
+				class="btn w-100 btn-primary text-uppercase">Proceed to
+				checkout</button>
 			<button id="clearBtn" type="submit"
-				class="btn w-100 mt-2 btn-danger text-uppercase">
-				clear cart</button>
+				class="btn w-100 mt-2 btn-danger text-uppercase">clear cart</button>
 		</div>
 	</div>
 </div>

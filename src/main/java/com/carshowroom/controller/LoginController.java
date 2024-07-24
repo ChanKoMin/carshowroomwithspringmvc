@@ -48,7 +48,7 @@ public class LoginController {
 		try {
 			Admin loggedAdmin = adminDao.findByEmailAndPassword(admin.getEmail(), admin.getPassword());
 			if (loggedAdmin != null) {
-				session.setAttribute("loggedInUser", loggedAdmin);
+				session.setAttribute("admin", loggedAdmin);
 				return "redirect:/dashboard";
 			}
 		} catch (Exception e) {

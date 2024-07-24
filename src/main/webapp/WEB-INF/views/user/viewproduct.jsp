@@ -30,8 +30,7 @@
 						<i class="bi bi-plus"></i>
 					</button>
 				</div>
-				<button class="btn btn-primary" id="addToCart">Add To
-					Cart</button>
+				<button class="btn btn-primary" id="addToCart" onclick="addItemToDB(${car.id})">Add To Cart</button>
 			</div>
 		</div>
 		<div class="d-flex my-5 justify-content-evenly">
@@ -94,31 +93,6 @@
 </div>
 <!-- Product Details End -->
 <script>
-let counter = 1;
 
-const counterValue = document.getElementById("counter-value");
-const incrementBtn = document.getElementById("increment-btn");
-const decrementBtn = document.getElementById("decrement-btn");
-const resetBtn = document.querySelector("#reset");
-incrementBtn.addEventListener("click", () => {
-  counter++;
-  counterValue.innerHTML = counter;
-});
-
-decrementBtn.addEventListener("click", () => {
-  if (counter > 1) {
-    counter--;
-    counterValue.innerHTML = counter;
-  }
-});
-const cartLink = document.getElementById("cart-link");
-const cartCount = document.getElementById("cart-count");
-const addToCartButton = document.getElementById("addToCart");
-let totalCount = 0;
-
-addToCartButton.addEventListener("click", () => {
-  totalCount++;
-  cartCount.textContent = totalCount;
-});
 </script>
 <c:import url="footer.jsp"></c:import>

@@ -21,10 +21,7 @@ public class PageController {
 		return "user/contact";
 	}
 
-	@RequestMapping("/cart")
-	public String showCartPage() {
-		return "user/cart";
-	}
+	
 
 	
 

@@ -2,6 +2,7 @@ package com.carshowroom.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,28 +37,43 @@ public class BrandController {
 	public void setBrandDao(BrandDao brandDao) {
 		this.brandDao = brandDao;
 	}
-	
+
 	@Autowired
 	public void setAdminDao(AdminDao adminDao) {
 		this.adminDao = adminDao;
 	}
 
+	private boolean isAuthenticated(HttpSession session) {
+		return session != null && session.getAttribute("admin") != null;
+	}
+
 	@RequestMapping("/brands")
-	public String showBrandPage(@RequestParam(name = "page", defaultValue = "1") int page,@RequestParam(name = "size", defaultValue = "5") int pageSize ,Model m) {
-		List<Brand> brands = brandDao.findAll(page,pageSize);
+	public String showBrandPage(@RequestParam(name = "page", defaultValue = "1") int page,
+			@RequestParam(name = "size", defaultValue = "5") int pageSize, Model m, HttpSession session) {
+		List<Brand> brands = brandDao.findAll(page, pageSize);
+		if (!isAuthenticated(session)) {
+			return "redirect:/";
+		}
+		Admin adm = (Admin) session.getAttribute("admin");
+		m.addAttribute("admin", adm);
 		Admin admin = adminDao.showAdmin();
 		int totalBrands = brandDao.brandCount();
-		int totalPages = (int) Math.ceil((double)totalBrands / pageSize);
+		int totalPages = (int) Math.ceil((double) totalBrands / pageSize);
 		m.addAttribute("brands", brands);
 		m.addAttribute("admin", admin);
 		m.addAttribute("currentPage", page);
 		m.addAttribute("totalPages", totalPages);
-        m.addAttribute("isEmpty", brands.isEmpty());
+		m.addAttribute("isEmpty", brands.isEmpty());
 		return "admin/brands";
 	}
 
 	@RequestMapping("/add-brand")
-	public String showAddBrandPage(Model m) {
+	public String showAddBrandPage(Model m, HttpSession session) {
+		if (!isAuthenticated(session)) {
+			return "redirect:/";
+		}
+		Admin adm = (Admin) session.getAttribute("admin");
+		m.addAttribute("admin", adm);
 		Admin admin = adminDao.showAdmin();
 		m.addAttribute("brand", new Brand());
 		m.addAttribute("admin", admin);
@@ -65,38 +81,60 @@ public class BrandController {
 	}
 
 	@PostMapping("/brand/save")
-	public String saveBrand(@ModelAttribute("brand") @Valid Brand brand, BindingResult result, RedirectAttributes ra) {
-		if(result.hasErrors()) {
+	public String saveBrand(@ModelAttribute("brand") @Valid Brand brand, BindingResult result, RedirectAttributes ra,
+			Model m, HttpSession session) {
+		if (result.hasErrors()) {
 			return "redirect:/add-brand";
 		}
+		if (!isAuthenticated(session)) {
+			return "redirect:/";
+		}
+		Admin adm = (Admin) session.getAttribute("admin");
+		m.addAttribute("admin", adm);
 		brandDao.save(brand);
-        ra.addFlashAttribute("createdSuccessfully", "Brand created successfully!");
+		ra.addFlashAttribute("createdSuccessfully", "Brand created successfully!");
 		return "redirect:/brands";
 	}
 
 	@RequestMapping(value = "/edit-brand/{id}")
-	public String showEditBrandPage(@PathVariable int id, Model m) {
+	public String showEditBrandPage(@PathVariable int id, Model m, HttpSession session) {
+		if (!isAuthenticated(session)) {
+			return "redirect:/";
+		}
+		Admin adm = (Admin) session.getAttribute("admin");
+		m.addAttribute("admin", adm);
 		Brand brand = brandDao.findById(id);
 		Admin admin = adminDao.showAdmin();
 		m.addAttribute("admin", admin);
-		m.addAttribute("brand",brand);
+		m.addAttribute("brand", brand);
 		return "admin/edit-brand";
 	}
-	
+
 	@RequestMapping(value = "/brand/update", method = RequestMethod.POST)
-    public String updateBrand(@ModelAttribute("brand") @Valid Brand brand, BindingResult result, RedirectAttributes ra) {
-        if(result.hasErrors()) {
-        	return "admin/edit-brand";
-        }
+	public String updateBrand(@ModelAttribute("brand") @Valid Brand brand, BindingResult result, RedirectAttributes ra,
+			Model m, HttpSession session) {
+		if (result.hasErrors()) {
+			return "admin/edit-brand";
+		}
+		if (!isAuthenticated(session)) {
+			return "redirect:/";
+		}
+		Admin adm = (Admin) session.getAttribute("admin");
+		m.addAttribute("admin", adm);
 		brandDao.update(brand);
-        ra.addFlashAttribute("updatedSuccessfully", "Brand updated successfully!");
-        return "redirect:/brands";
-    }
-	
+		ra.addFlashAttribute("updatedSuccessfully", "Brand updated successfully!");
+		return "redirect:/brands";
+	}
+
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-	public String delete(@PathVariable int id, RedirectAttributes ra) {
+	public String delete(@PathVariable int id, RedirectAttributes ra, Model m, HttpSession session) {
+		if (!isAuthenticated(session)) {
+			return "redirect:/";
+		}
+		Admin adm = (Admin) session.getAttribute("admin");
+		m.addAttribute("admin", adm);
 		brandDao.deleteById(id);
-        ra.addFlashAttribute("deletedSuccessfully", "Brand deleted successfully!");
+		ra.addFlashAttribute("deletedSuccessfully", "Brand deleted successfully!");
 		return "redirect:/brands";
 	}
 

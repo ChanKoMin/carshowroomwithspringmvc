@@ -44,7 +44,10 @@
 								class="bi bi-cart"></i> Cart
 								<p
 									class="badge bg-danger rounded-5 position-absolute top-0 start-0"
-									id="cart-count">0</p>
+									id="cart-count">
+									<c:out
+										value="${sessionScope.cartCount != null ? sessionScope.cartCount : 0}" />
+								</p>
 						</a></li>
 						<li class="nav-item"><a
 							href="${pageContext.request.contextPath}/profile"
@@ -57,8 +60,8 @@
 											alt="${user.name}'s image" />
 									</c:when>
 									<c:otherwise>
-										<img class="profile border-1" width="50px" height="50px" src="${defaultImage}"
-											alt="Default image" />
+										<img class="profile border-1" width="50px" height="50px"
+											src="${defaultImage}" alt="Default image" />
 									</c:otherwise>
 								</c:choose>
 						</a></li>

@@ -2,6 +2,8 @@ package com.carshowroom.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,10 +38,19 @@ public class FeedbackController {
 		fbDao.save(feedback);
 		return "redirect:/home";
 	}
+	
+	private boolean isAuthenticated(HttpSession session) {
+		return session != null && session.getAttribute("admin") != null;
+	}
 
 	@RequestMapping("/feedbacks")
 	public String showFeedbackPage(@RequestParam(name = "page", defaultValue = "1") int page,
-			@RequestParam(name = "size", defaultValue = "5") int pageSize, Model m) {
+			@RequestParam(name = "size", defaultValue = "5") int pageSize, Model m, HttpSession session) {
+		if (!isAuthenticated(session)) {
+			return "redirect:/";
+		}
+		Admin adm = (Admin) session.getAttribute("admin");
+		m.addAttribute("admin", adm);
 		List<Feedback> fbs = fbDao.findAll(page, pageSize);
 		Admin admin = adminDao.showAdmin();
 		int totalFbs = fbDao.fbCount();
