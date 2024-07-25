@@ -1,7 +1,11 @@
 package com.carshowroom.model;
 
+import java.time.LocalDateTime;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class Brand {
 	private int id;
@@ -9,6 +13,8 @@ public class Brand {
 	private String name;
     @NotBlank(message = "Image must not be blank")
 	private String img;
+    @DateTimeFormat
+    private LocalDateTime createdAt;
 
 //	public Brand() {
 //		super();

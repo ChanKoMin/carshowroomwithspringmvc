@@ -1,76 +1,84 @@
 package com.carshowroom.dao;
 
-import com.carshowroom.model.Car;
-import com.carshowroom.model.CarAvailability;
-import com.carshowroom.model.CarTransmission;
-import com.carshowroom.model.Cart;
-import com.carshowroom.model.CartItem;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Repository;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
+
+import com.carshowroom.model.Car;
+import com.carshowroom.model.CarAvailability;
+import com.carshowroom.model.CarTransmission;
+import com.carshowroom.model.Cart;
+import com.carshowroom.model.CartItemDetails;
+
 @Repository
 public class CartDao {
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+	public void addCartItem(Cart cart) {
+		String sql = "INSERT INTO carts (car_id, user_id, quantity) VALUES (?, ?, ?)";
+		jdbcTemplate.update(sql, cart.getCarId(), cart.getUserId(), cart.getQuantity());
+	}
 
-    // SQL queries
-    private static final String INSERT_CART_ITEM = "INSERT INTO carts (car_id, user_id, quantity) VALUES (?, ?, ?)";
-    private static final String SELECT_CART_ITEMS_BY_USER = "SELECT * FROM carts WHERE user_id = ?";
-    private static final String SELECT_CART_ITEM_COUNT_BY_USER = "SELECT COUNT(*) FROM carts WHERE user_id = ?";
+	public void updateCartItem(Cart cart) {
+		String sql = "UPDATE carts SET quantity = quantity + ? WHERE car_id = ? AND user_id = ?";
+		jdbcTemplate.update(sql, cart.getQuantity(), cart.getCarId(), cart.getUserId());
+	}
 
-    // Add an item to the cart
-    public void addCartItem(Cart cart) {
-        jdbcTemplate.update(INSERT_CART_ITEM,
-                cart.getCarId(),
-                cart.getUserId(),
-                cart.getQuantity());
-    }
-    
-    @SuppressWarnings("deprecation")
-	public Car getCarById(int carId) {
-        String sql = "SELECT * FROM cars WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[]{carId}, new RowMapper<Car>() {
-            @Override
-            public Car mapRow(ResultSet rs, int rowNum) throws SQLException {
-                Car car = new Car();
-                car.setId(rs.getInt("car_id"));
-				car.setBrandId(rs.getInt("brand_id"));
-				car.setCarName(rs.getString("car_name"));
-				car.setCarModel(rs.getString("car_model"));
-				car.setCarType(rs.getString("car_type"));
-				car.setCarYear(rs.getString("car_year"));
-				car.setCarColor(rs.getString("car_color"));
-				car.setCarCylinder(rs.getString("car_cylinder"));
-				car.setCarEngine(rs.getString("car_engine"));
-				car.setCarTransmission(CarTransmission.valueOf(rs.getString("car_transmission")));
-				car.setCarAvailability(CarAvailability.valueOf(rs.getString("car_availability")));
-				car.setCarDescription(rs.getString("car_description"));
-				car.setCarPrice(rs.getString("car_price"));
-				car.setCarImage(rs.getString("car_image"));
-                return car;
-            }
-        });
-    }
+	@SuppressWarnings("deprecation")
+	public boolean cartItemExists(int userId, int carId) {
+		String sql = "SELECT COUNT(*) FROM carts WHERE user_id = ? AND car_id = ?";
+		Integer count = jdbcTemplate.queryForObject(sql, new Object[] { userId, carId }, Integer.class);
+		return count != null && count > 0;
+	}
 
-    // Get all cart items for a specific user
-    public List<CartItem> getCartItemsForUser(int userId) {
-        return jdbcTemplate.query(SELECT_CART_ITEMS_BY_USER,
-                new BeanPropertyRowMapper<>(CartItem.class),
-                userId);
-    }
+	@SuppressWarnings("deprecation")
+	public List<CartItemDetails> getCarsFromCart(int userId) {
+		String sql = "SELECT c.car_id AS car_id, c.car_name AS car_name, c.car_image AS car_image, c.car_price AS car_price,ca.cart_id AS cart_id ,ca.quantity AS cart_quantity FROM carts ca JOIN cars c ON ca.car_id = c.car_id WHERE ca.user_id = ?";
+		return jdbcTemplate.query(sql, new Object[] { userId }, (rs, rowNum) -> {
+			CartItemDetails item = new CartItemDetails();
+			item.setCarId(rs.getInt("car_id"));
+			item.setCarName(rs.getString("car_name"));
+			item.setCarImage(rs.getString("car_image"));
+			item.setCarPrice(rs.getInt("car_price"));
+			item.setCartId(rs.getInt("cart_id"));
+			item.setQuantity(rs.getInt("cart_quantity"));
+			return item;
+		});
+	}
 
-    // Get the count of items in the cart for a specific user
-    public int getCartItemCountByUserId(int userId) {
-        return jdbcTemplate.queryForObject(SELECT_CART_ITEM_COUNT_BY_USER, Integer.class, userId);
-    }
+	@SuppressWarnings("deprecation")
+	public int getCartItemCount(int userId) {
+		String sql = "SELECT SUM(quantity) FROM carts WHERE user_id = ?";
+		Integer count = jdbcTemplate.queryForObject(sql, new Object[] { userId }, Integer.class);
+		return count != null ? count : 0;
+	}
 
-    // Optionally: You can add more methods like updateCartItem, deleteCartItem, etc.
+	public void deleteCartItemsByUserId(int userId) {
+		String sql = "DELETE FROM carts WHERE user_id = ?";
+		jdbcTemplate.update(sql, userId);
+	}
+
+	public int deleteById(int id) {
+		String sql = "DELETE FROM carts WHERE cart_id = ?";
+		return jdbcTemplate.update(sql, id);
+	}
+
+	@SuppressWarnings("deprecation")
+	public List<Cart> getCartItems(int userId) {
+		String sql = "SELECT * FROM carts WHERE user_id = ?";
+		return jdbcTemplate.query(sql, new Object[] { userId }, (rs, rowNum) -> {
+			Cart cart = new Cart();
+			cart.setId(rs.getInt("cart_id"));
+			cart.setCarId(rs.getInt("car_id"));
+			cart.setUserId(rs.getInt("user_id"));
+			cart.setQuantity(rs.getInt("quantity"));
+			return cart;
+		});
+	}
 }

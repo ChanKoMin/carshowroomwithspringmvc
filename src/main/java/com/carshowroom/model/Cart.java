@@ -1,6 +1,7 @@
 package com.carshowroom.model;
 
 public class Cart {
+
 	private int id;
 	private int carId;
 	private int userId;

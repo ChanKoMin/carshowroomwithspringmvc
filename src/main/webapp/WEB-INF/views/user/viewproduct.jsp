@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <c:import url="header.jsp">
 	<c:param name="title" value="View Product" />
 </c:import>
@@ -16,12 +17,20 @@
 				</li>
 			</ol>
 		</nav>
+		<c:if test="${not empty createdSuccessfully}">
+			<div class="alert alert-success alert-dismissible fade show"
+				role="alert">
+				<strong>${createdSuccessfully}</strong>
+				<button type="button" class="btn-close" data-bs-dismiss="alert"
+					aria-label="Close"></button>
+			</div>
+		</c:if>
 		<div
 			class="d-flex justify-content-between align-items-center shadow p-3 my-3">
 			<h4 class="fw-bold">${car.carName }</h4>
-			<div class="d-flex gap-2">
-				<div
-					class="border bg-primary rounded-5 px-4 text-center d-flex align-items-center">
+			<div class="d-flex justify-content-between gap-2 align-items-center">
+				<!-- <div
+					class="border bg-primary px-2 rounded-4 text-center d-flex align-items-center">
 					<button class="btn text-white" id="decrement-btn">
 						<i class="bi bi-dash"></i>
 					</button>
@@ -29,8 +38,15 @@
 					<button class="btn text-white" id="increment-btn">
 						<i class="bi bi-plus"></i>
 					</button>
-				</div>
-				<button class="btn btn-primary" id="addToCart" onclick="addItemToDB(${car.id})">Add To Cart</button>
+				</div>-->
+				<form class="d-flex align-items-center"
+					action="${pageContext.request.contextPath}/addToCart/${car.id}"
+					method="post">
+					<input type="hidden" name="userId" value="${user.id}"> <input
+						type="hidden" name="carId" value="${car.id}"> <input
+						type="hidden" id="quantity" name="quantity" min="1" value="1">
+					<button class="btn btn-primary" id="addToCart">Add To Cart</button>
+				</form>
 			</div>
 		</div>
 		<div class="d-flex my-5 justify-content-evenly">
@@ -92,7 +108,5 @@
 	</div>
 </div>
 <!-- Product Details End -->
-<script>
 
-</script>
 <c:import url="footer.jsp"></c:import>

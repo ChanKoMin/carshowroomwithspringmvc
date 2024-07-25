@@ -209,20 +209,18 @@ public class UserController {
 		return "redirect:/home";
 	}
 	
-	
-	
-	@RequestMapping("/cart")
-	public String showCartPage(Model m, HttpSession session, RedirectAttributes ra) {
-		if (!isAuthenticated(session)) {
-			ra.addFlashAttribute("message", "Please login first.");
-			return "redirect:/";
-		}
-		User user = (User) session.getAttribute("user");
-		if(user == null) {
-			return "redirect:/";
-		}
-		return "user/cart";
-	}
+//	@RequestMapping("/cart")
+//	public String showCartPage(Model m, HttpSession session, RedirectAttributes ra) {
+//		if (!isAuthenticated(session)) {
+//			ra.addFlashAttribute("message", "Please login first.");
+//			return "redirect:/";
+//		}
+//		User user = (User) session.getAttribute("user");
+//		if(user == null) {
+//			return "redirect:/";
+//		}
+//		return "user/cart";
+//	}
 
 	@RequestMapping("/users")
 	public String showUserPage(@RequestParam(name = "page", defaultValue = "1") int page,

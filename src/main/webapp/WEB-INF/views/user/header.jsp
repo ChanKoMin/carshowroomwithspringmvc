@@ -41,13 +41,14 @@
 						<li class="nav-item"><a
 							class="nav-link text-black position-relative" id="cart-link"
 							href="${pageContext.request.contextPath}/cart"> <i
-								class="bi bi-cart"></i> Cart
-								<p
-									class="badge bg-danger rounded-5 position-absolute top-0 start-0"
-									id="cart-count">
-									<c:out
-										value="${sessionScope.cartCount != null ? sessionScope.cartCount : 0}" />
-								</p>
+								class="bi bi-cart"></i> Cart <!--<c:if
+									test="${sessionScope.cartCount > 0}">
+									<p
+										class="badge bg-danger rounded-5 position-absolute top-0 start-0"
+										id="cart-count">
+										<c:out value="${sessionScope.cartCount}" />
+									</p>
+								</c:if> -->
 						</a></li>
 						<li class="nav-item"><a
 							href="${pageContext.request.contextPath}/profile"

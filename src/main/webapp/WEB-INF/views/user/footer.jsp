@@ -5,9 +5,8 @@
 	src="${pageContext.request.contextPath}/assets/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/app.js"></script>
-<
 <script type="text/javascript">
-	updateItemCount();
+	//updateItemCount();
 </script>
 </body>
 <!-- Footer Start -->
