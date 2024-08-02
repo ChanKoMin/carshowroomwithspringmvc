@@ -24,9 +24,8 @@
 							<th>Product</th>
 							<th>Name</th>
 							<th>Quantity</th>
-							<th>Price</th>
-							<th>Action</th>
-							<th class="text-end fw-bold">Total</th>
+							<th class="text-end">Price</th>
+							<th class="text-end">Action</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -39,31 +38,64 @@
 									class="w-25" alt="" /></td>
 								<td class="align-middle">${car.carName}</td>
 								<td class="align-middle">
-									<div
+									<!-- <div
 										class="border rounded-4 w-75 text-center d-flex justify-content-around bg-primary align-items-center">
-										<button class="btn text-white decrement-btn">
+										<button class="btn text-white decrement-btn"
+											data-cart-id="${car.carId}">
 											<i class="bi bi-dash"></i>
 										</button>
 										<div class="counter-value mx-2 text-white">${quantity}</div>
-										<button class="btn text-white increment-btn">
+										<button class="btn text-white increment-btn"
+											data-cart-id="${car.carId}">
 											<i class="bi bi-plus"></i>
 										</button>
-									</div>
+									</div> -->
+									<form
+										class="border rounded-4 w-75 text-center d-flex justify-content-around bg-primary align-items-center"
+										action="${pageContext.request.contextPath}/update-cart-quantity"
+										method="post" class="d-inline">
+										<input type="hidden" name="cartId" value="${car.cartId}" /> <input
+											type="hidden" name="quantity" value="${quantity}" />
+										<button type="submit" class="btn text-white decrement-btn"
+											name="action" value="decrement">
+											<i class="bi bi-dash"></i>
+										</button>
+										<div class="counter-value mx-2 text-white d-inline">${quantity}</div>
+										<button type="submit" class="btn text-white increment-btn"
+											name="action" value="increment">
+											<i class="bi bi-plus"></i>
+										</button>
+									</form>
 								</td>
-								<td class="align-middle">$<span class="total-price">${price * quantity}</span>
-									<input type="hidden" class="item-price" value="${price}" />
+								<td class="align-middle text-end">$<span
+									class="total-price">${price * quantity}</span> <input
+									type="hidden" class="item-price" value="${price}" />
 								</td>
-								<td class="align-middle"><a
+								<td class="align-middle text-end"><a
 									href="${pageContext.request.contextPath}/remove-item/${car.cartId}"
 									class="btn btn-danger">Remove</a></td>
-								<td rowspan="4" class="align-middle text-end fw-bold"><span
-									id="cart-total"></span></td>
 							</tr>
 						</c:forEach>
+						<tr>
+							<td class="fw-bold">Total</td>
+							<td colspan="3" class="align-middle text-end fw-bold">$
+								${totalPrice}</td>
+						</tr>
 					</tbody>
 				</table>
 				<div class="my-3 d-flex justify-content-end">
-					<a href="${pageContext.request.contextPath}/cart/order" class="btn btn-primary">Order</a>
+					<form action="${pageContext.request.contextPath}/order-now"
+						method="post">
+						<c:forEach var="car" items="${cartItems}">
+							<input type="hidden" name="cartItems[${car.cartId}].carId"
+								value="${car.carId}" />
+							<input type="hidden" name="cartItems[${car.cartId}].quantity"
+								value="${car.quantity}" />
+							<input type="hidden" name="cartItems[${car.cartId}].price"
+								value="${car.carPrice}" />
+						</c:forEach>
+						<button type="submit" class="btn btn-primary">Order Now</button>
+					</form>
 				</div>
 			</div>
 		</c:if>
@@ -74,50 +106,4 @@
 	</div>
 </div>
 <!-- Car Type End -->
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const cartItems = document.querySelectorAll('tbody tr');
-    const cartTotal = document.getElementById('cart-total');
-    let total = 0;
-
-    cartItems.forEach((item) => {
-        const decrementBtn = item.querySelector('.decrement-btn');
-        const incrementBtn = item.querySelector('.increment-btn');
-        const counterValue = item.querySelector('.counter-value');
-        const itemPrice = parseFloat(item.querySelector('.item-price').value);
-        const totalPrice = item.querySelector('.total-price');
-        let quantity = parseInt(counterValue.textContent);
-
-        decrementBtn.addEventListener('click', function () {
-            if (quantity > 1) {
-                quantity--;
-                counterValue.textContent = quantity;
-                totalPrice.textContent = (itemPrice * quantity).toFixed(2);
-                updateCartTotal();
-            }
-        });
-
-        incrementBtn.addEventListener('click', function () {
-            quantity++;
-            counterValue.textContent = quantity;
-            totalPrice.textContent = (itemPrice * quantity).toFixed(2);
-            updateCartTotal();
-        });
-
-        total += itemPrice * quantity;
-    });
-
-    cartTotal.textContent = total.toFixed(2);
-
-    function updateCartTotal() {
-        let newTotal = 0;
-        cartItems.forEach((item) => {
-            const itemPrice = parseFloat(item.querySelector('.item-price').value);
-            const quantity = parseInt(item.querySelector('.counter-value').textContent);
-            newTotal += itemPrice * quantity;
-        });
-        cartTotal.textContent = newTotal.toFixed(2);
-    }
-});
-</script>
 <c:import url="footer.jsp" />

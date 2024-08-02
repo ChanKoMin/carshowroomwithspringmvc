@@ -1,17 +1,11 @@
 package com.carshowroom.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-
-import com.carshowroom.model.Car;
-import com.carshowroom.model.CarAvailability;
-import com.carshowroom.model.CarTransmission;
 import com.carshowroom.model.Cart;
 import com.carshowroom.model.CartItemDetails;
 
@@ -28,6 +22,11 @@ public class CartDao {
 	public void updateCartItem(Cart cart) {
 		String sql = "UPDATE carts SET quantity = quantity + ? WHERE car_id = ? AND user_id = ?";
 		jdbcTemplate.update(sql, cart.getQuantity(), cart.getCarId(), cart.getUserId());
+	}
+	
+	public void updateCartQuantity(int cartId, int quantity) {
+	    String sql = "UPDATE carts SET quantity = ? WHERE cart_id = ?";
+		jdbcTemplate.update(sql, quantity, cartId);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -81,4 +80,9 @@ public class CartDao {
 			return cart;
 		});
 	}
+	
+	public List<CartItemDetails> getCartItem(int userId) {
+        String sql = "SELECT c.car_id, c.car_name AS carName, c.car_image AS carImage, c.car_price AS carPrice, cart.cart_id, cart.quantity FROM carts cart JOIN cars c ON cart.car_id = c.car_id WHERE cart.user_id = ?";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(CartItemDetails.class), userId);
+    }
 }
