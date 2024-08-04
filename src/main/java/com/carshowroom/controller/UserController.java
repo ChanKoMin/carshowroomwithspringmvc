@@ -158,6 +158,17 @@ public class UserController {
 		m.addAttribute("brands", brands);
 		return "user/allbrands";
 	}
+	
+	@RequestMapping("/contact")
+	public String showContactPage(Model m, HttpSession session, RedirectAttributes ra) {
+		if (!isAuthenticated(session)) {
+			ra.addFlashAttribute("message", "Please login first.");
+			return "redirect:/";
+		}
+		User user = (User) session.getAttribute("user");
+		m.addAttribute("user", user);
+		return "user/contact";
+	}
 
 	@RequestMapping("/profile")
 	public String showProfilePage(Model m, HttpSession session, RedirectAttributes ra) {

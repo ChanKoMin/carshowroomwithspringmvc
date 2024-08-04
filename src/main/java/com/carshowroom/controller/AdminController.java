@@ -18,6 +18,7 @@ import com.carshowroom.dao.AdminDao;
 import com.carshowroom.dao.BrandDao;
 import com.carshowroom.dao.CarDao;
 import com.carshowroom.dao.FeedbackDao;
+import com.carshowroom.dao.OrderDao;
 import com.carshowroom.dao.UserDao;
 import com.carshowroom.model.Admin;
 
@@ -28,14 +29,16 @@ public class AdminController {
 	private CarDao carDao;
 	private UserDao userDao;
 	private FeedbackDao fbDao;
+	private OrderDao orderDao;
 
 	@Autowired
-	public AdminController(AdminDao adminDao, BrandDao brandDao, CarDao carDao, UserDao userDao, FeedbackDao fbDao) {
+	public AdminController(AdminDao adminDao, BrandDao brandDao, CarDao carDao, UserDao userDao, FeedbackDao fbDao, OrderDao orderDao) {
 		this.adminDao = adminDao;
 		this.brandDao = brandDao;
 		this.carDao = carDao;
 		this.userDao = userDao;
 		this.fbDao = fbDao;
+		this.orderDao = orderDao;
 	}
 
 	@Autowired
@@ -63,6 +66,11 @@ public class AdminController {
 		this.fbDao = fbDao;
 	}
 	
+	@Autowired
+	public void setOrderDao(OrderDao orderDao) {
+		this.orderDao = orderDao;
+	}
+	
 	private boolean isAuthenticated(HttpSession session) {
 		return session != null && session.getAttribute("admin") != null;
 	}
@@ -79,11 +87,13 @@ public class AdminController {
 		int totalCars = carDao.carCount();
 		int totalUsers = userDao.userCount();
 		double totalFeedbacks = fbDao.calculateAverageRating();
+		int totalOrders = orderDao.orderCount();
 		String formattedValue = String.format("%.2f", totalFeedbacks);
 		m.addAttribute("admin", admin);
 		m.addAttribute("brand", totalBrands);
 		m.addAttribute("car", totalCars);
 		m.addAttribute("user", totalUsers);
+		m.addAttribute("order", totalOrders);
 		m.addAttribute("feedback", formattedValue);
 		return "admin/index";
 	}

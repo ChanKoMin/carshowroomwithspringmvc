@@ -40,13 +40,10 @@ public class UserOrderController {
             model.addAttribute("message", "Your cart is empty.");
             return "cart";
         }
-        
-        
-        
+                       
         int totalPrice = cartItems.stream()
                 .mapToInt(item -> item.getCarPrice() * item.getQuantity())
                 .sum();
-        System.out.println(totalPrice);
         Order order = new Order();
         order.setUserId(user.getId());
         order.setTotalPrice(totalPrice);
@@ -71,7 +68,7 @@ public class UserOrderController {
     @GetMapping("/bookings")
     public String viewUserBookings(HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
-        List<OrderItemDetails> orderItemsDetails = orderDao.getOrderItemsDetails(user.getId());
+        List<OrderItemDetails> orderItemsDetails = orderDao.getOrderDetails(user.getId());
         model.addAttribute("orderItemsDetails", orderItemsDetails);
         return "user/bookings";
     }

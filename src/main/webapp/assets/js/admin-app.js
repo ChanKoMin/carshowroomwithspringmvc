@@ -1,26 +1,26 @@
 // import { Chart } from "chart";
 // import Swal from "sweetalert2";
-const ctx = document.getElementById("myChart");
-new Chart(ctx, {
-  type: "bar",
-  data: {
-    labels: ["Honda", "Toyota", "Ford", "Chevrolet"],
-    datasets: [
-      {
-        label: "Brands",
-        data: [52, 19, 13, 25, 22, 13],
-        borderWidth: 1
-      }
-    ]
-  },
-  options: {
-    scales: {
-      y: {
-        beginAtZero: true
-      }
-    }
-  }
-});
+//const ctx = document.getElementById("myChart");
+//new Chart(ctx, {
+  //type: "bar",
+  //data: {
+    //labels: ["Honda", "Toyota", "Ford", "Chevrolet"],
+    //datasets: [
+      //{
+        //label: "Brands",
+        //data: [52, 19, 13, 25, 22, 13],
+        //borderWidth: 1
+      //}
+    //]
+  //},
+  //options: {
+    //scales: {
+      //y: {
+        //beginAtZero: true
+      //}
+    //}
+  //}
+//});
 
 const deleteBrand = document.getElementById("delete-brand");
 deleteBrand.addEventListener("click", () => {

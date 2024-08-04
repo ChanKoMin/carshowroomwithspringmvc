@@ -37,9 +37,9 @@
 			</a>
 		</div>
 		<div class="col-4">
-			<a href="" class="card p-5 text-decoration-none">
+			<a href="${pageContext.request.contextPath}/orders" class="card p-5 text-decoration-none">
 				<span class="card-title fw-bold">Total Orders</span>
-				<span class="counter card-text fw-bold">30</span>
+				<span class="counter card-text fw-bold">${order}</span>
 			</a>
 		</div>
 	</div>
@@ -62,7 +62,6 @@
 		<div class="card p-5">
 			<div class="body">
 				<h6 class="card-title">Top selling brands</h6>
-				<p class="card-text fw-bold">$400,000</p>
 				<div>
 					<canvas id="myChart"></canvas>
 				</div>
@@ -71,5 +70,35 @@
 	</div>
 </div>
 <!-- Main Content End -->
+<script>
+fetch('${pageContext.request.contextPath}/api/top-selling-brands')
+  .then(response => response.json())
+  .then(data => {
+    const labels = data.map(item => item.brandName);
+    const sales = data.map(item => item.totalSales);
+    const totalSales = sales.reduce((acc, curr) => acc + curr, 0);
+    const ctx = document.getElementById("myChart");
+    new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: "Total Sales",
+            data: sales,
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  });
+</script>
 <c:import url="footer.jsp" />
 

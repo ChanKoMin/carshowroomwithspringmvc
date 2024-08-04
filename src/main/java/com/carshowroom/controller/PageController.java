@@ -11,15 +11,9 @@ public class PageController {
 		return "redirect:/";
 	}
 
-	@RequestMapping("/bookings")
-	public String showBookingPage() {
-		return "user/bookings";
-	}
+	
 
-	@RequestMapping("/contact")
-	public String showContactPage() {
-		return "user/contact";
-	}
+	
 
 	
 

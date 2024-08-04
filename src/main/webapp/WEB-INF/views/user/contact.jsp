@@ -4,14 +4,12 @@
 <c:import url="header.jsp">
 	<c:param name="title" value="Contact" />
 </c:import>
-
-<!-- Contact Start -->
 <div class="my-5">
 	<div class="row m-auto" style="width: 90%">
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item"><a
-					href="${pageContext.request.contextPath}/">Home</a></li>
+					href="${pageContext.request.contextPath}/home">Home</a></li>
 				<li class="breadcrumb-item active" aria-current="page">Contact</li>
 			</ol>
 		</nav>
@@ -21,7 +19,7 @@
 				<div class="">
 					<label for="email" class="form-label">Email</label> <input
 						type="email" name="email" id="email" class="form-control"
-						value="batman@gmail.com" readonly />
+						value="${user.email}" readonly />
 				</div>
 				<div class="my-3">
 					<label for="message" class="form-label">Your Message</label>
@@ -35,5 +33,5 @@
 		</div>
 	</div>
 </div>
-<!-- Contact Start -->
 <c:import url="footer.jsp" />
+

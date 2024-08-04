@@ -80,10 +80,10 @@ public class LoginController {
 	public String logout(HttpSession session) {
 		User user = (User) session.getAttribute("user");
 
-        if (user != null) {
-            int userId = user.getId();
-			cartDao.deleteCartItemsByUserId(userId); // Delete the user's cart items
-        }
+//        if (user != null) {
+//            int userId = user.getId();
+//			cartDao.deleteCartItemsByUserId(userId); // Delete the user's cart items
+//        }
 		session.invalidate();
 		return "redirect:/";
 	}

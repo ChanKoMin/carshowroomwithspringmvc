@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.carshowroom.model.Brand;
+import com.carshowroom.model.TopSellingBrand;
 
 @Repository
 public class BrandDao {
@@ -80,4 +81,15 @@ public class BrandDao {
 		String sql = "SELECT COUNT(*) FROM brands";
 		return jdbcTemplate.queryForObject(sql, Integer.class);
 	}
+	
+	public List<TopSellingBrand> getTopSellingBrands() {
+	    String sql = "SELECT b.name AS brand_name, SUM(oi.quantity * oi.price) AS total_sales FROM order_items oi JOIN cars c ON oi.car_id = c.car_id JOIN brands b ON c.brand_id = b.id GROUP BY b.name ORDER BY total_sales DESC LIMIT 5";
+	    return jdbcTemplate.query(sql, (rs, rowNum) -> {
+	        TopSellingBrand topSellingBrand = new TopSellingBrand();
+	        topSellingBrand.setBrandName(rs.getString("brand_name"));
+	        topSellingBrand.setTotalSales(rs.getDouble("total_sales"));
+	        return topSellingBrand;
+	    });
+	}
+
 }
