@@ -18,6 +18,11 @@
 	href="${pageContext.request.contextPath}/assets/node_modules/bootstrap/dist/css/bootstrap.min.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/assets/node_modules/bootstrap-icons/font/bootstrap-icons.min.css" />
+<style>
+	.error{
+		color : red;
+	}
+</style>
 </head>
 <body>
 	<div class="container-fluid">

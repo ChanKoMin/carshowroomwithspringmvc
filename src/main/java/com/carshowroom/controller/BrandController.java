@@ -1,7 +1,8 @@
 package com.carshowroom.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
-
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -11,21 +12,23 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.carshowroom.dao.AdminDao;
 import com.carshowroom.dao.BrandDao;
 import com.carshowroom.model.Admin;
 import com.carshowroom.model.Brand;
+import com.carshowroom.util.ImageUploadUtil;
 
 @Controller
 public class BrandController {
 	private BrandDao brandDao;
 	private AdminDao adminDao;
+	private final String imageUploadDir = "Downloads/CarShowroomManagement/src/main/webapp/assets/images/";
 
 	@Autowired
 	public BrandController(BrandDao brandDao, AdminDao adminDao) {
@@ -80,19 +83,27 @@ public class BrandController {
 		return "admin/add-brand";
 	}
 
-	@PostMapping("/brand/save")
-	public String saveBrand(@ModelAttribute("brand") @Valid Brand brand, BindingResult result, RedirectAttributes ra,
-			Model m, HttpSession session) {
-		if (result.hasErrors()) {
-			return "redirect:/add-brand";
-		}
+	@RequestMapping(value = "/brand/save", method = RequestMethod.POST)
+	public String saveBrand(@RequestParam("img") MultipartFile img, @ModelAttribute("brand") @Valid Brand brand,
+			BindingResult result, RedirectAttributes ra, Model m, HttpSession session) {
 		if (!isAuthenticated(session)) {
 			return "redirect:/";
 		}
+
+		try {
+			// Use the reusable method to save the image
+			String fileName = ImageUploadUtil.saveImage(img, imageUploadDir);
+			// Set the image name in the brand and save
+			brand.setImg(fileName);
+			brandDao.save(brand);
+			ra.addFlashAttribute("createdSuccessfully", "Brand created successfully!");
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			m.addAttribute("message", "Failed to upload image: " + e.getMessage());
+		}
 		Admin adm = (Admin) session.getAttribute("admin");
 		m.addAttribute("admin", adm);
-		brandDao.save(brand);
-		ra.addFlashAttribute("createdSuccessfully", "Brand created successfully!");
 		return "redirect:/brands";
 	}
 
@@ -111,31 +122,61 @@ public class BrandController {
 	}
 
 	@RequestMapping(value = "/brand/update", method = RequestMethod.POST)
-	public String updateBrand(@ModelAttribute("brand") @Valid Brand brand, BindingResult result, RedirectAttributes ra,
+	public String updateBrand(@RequestParam("img") MultipartFile img, @ModelAttribute("brand") @Valid Brand brand, BindingResult result, RedirectAttributes ra,
 			Model m, HttpSession session) {
-		if (result.hasErrors()) {
-			return "admin/edit-brand";
-		}
 		if (!isAuthenticated(session)) {
 			return "redirect:/";
 		}
+		try {
+			// Use the reusable method to save the image
+			String fileName = ImageUploadUtil.saveImage(img, imageUploadDir);
+			// Set the image name in the brand and save
+			brand.setImg(fileName);
+			brandDao.update(brand);
+			ra.addFlashAttribute("updatedSuccessfully", "Brand created successfully!");
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			m.addAttribute("message", "Failed to upload image: " + e.getMessage());
+		}
 		Admin adm = (Admin) session.getAttribute("admin");
 		m.addAttribute("admin", adm);
-		brandDao.update(brand);
-		ra.addFlashAttribute("updatedSuccessfully", "Brand updated successfully!");
 		return "redirect:/brands";
 	}
 
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-	public String delete(@PathVariable int id, RedirectAttributes ra, Model m, HttpSession session) {
+	public String delete(@PathVariable("id") int id, RedirectAttributes ra, Model m, HttpSession session) {
 		if (!isAuthenticated(session)) {
 			return "redirect:/";
 		}
+		try {
+            // Fetch the brand to get the image file name
+            Brand brand = brandDao.findById(id);
+            if (brand != null) {
+                // Delete the image file
+                deleteImageFile(brand.getImg());
+
+                // Delete the brand record from the database
+                brandDao.deleteById(id);
+
+                ra.addFlashAttribute("deletedSuccessfully", "Brand deleted successfully!");
+            } else {
+                ra.addFlashAttribute("deletedSuccessfully", "Brand not found.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            ra.addFlashAttribute("message", "Failed to delete brand.");
+        }
 		Admin adm = (Admin) session.getAttribute("admin");
 		m.addAttribute("admin", adm);
-		brandDao.deleteById(id);
-		ra.addFlashAttribute("deletedSuccessfully", "Brand deleted successfully!");
 		return "redirect:/brands";
 	}
+	
+	private void deleteImageFile(String fileName) {
+        File file = new File(imageUploadDir + fileName);
+        if (file.exists()) {
+            file.delete();
+        }
+    }
 
 }

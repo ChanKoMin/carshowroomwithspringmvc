@@ -65,7 +65,7 @@
 							<td class="text-center align-middle">${brand.name}</td>
 							<td class="text-center align-middle"><a
 								href="edit-brand/${brand.id}" class="btn btn-sm btn-primary">Edit</a>
-								<a href="delete/${brand.id}" class="btn btn-sm btn-danger">
+								<a href="delete/${brand.id}" onclick="return confirm('Are you sure you want to delete this brand?');" class="btn btn-sm btn-danger">
 									Delete</a></td>
 						</tr>
 					</c:forEach>

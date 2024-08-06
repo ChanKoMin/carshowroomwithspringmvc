@@ -1,17 +1,14 @@
 package com.carshowroom.model;
 
 import java.time.LocalDateTime;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class Brand {
 	private int id;
-	@Size(min = 1, message = "Brand name must be required")
-	private String name;
-    @NotBlank(message = "Image must not be blank")
+	@NotEmpty(message = "Name is required")
+    private String name;
 	private String img;
     @DateTimeFormat
     private LocalDateTime createdAt;

@@ -1,7 +1,5 @@
 package com.carshowroom.controller;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,8 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import com.carshowroom.dao.CartDao;
 import com.carshowroom.dao.OrderDao;
 import com.carshowroom.model.CartItemDetails;
@@ -27,18 +23,26 @@ public class UserOrderController {
     private OrderDao orderDao;
 
     @Autowired
-    private CartDao cartDao;  // Assuming you have CartDao to fetch cart items
-
+    private CartDao cartDao;
+    
+    private boolean isAuthenticated(HttpSession session) {
+		return session != null && session.getAttribute("user") != null;
+	}
+    
     @PostMapping("/order-now")
-    public String orderNow(HttpSession session, Model model) {
+    public String orderNow(HttpSession session,Model model) {
+    	if (!isAuthenticated(session)) {
+			return "redirect:/";
+		}
         User user = (User) session.getAttribute("user");
         if(user == null) {
         	return "redirect:/";
         }
+        
         List<CartItemDetails> cartItems = cartDao.getCartItem(user.getId());        
         if (cartItems.isEmpty()) {
             model.addAttribute("message", "Your cart is empty.");
-            return "cart";
+            return "redirect:/cart";
         }
                        
         int totalPrice = cartItems.stream()
@@ -67,6 +71,9 @@ public class UserOrderController {
     
     @GetMapping("/bookings")
     public String viewUserBookings(HttpSession session, Model model) {
+    	if (!isAuthenticated(session)) {
+			return "redirect:/";
+		}
         User user = (User) session.getAttribute("user");
         List<OrderItemDetails> orderItemsDetails = orderDao.getOrderDetails(user.getId());
         model.addAttribute("orderItemsDetails", orderItemsDetails);

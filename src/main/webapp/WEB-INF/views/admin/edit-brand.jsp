@@ -20,11 +20,14 @@
 		<div class="body">
 			<h5 class="card-title mb-3">Edit Brand</h5>
 			<form:form action="${pageContext.request.contextPath}/brand/update"
-				method="post" modelAttribute="brand">
+				enctype="multipart/form-data" method="post" modelAttribute="brand">
 				<form:input path="id" type="hidden" class="form-control" />
 				<form:input path="name" type="text" class="form-control" />
-				<form:input path="img" type="file" class="form-control my-4" />
-				<button class="btn btn-primary mb-0">Update</button>
+				<form:errors path="name" cssClass="error" />
+				<form:input path="img" type="file" class="form-control mt-4" />
+				<div class="mt-3">
+					<button class="btn btn-primary mb-0">Update</button>
+				</div>
 			</form:form>
 		</div>
 	</div>

@@ -32,48 +32,48 @@
 				</div>
 				<div class="row my-4">
 					<div class="col">
-						<form:input path="carName" type="text" name="name"
+						<form:input path="carName" type="text"
 							class="form-control" placeholder="Name" />
-						<form:errors path="carName" />
+						<form:errors path="carName" cssClass="error"/>
 					</div>
 					<div class="col">
-						<form:input path="carModel" type="text" name="model"
+						<form:input path="carModel" type="text"
 							class="form-control" placeholder="Model" />
-						<form:errors path="carModel" />
+						<form:errors path="carModel" cssClass="error"/>
 					</div>
 				</div>
 				<div class="row my-4">
 					<div class="col">
-						<form:input path="carType" type="text" name="type"
+						<form:input path="carType" type="text"
 							class="form-control" placeholder="Type" />
-						<form:errors path="carType" />
+						<form:errors path="carType" cssClass="error"/>
 					</div>
 					<div class="col">
-						<form:input path="carYear" type="text" name="year"
+						<form:input path="carYear" type="text"
 							class="form-control" placeholder="Year" />
-						<form:errors path="carYear" />
+						<form:errors path="carYear" cssClass="error"/>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col">
-						<form:input path="carColor" type="text" name="colour"
+						<form:input path="carColor" type="text"
 							class="form-control" placeholder="Colour" />
-						<form:errors path="carColor" />
+						<form:errors path="carColor" cssClass="error"/>
 					</div>
 					<div class="col">
-						<form:input path="carCylinder" type="text" name="cylinder"
+						<form:input path="carCylinder" type="text"
 							class="form-control" placeholder="Cylinder" />
-						<form:errors path="carCylinder" />
+						<form:errors path="carCylinder" cssClass="error"/>
 					</div>
 				</div>
 				<div class="row my-4">
 					<div class="col">
-						<form:input path="carEngine" type="text" name="engine"
+						<form:input path="carEngine" type="text"
 							class="form-control" placeholder="Engine" />
-						<form:errors path="carEngine" />
+						<form:errors path="carEngine" cssClass="error"/>
 					</div>
 					<div class="col">
-						<form:select path="carTransmission" name="transmission"
+						<form:select path="carTransmission"
 							class="form-select">
 							<option value="">Transmission</option>
 							<option value="AUTOMATIC">Automatic</option>
@@ -83,12 +83,12 @@
 				</div>
 				<div class="row my-4">
 					<div class="col">
-						<form:input path="carPrice" type="text" name="engine"
+						<form:input path="carPrice" type="text"
 							class="form-control" placeholder="Price" />
-						<form:errors path="carPrice" />
+						<form:errors path="carPrice" cssClass="error"/>
 					</div>
 					<div class="col">
-						<form:select path="carAvailability" name="availability"
+						<form:select path="carAvailability"
 							class="form-select">
 							<option value="">Availability</option>
 							<option value="INSTOCK">In Stock</option>
@@ -98,16 +98,16 @@
 				</div>
 				<div class="row my-4">
 					<div class="col">
-						<form:textarea path="carDescription" name="description"
+						<form:textarea path="carDescription"
 							class="form-control" cols="30" rows="5" placeholder="Description"></form:textarea>
-						<form:errors path="carDescription" />
+						<form:errors path="carDescription" cssClass="error"/>
 					</div>
 				</div>
 				<div class="row mb-4">
 					<div class="col">
-						<form:input path="carImage" type="file" name="file"
+						<form:input path="carImage" type="file"
 							class="form-control" />
-						<form:errors path="carImage" />
+						<form:errors path="carImage" cssClass="error"/>
 					</div>
 				</div>
 				<button class="btn btn-primary">Add</button>

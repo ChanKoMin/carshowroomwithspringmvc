@@ -3,32 +3,32 @@ package com.carshowroom.model;
 import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotEmpty;
 
 public class Car {
 	private int id;
 	private int brandId;
-	@Size(min = 1, message = "Car name must be required")
+	@NotEmpty(message = "Car name is required")
 	private String carName;
-	@Size(min = 1, message = "Car model must be required")
+	@NotEmpty(message = "Car model is required")
 	private String carModel;
-	@Size(min = 1, message = "Car type must be required")
+	@NotEmpty(message = "Car type is required")
 	private String carType;
-	@Size(min = 1, message = "Car year must be required")
+	@NotEmpty(message = "Car year is required")
 	private String carYear;
-	@Size(min = 1, message = "Car color must be required")
+	@NotEmpty(message = "Car color is required")
 	private String carColor;
-	@Size(min = 1, message = "Car cylinder must be required")
+	@NotEmpty(message = "Car cylinder is required")
 	private String carCylinder;
-	@Size(min = 1, message = "Car engine must be required")
+	@NotEmpty(message = "Car engine is required")
 	private String carEngine;
 	private CarTransmission carTransmission;
 	private CarAvailability carAvailability;
-	@Size(min = 1, message = "Car description must be required")
+	@NotEmpty(message = "Car description is required")
 	private String carDescription;
-	@Size(min = 1, message = "Car price must be required")
+	@NotEmpty(message = "Car price is required")
 	private String carPrice;
-	@NotBlank(message = "Image must not be blank")
+	@NotBlank(message = "Image URL is required")
 	private String carImage;
 	private Brand brand;
 	private int count;

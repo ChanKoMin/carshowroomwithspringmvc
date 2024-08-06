@@ -20,7 +20,7 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/assets/css/style.css" />
 </head>
-<body>
+<body class="d-flex flex-column h-100">
 	<div class="container-fluid position-relative">
 		<nav
 			class="navbar bg-body-tertiary position-sticky z-3 top-0 container-fluid">

@@ -38,18 +38,6 @@
 									class="w-25" alt="" /></td>
 								<td class="align-middle">${car.carName}</td>
 								<td class="align-middle">
-									<!-- <div
-										class="border rounded-4 w-75 text-center d-flex justify-content-around bg-primary align-items-center">
-										<button class="btn text-white decrement-btn"
-											data-cart-id="${car.carId}">
-											<i class="bi bi-dash"></i>
-										</button>
-										<div class="counter-value mx-2 text-white">${quantity}</div>
-										<button class="btn text-white increment-btn"
-											data-cart-id="${car.carId}">
-											<i class="bi bi-plus"></i>
-										</button>
-									</div> -->
 									<form
 										class="border rounded-4 w-75 text-center d-flex justify-content-around bg-primary align-items-center"
 										action="${pageContext.request.contextPath}/update-cart-quantity"

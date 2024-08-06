@@ -12,7 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -91,7 +90,7 @@ public class CarController {
 		return "admin/add-car";
 	}
 
-	@PostMapping("/add-car/save")
+	@RequestMapping(value = "/add-car/save", method = RequestMethod.POST)
 	public String addCar(@ModelAttribute("car") @Valid Car car, BindingResult result, RedirectAttributes ra, Model m,
 			HttpSession session) {
 		if (result.hasErrors()) {

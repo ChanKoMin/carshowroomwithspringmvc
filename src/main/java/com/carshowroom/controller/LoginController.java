@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.carshowroom.dao.AdminDao;
-import com.carshowroom.dao.CartDao;
 import com.carshowroom.dao.UserDao;
 import com.carshowroom.model.Admin;
 import com.carshowroom.model.User;
@@ -21,7 +20,6 @@ import com.carshowroom.model.User;
 public class LoginController {
 	private AdminDao adminDao;
 	private UserDao userDao;
-	private CartDao cartDao;
 
 	@Autowired
 	public void setAdminDao(AdminDao adminDao) {
@@ -31,11 +29,6 @@ public class LoginController {
 	@Autowired
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
-	}
-	
-	@Autowired
-	public void setCartDao(CartDao cartDao) {
-		this.cartDao = cartDao;
 	}
 
 	@GetMapping("/")
@@ -78,12 +71,6 @@ public class LoginController {
 	
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
-		User user = (User) session.getAttribute("user");
-
-//        if (user != null) {
-//            int userId = user.getId();
-//			cartDao.deleteCartItemsByUserId(userId); // Delete the user's cart items
-//        }
 		session.invalidate();
 		return "redirect:/";
 	}

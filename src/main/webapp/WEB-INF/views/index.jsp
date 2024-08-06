@@ -210,7 +210,7 @@
 						<div class="mb-3">
 							<label for="description" class="form-label">Message</label>
 							<textarea name="description" id="description" class="form-control"
-								cols="30" rows="10"></textarea>
+								cols="30" rows="10" required></textarea>
 						</div>
 						<div class="">
 							<div class="d-flex justify-content-between mb-0">

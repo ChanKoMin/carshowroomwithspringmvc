@@ -1,0 +1,37 @@
+if (!img.isEmpty()) {
+			try {
+
+				// Define the path where the image will be saved
+				String imagePath = "Downloads/CarShowroomManagement/src/main/webapp/assets/images/";
+				String fileName = img.getOriginalFilename();
+
+				// Extract the file extension
+				String fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
+
+				// Validate the file extension
+				if (!fileExtension.equals("jpg") && !fileExtension.equals("jpeg") && !fileExtension.equals("png")) {
+					m.addAttribute("imageError", "Only JPG, JPEG, and PNG formats are supported.");
+					return "redirect:/add-brand";
+				}
+
+				File file = new File(imagePath + fileName);
+
+				// Save the image file
+				BufferedImage bufferedImage = ImageIO.read(img.getInputStream());
+				ImageIO.write(bufferedImage, "png", file);
+
+				// Save the brand data in the database
+				brand.setImg(fileName);
+				brandDao.save(brand);
+				ra.addFlashAttribute("createdSuccessfully", "Brand created successfully!");
+			} catch (IOException e) {
+				e.printStackTrace();
+				m.addAttribute("message", "Failed to upload image.");
+			}
+		} else {
+			m.addAttribute("imageError", "Image is required.");
+			return "redirect:/add-brand";
+		}
+		Admin adm = (Admin) session.getAttribute("admin");
+		m.addAttribute("admin", adm);
+		return "redirect:/brands";

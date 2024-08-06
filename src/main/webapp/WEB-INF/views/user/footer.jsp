@@ -10,7 +10,7 @@
 </script>
 </body>
 <!-- Footer Start -->
-<footer class="p-5" style="background-color: #262626">
+<footer class="p-5 mt-auto" style="background-color: #262626">
 	<div class="row">
 		<div class="col-6 d-flex flex-column align-items-center gap-2">
 			<img src="${pageContext.request.contextPath}/assets/images/logo.jpg"

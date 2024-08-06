@@ -1,8 +1,11 @@
 package com.carshowroom.model;
 
+import javax.validation.constraints.NotEmpty;
+
 public class Feedback {
 	private int id;
 	private int userId;
+	@NotEmpty(message = "Message is required")
 	private String description;
 	private Rate rate;
 

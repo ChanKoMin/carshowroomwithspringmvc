@@ -190,6 +190,9 @@ public class UserController {
 			@RequestParam("address") String address, @RequestParam("image") String image, HttpSession session,
 			Model model) {
 		User user = (User) session.getAttribute("user");
+		if (!isAuthenticated(session)) {
+			return "redirect:/";
+		}
 		if (user == null) {
 			return "redirect:/";
 		}
@@ -209,6 +212,9 @@ public class UserController {
 	public String postFeedback(@RequestParam("description") String description, @RequestParam("rate") int rate,
 			HttpSession session, Model model) {
 		User user = (User) session.getAttribute("user");
+		if (!isAuthenticated(session)) {
+			return "redirect:/";
+		}
 		if (user == null) {
 			return "redirect:/";
 		}

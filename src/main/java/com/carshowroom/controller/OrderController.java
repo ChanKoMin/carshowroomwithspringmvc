@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.carshowroom.dao.AdminDao;
 import com.carshowroom.dao.OrderDao;
@@ -39,9 +38,16 @@ public class OrderController {
 	public void setOrderDao(OrderDao orderDao) {
 		this.orderDao = orderDao;
 	}
+	
+	private boolean isAuthenticated(HttpSession session) {
+		return session != null && session.getAttribute("admin") != null;
+	}
 
 	@RequestMapping("/orders")
 	public String showOrderPage(@RequestParam(name = "page", defaultValue = "1") int page,@RequestParam(name = "size", defaultValue = "5") int pageSize,HttpSession session,Model m) {
+		if (!isAuthenticated(session)) {
+			return "redirect:/";
+		}
 		Admin admin = adminDao.showAdmin();
 		List<AdminOrderDetails> orderDetailsList = orderDao.getOrderDetails(page, pageSize);
 		int totalOrders = orderDao.orderCount();
@@ -53,30 +59,22 @@ public class OrderController {
 		m.addAttribute("isEmpty", orderDetailsList.isEmpty());
 		return "admin/orders";
 	}
-
-//	@RequestMapping("/complete-order")
-//	public String showCompleteOrderPage(Model m) {
-//		Admin admin = adminDao.showAdmin();
-//		m.addAttribute("admin", admin);
-//		return "admin/complete-order";
-//	}
 	
 	@PostMapping("/update-order-status")
-	public String confirmOrder(@RequestParam("orderId") int orderId, Model model, @RequestParam("status") String status) {
-	    orderDao.updateOrderStatus(orderId, status);
-
-	    // Get the confirmed order details to pass to the complete-orders page
-	    //AdminOrderDetails confirmedOrder = orderDao.getOrderDetailsById(orderId);
-	    //System.out.println(confirmedOrder);
-	    //model.addAttribute("confirmedOrder", confirmedOrder);
-	    //ra.addAttribute("id", orderId);
-	    // Redirect to the complete-orders page
+	public String confirmOrder(@RequestParam("orderId") int orderId, Model model, @RequestParam("status") String status, HttpSession session) {
+		if (!isAuthenticated(session)) {
+			return "redirect:/";
+		}
+		orderDao.updateOrderStatus(orderId, status);
 	    return "redirect:/orders";
 	}
 	
 	@GetMapping("/complete-orders/{id}")
-    public String completeOrdersPage(@RequestParam(value = "orderId", required = false) Integer orderId, Model model) {
-        // Fetch all completed orders with their items
+    public String completeOrdersPage(@RequestParam(value = "orderId", required = false) Integer orderId, Model model, HttpSession session) {
+		if (!isAuthenticated(session)) {
+			return "redirect:/";
+		}
+		// Fetch all completed orders with their items
         Admin admin = adminDao.showAdmin();
         if(orderId != null) {
         	List<OrderItemDetails> orderItemDetails = orderDao.fetchOrderItemDetails(orderId);

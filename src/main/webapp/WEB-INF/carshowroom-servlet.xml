@@ -37,7 +37,7 @@ http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 		class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-	
+
 	<!-- AdminDao Bean -->
 	<bean id="adminDao" class="com.carshowroom.dao.AdminDao">
 		<property name="jdbcTemplate" ref="jdbcTemplate" />
@@ -71,4 +71,10 @@ http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 		class="com.carshowroom.controller.CarController">
 		<constructor-arg ref="carDao" />
 	</bean>
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="5000000" /> <!-- Maximum upload size in bytes -->
+	</bean>
+
 </beans>

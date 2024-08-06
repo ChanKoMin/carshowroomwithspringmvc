@@ -31,7 +31,7 @@
 						</c:choose>
 						<form:input path="image" type="file" name="file"
 							class="form-control mt-4 w-75" />
-						<form:errors path="image" />
+						<form:errors path="image" cssClass="error"/>
 					</div>
 					<div class="col-5">
 						<div class="">
@@ -39,33 +39,34 @@
 							<form:label path="name" for="name" class="form-label">Name</form:label>
 							<form:input path="name" type="text" name="name" id="name"
 								class="form-control" />
-							<form:errors path="name" />
+							<form:errors path="name" cssClass="error"/>
 						</div>
 						<div class="my-3">
 							<form:label path="email" for="email" class="form-label">Email</form:label>
 							<form:input path="email" type="email" name="email" id="email"
 								class="form-control" />
-							<form:errors path="email" />
+							<form:errors path="email" cssClass="error"/>
 						</div>
 						<div class="">
 							<form:label path="password" for="password" class="form-label">Password</form:label>
 							<form:input path="password" type="password" name="password"
 								id="password" class="form-control" />
-							<form:errors path="password" />
+							<form:errors path="password" cssClass="error"/>
 						</div>
 						<div class="my-3">
 							<form:label path="phone" for="phonenumber" class="form-label">Phone Number</form:label>
 							<form:input path="phone" type="number" name="phonenumber"
 								id="phonenumber" class="form-control" />
-							<form:errors path="phone" />
+							<form:errors path="phone" cssClass="error"/>
 						</div>
 						<div class="">
 							<form:label path="address" for="address" class="form-label">Address</form:label>
 							<form:textarea path="address" name="address" class="form-control"
 								id="address" cols="30" rows="5" />
-							<form:errors path="address" />
+							<form:errors path="address" cssClass="error"/>
 						</div>
 						<div class="d-flex mt-3 justify-content-between">
+							<a href="${pageContext.request.contextPath}/admin-profile" class="btn btn-danger">Cancel</a>
 							<button class="btn btn-primary">Save</button>
 						</div>
 					</div>
