@@ -18,7 +18,7 @@
 	<div class="card p-5">
 		<div class="body">
 			<h5 class="card-title mb-3">Edit Car</h5>
-			<form:form action="${pageContext.request.contextPath}/car/update"
+			<form:form action="${pageContext.request.contextPath}/car/update" enctype="multipart/form-data"
 				modelAttribute="car" method="post">
 				<div class="row">
 					<div class="col">
@@ -92,8 +92,10 @@
 				<div class="row mb-4">
 					<div class="col">
 						<form:input path="carImage" type="file"
-							class="form-control" />
-						<form:errors path="carImage" cssClass="error"/>
+							class="form-control"/>
+						<c:if test="${not empty message}">
+							<span class="error">${message}</span>
+						</c:if>
 					</div>
 				</div>
 				<button class="btn btn-primary">Update</button>

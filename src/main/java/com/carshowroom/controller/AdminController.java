@@ -1,5 +1,7 @@
 package com.carshowroom.controller;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.carshowroom.dao.AdminDao;
@@ -21,6 +25,7 @@ import com.carshowroom.dao.FeedbackDao;
 import com.carshowroom.dao.OrderDao;
 import com.carshowroom.dao.UserDao;
 import com.carshowroom.model.Admin;
+import com.carshowroom.util.ImageUploadUtil;
 
 @Controller
 public class AdminController {
@@ -30,6 +35,7 @@ public class AdminController {
 	private UserDao userDao;
 	private FeedbackDao fbDao;
 	private OrderDao orderDao;
+	private final String imageUploadDir = "Downloads/CarShowroomManagement/src/main/webapp/assets/images/";
 
 	@Autowired
 	public AdminController(AdminDao adminDao, BrandDao brandDao, CarDao carDao, UserDao userDao, FeedbackDao fbDao, OrderDao orderDao) {
@@ -123,18 +129,28 @@ public class AdminController {
 	}
 
 	@PostMapping("/profile/update")
-	public String updateProfile(@ModelAttribute("admin") @Valid Admin admin, BindingResult result,
+	public String updateProfile(@RequestParam("image") MultipartFile image ,@ModelAttribute("admin") @Valid Admin admin, BindingResult result,
 			RedirectAttributes ra,Model m,HttpSession session) {
-		if (result.hasErrors()) {
-			return "admin/edit-profile";
-		}
+//		if (result.hasErrors()) {
+//			return "admin/edit-profile";
+//		}
 		if (!isAuthenticated(session)) {
 			return "redirect:/";
 		}
+		try {
+			// Use the reusable method to save the image
+			String fileName = ImageUploadUtil.saveImage(image, imageUploadDir);
+			// Set the image name in the brand and save
+			admin.setImage(fileName);
+			adminDao.update(admin);
+			ra.addFlashAttribute("updatedSuccessfully", "Profile updated successfully!");
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			m.addAttribute("message", "Failed to upload image: " + e.getMessage());
+		}
 		Admin adm = (Admin) session.getAttribute("admin");
 		m.addAttribute("admin", adm);
-		adminDao.update(admin);
-		ra.addFlashAttribute("updatedSuccessfully", "Account updated successfully!");
 		return "redirect:/admin-profile";
 	}
 }

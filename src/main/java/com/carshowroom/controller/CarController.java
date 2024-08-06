@@ -1,5 +1,7 @@
 package com.carshowroom.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.carshowroom.dao.AdminDao;
@@ -22,6 +25,7 @@ import com.carshowroom.dao.BrandDao;
 import com.carshowroom.dao.CarDao;
 import com.carshowroom.model.Admin;
 import com.carshowroom.model.Car;
+import com.carshowroom.util.ImageUploadUtil;
 
 @Controller
 public class CarController {
@@ -29,6 +33,8 @@ public class CarController {
 	private CarDao carDao;
 	private BrandDao brandDao;
 	private AdminDao adminDao;
+	private final String imageUploadDir = "Downloads/CarShowroomManagement/src/main/webapp/assets/images/";
+
 
 	@Autowired
 	public CarController(CarDao carDao, BrandDao brandDao, AdminDao adminDao) {
@@ -91,18 +97,30 @@ public class CarController {
 	}
 
 	@RequestMapping(value = "/add-car/save", method = RequestMethod.POST)
-	public String addCar(@ModelAttribute("car") @Valid Car car, BindingResult result, RedirectAttributes ra, Model m,
+	public String addCar(@RequestParam("carImage") MultipartFile carImage, @ModelAttribute("car") @Valid Car car, BindingResult result, RedirectAttributes ra, Model m,
 			HttpSession session) {
-		if (result.hasErrors()) {
-			return "redirect:/add-car";
-		}
+//		if (result.hasErrors()) {
+//			return "redirect:/add-car";
+//		}
 		if (!isAuthenticated(session)) {
 			return "redirect:/";
 		}
+		try {
+			// Use the reusable method to save the image
+			String fileName = ImageUploadUtil.saveImage(carImage, imageUploadDir);
+			// Set the image name in the brand and save
+			car.setCarImage(fileName);
+			carDao.save(car);
+			ra.addFlashAttribute("createdSuccessfully", "Car created successfully!");
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			m.addAttribute("message", "Failed to upload image: " + e.getMessage());
+		}
 		Admin adm = (Admin) session.getAttribute("admin");
 		m.addAttribute("admin", adm);
-		carDao.save(car);
-		ra.addFlashAttribute("createdSuccessfully", "Car created successfully!");
+//		carDao.save(car);
+//		ra.addFlashAttribute("createdSuccessfully", "Car created successfully!");
 		return "redirect:/cars";
 	}
 
@@ -135,18 +153,30 @@ public class CarController {
 	}
 
 	@RequestMapping(value = "/car/update", method = RequestMethod.POST)
-	public String updateCar(@ModelAttribute("car") @Valid Car car, BindingResult result, RedirectAttributes ra, Model m,
+	public String updateCar(@RequestParam("carImage") MultipartFile carImage ,@ModelAttribute("car") @Valid Car car, BindingResult result, RedirectAttributes ra, Model m,
 			HttpSession session) {
-		if (result.hasErrors()) {
-			return "admin/edit-car";
-		}
+//		if (result.hasErrors()) {
+//			return "admin/edit-car";
+//		}
 		if (!isAuthenticated(session)) {
 			return "redirect:/";
 		}
+		try {
+			// Use the reusable method to save the image
+			String fileName = ImageUploadUtil.saveImage(carImage, imageUploadDir);
+			// Set the image name in the brand and save
+			car.setCarImage(fileName);
+			carDao.update(car);
+			ra.addFlashAttribute("updatedSuccessfully", "Car updated successfully!");
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			m.addAttribute("message", "Failed to upload image: " + e.getMessage());
+		}
 		Admin adm = (Admin) session.getAttribute("admin");
+		Admin admin = adminDao.showAdmin();
 		m.addAttribute("admin", adm);
-		carDao.update(car);
-		ra.addFlashAttribute("updatedSuccessfully", "Car updated successfully!");
+		m.addAttribute("admin", admin);
 		return "redirect:/cars";
 	}
 
@@ -155,10 +185,37 @@ public class CarController {
 		if (!isAuthenticated(session)) {
 			return "redirect:/";
 		}
+		try {
+            // Fetch the brand to get the image file name
+            Car car = carDao.findById(id);
+            if (car != null) {
+                // Delete the image file
+                deleteImageFile(car.getCarImage());
+                int orderCount = carDao.countOrdersByCarId(id);
+    		    if (orderCount > 0) {
+    		    	System.out.println("Cannot delete car.");
+    		        ra.addFlashAttribute("message", "Cannot delete car. There are existing orders associated with this car.");
+    		        return "redirect:/cars";
+    		    }
+                // Delete the brand record from the database
+                carDao.deleteById(id);
+                ra.addFlashAttribute("deletedSuccessfully", "Car deleted successfully!");
+                
+            } else {
+                ra.addFlashAttribute("deletedSuccessfully", "Car not found.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            ra.addFlashAttribute("message", "Failed to delete car.");
+        }
 		Admin adm = (Admin) session.getAttribute("admin");
 		m.addAttribute("admin", adm);
-		carDao.deleteById(id);
-		ra.addFlashAttribute("deletedSuccessfully", "Car deleted successfully!");
 		return "redirect:/cars";
 	}
+	private void deleteImageFile(String fileName) {
+        File file = new File(imageUploadDir + fileName);
+        if (file.exists()) {
+            file.delete();
+        }
+    }
 }

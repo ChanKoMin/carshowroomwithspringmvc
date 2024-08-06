@@ -28,7 +28,7 @@
 			<form:form action="${pageContext.request.contextPath}/brand/save"
 				enctype="multipart/form-data" method="post" modelAttribute="brand">
 				<form:input path="name" type="text" class="form-control"
-					placeholder="Brand Name" />
+					placeholder="Brand Name"/>
 				<form:errors path="name" cssClass="error" />
 				<form:input path="img" type="file" class="form-control mt-4" />
 				<c:if test="${not empty imageError}">

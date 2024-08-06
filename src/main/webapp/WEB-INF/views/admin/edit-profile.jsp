@@ -11,7 +11,7 @@
 	<div class="row m-auto" style="width: 90%">
 		<div class="w-75 mx-auto">
 			<h5 class="text-center fw-bold mb-5">Edit Your Account Details</h5>
-			<form:form action="${pageContext.request.contextPath}/profile/update"
+			<form:form action="${pageContext.request.contextPath}/profile/update" enctype="multipart/form-data"
 				modelAttribute="admin" method="post" class="p-5">
 				<div class="row">
 					<div class="col-2"></div>
@@ -31,7 +31,9 @@
 						</c:choose>
 						<form:input path="image" type="file" name="file"
 							class="form-control mt-4 w-75" />
-						<form:errors path="image" cssClass="error"/>
+							<c:if test="${not empty message}">
+								<span class="error">${message}</span>
+							</c:if>
 					</div>
 					<div class="col-5">
 						<div class="">

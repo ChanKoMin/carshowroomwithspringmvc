@@ -17,7 +17,7 @@
 <div class="w-50 mx-auto">
 	<div class="card p-5">
 		<div class="body">
-			<form:form action="${pageContext.request.contextPath}/add-car/save"
+			<form:form action="${pageContext.request.contextPath}/add-car/save" enctype="multipart/form-data"
 				modelAttribute="car" method="post">
 				<div class="row d-flex justify-content-between">
 					<div class="col">
@@ -107,7 +107,9 @@
 					<div class="col">
 						<form:input path="carImage" type="file"
 							class="form-control" />
-						<form:errors path="carImage" cssClass="error"/>
+						<c:if test="${not empty message}">
+							<span class="error">${message}</span>
+						</c:if>
 					</div>
 				</div>
 				<button class="btn btn-primary">Add</button>

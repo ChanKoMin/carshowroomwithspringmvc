@@ -36,6 +36,14 @@
 				aria-label="Close"></button>
 		</div>
 	</c:if>
+	<c:if test="${not empty message}">
+		<div class="alert alert-danger alert-dismissible fade show"
+			role="alert">
+			<strong>${message}</strong>
+			<button type="button" class="btn-close" data-bs-dismiss="alert"
+				aria-label="Close"></button>
+		</div>
+	</c:if>
 
 	<c:choose>
 		<c:when test="${isEmpty}">
@@ -73,7 +81,7 @@
 									<a href="${pageContext.request.contextPath}/view-car/${car.id}"
 										class="btn btn-sm btn-outline-secondary">View</a> <a
 										href="edit-car/${car.id}" class="btn btn-sm btn-primary">Edit</a>
-									<a href="car-delete/${car.id}" class="btn btn-sm btn-danger">
+									<a href="car-delete/${car.id}" onclick="return confirm('Are you sure you want to delete this car?');" class="btn btn-sm btn-danger">
 										Delete</a>
 								</div>
 							</td>

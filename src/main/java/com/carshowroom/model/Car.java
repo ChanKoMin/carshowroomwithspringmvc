@@ -28,7 +28,6 @@ public class Car {
 	private String carDescription;
 	@NotEmpty(message = "Car price is required")
 	private String carPrice;
-	@NotBlank(message = "Image URL is required")
 	private String carImage;
 	private Brand brand;
 	private int count;

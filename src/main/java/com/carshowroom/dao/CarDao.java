@@ -127,5 +127,11 @@ public class CarDao {
 		String sql = "SELECT COUNT(*) FROM cars";
 		return jdbcTemplate.queryForObject(sql, Integer.class);
 	}
+	
+	public int countOrdersByCarId(int carId) {
+	    String sql = "SELECT COUNT(*) FROM order_items WHERE car_id = ?";
+	    return jdbcTemplate.queryForObject(sql, Integer.class, carId);
+	}
+
 
 }
