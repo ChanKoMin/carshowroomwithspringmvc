@@ -10,8 +10,9 @@
 <c:choose>
 	<c:when test="${not empty sessionScope.user}">
 		<!-- Carousel Start -->
-		<div id="carouselExampleIndicators" class="carousel slide">
-			<div class="carousel-indicators">
+		<div id="carouselExampleAutoplaying" class="carousel slide"
+			data-bs-ride="carousel">
+			<!-- <div class="carousel-inner">
 				<button type="button" data-bs-target="#carouselExampleIndicators"
 					data-bs-slide-to="0" class="active" aria-current="true"
 					aria-label="Slide 1"></button>
@@ -19,7 +20,7 @@
 					data-bs-slide-to="1" aria-label="Slide 2"></button>
 				<button type="button" data-bs-target="#carouselExampleIndicators"
 					data-bs-slide-to="2" aria-label="Slide 3"></button>
-			</div>
+			</div> -->
 			<div class="carousel-inner position-relative">
 				<div class="carousel-item active">
 					<img src="${pageContext.request.contextPath}/assets/images/2.jpg"
@@ -33,24 +34,22 @@
 					<img src="${pageContext.request.contextPath}/assets/images/4.jpg"
 						class="d-block vh-100 w-100" alt="Carousel-3" />
 				</div>
-				<p
+				<p id="multipleStrings"
 					class="position-absolute border p-5 hero-content fw-bolder text-wrap w-50 text-center">
-					"Revolutionize Your Car Shopping Experience.<br /> Explore Top
-					Brands, Browse Extensive Inventory, and<br /> Drive Home Your
-					Dream Car Today!"
+
 				</p>
 				<a href="#explore"
-					class="btn btn-lg btn-primary position-absolute btn-explore"> <i
-					class="bi bi-search"></i> Explore More
+					class="btn btn-lg position-absolute btn-explore hvr-float-shadow">
+					<i class="bi bi-search"></i> Explore More
 				</a>
 			</div>
 			<button class="carousel-control-prev" type="button"
-				data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+				data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
 				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 				<span class="visually-hidden">Previous</span>
 			</button>
 			<button class="carousel-control-next" type="button"
-				data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+				data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
 				<span class="carousel-control-next-icon" aria-hidden="true"></span>
 				<span class="visually-hidden">Next</span>
 			</button>
@@ -58,22 +57,39 @@
 		<!-- Carousel End -->
 
 		<!-- Explore by Car Type Start -->
-		<div class="my-5 w-75 m-auto">
-			<h2 class="text-center fw-bolder">Explore By Car Type</h2>
-			<div class="row my-5">
-				<c:forEach var="car" items="${carTypes}">
-					<div class="col-3">
-						<div class="card mb-4 p-3 bg-body-secondary" style="width: 250px">
-							<img
-								src="${pageContext.request.contextPath}/assets/images/couple.svg"
-								alt="" />
-							<div class="card-body text-center my-3">
-								<a href="${pageContext.request.contextPath}/cartype/${car}"
-									class="btn btn-outline-primary">${car}</a>
+		<div class="bg-gradient-color">
+			<div class="w-75 m-auto py-5">
+				<h2 class="text-center fw-bolder">Explore By Car Type</h2>
+				<div data-aos="fade-up" class="row my-5">
+					<c:forEach var="car" items="${carTypes}">
+						<div class="col-3">
+							<!-- <div class="card mb-4 p-3 bg-body-secondary" style="width: 250px">
+								<img
+									src="${pageContext.request.contextPath}/assets/images/couple.svg"
+									alt="" />
+								<div class="card-body text-center my-3">
+									<a href="${pageContext.request.contextPath}/cartype/${car}"
+										class="btn btn-outline-primary">${car}</a>
+								</div>
+							</div> -->
+							<div class="cards mb-4 p-3">
+								<div class="layer"></div>
+								<div class="content">
+									<div class="mb-2">
+										<img
+											width="150px" height="150px"
+											src="${pageContext.request.contextPath}/assets/images/couple.svg"
+											alt="">
+									</div>
+									<div class="details">
+										<a href="${pageContext.request.contextPath}/cartype/${car}"
+											class="btn btn-grad">${car}</a>
+									</div>
+								</div>
 							</div>
 						</div>
-					</div>
-				</c:forEach>
+					</c:forEach>
+				</div>
 			</div>
 		</div>
 		<!-- Explore by Car Type End -->
@@ -86,7 +102,7 @@
 					placeholder="Search" aria-label="Search" />
 				<button class="btn btn-lg btn-primary" type="submit">Search</button>
 			</form>
-			<div class="row m-auto my-5" style="width: 90%">
+			<div data-aos="fade-up" class="row m-auto my-5" style="width: 90%">
 				<c:forEach var="car" items="${cars}" varStatus="status">
 					<c:if test="${status.index < 8}">
 						<div class="col-3">
@@ -149,7 +165,7 @@
 		<!-- Explore by Company Start -->
 		<div class="my-5 w-75 m-auto">
 			<h2 class="text-center fw-bolder">Explore By Company</h2>
-			<div class="row my-5">
+			<div data-aos="fade-up" class="row my-5">
 				<c:forEach var="brand" items="${brands}" varStatus="status">
 					<c:if test="${status.index < 8}">
 						<div class="col-3">
@@ -203,14 +219,15 @@
 					<form action="${pageContext.request.contextPath}/post-feedback"
 						method="post">
 						<div class="mb-3">
-							<input name="user_id" value="${user.id}" type="hidden" /> <label for="email"
-								class="form-label">Email</label> <input type="email"
-								name="email" id="email" value="${user.email}" readonly class="form-control" />
+							<input name="user_id" value="${user.id}" type="hidden" /> <label
+								for="email" class="form-label">Email</label> <input type="email"
+								name="email" id="email" value="${user.email}" readonly
+								class="form-control" />
 						</div>
 						<div class="mb-3">
 							<label for="description" class="form-label">Message</label>
-							<textarea name="description" id="description" class="form-control"
-								cols="30" rows="10" required></textarea>
+							<textarea name="description" id="description"
+								class="form-control" cols="30" rows="10" required></textarea>
 						</div>
 						<div class="">
 							<div class="d-flex justify-content-between mb-0">
@@ -244,7 +261,17 @@
 		<c:redirect url="/" />
 	</c:otherwise>
 </c:choose>
+<script src="${pageContext.request.contextPath}/assets/js/aos.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/index.umd.js"></script>
 <script>
+	AOS.init();
+	new TypeIt("#multipleStrings", {
+		strings : [ "Revolutionize Your Car Shopping Experience.",
+				"Explore Top Brands, Browse Extensive Inventory, and",
+				"Drive Home Your Dream Car Today!" ],
+		speed : 50,
+		waitUntilVisible : true,
+	}).go();
 	let stars = document.getElementsByClassName("star");
 	let output = document.getElementById("output");
 	function giveFeedback(n) {

@@ -18,6 +18,11 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/assets/node_modules/bootstrap-icons/font/bootstrap-icons.min.css" />
 <link rel="stylesheet"
+	href="${pageContext.request.contextPath}/assets/css/aos.css" />
+</head>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/assets/css/hover-min.css" />
+<link rel="stylesheet"
 	href="${pageContext.request.contextPath}/assets/css/style.css" />
 </head>
 <body class="d-flex flex-column h-100">
@@ -32,16 +37,30 @@
 				</a>
 				<div class="">
 					<ul class="d-flex nav align-items-center">
-						<li class="nav-item"><a class="nav-link text-black active"
-							href="${pageContext.request.contextPath}/home">Home</a></li>
-						<li class="nav-item"><a class="nav-link text-black"
-							href="${pageContext.request.contextPath}/bookings">Bookings</a></li>
-						<li class="nav-item"><a class="nav-link text-black"
-							href="${pageContext.request.contextPath}/contact">Contact</a></li>
-						<li class="nav-item"><a
-							class="nav-link text-black position-relative" id="cart-link"
-							href="${pageContext.request.contextPath}/cart"> <i
-								class="bi bi-cart"></i> Cart <!--<c:if
+						<li class="nav-item hvr-float-shadow"><a
+							class="nav-link text-black active d-flex justify-content-center align-items-end"
+							href="${pageContext.request.contextPath}/home"><img
+								style="margin-bottom: 6px; margin-right: 4px" alt="home"
+								src="${pageContext.request.contextPath}/assets/images/home.png"
+								width="25px" height="25px">Home</a></li>
+						<li class="nav-item hvr-float-shadow"><a
+							class="nav-link text-black d-flex justify-content-center align-items-end"
+							href="${pageContext.request.contextPath}/bookings"><img
+								style="margin-bottom: 4px; margin-right: 3px" alt="booking"
+								src="${pageContext.request.contextPath}/assets/images/booking.png"
+								width="25px" height="25px">Bookings</a></li>
+						<li class="nav-item hvr-float-shadow"><a
+							class="nav-link text-black d-flex justify-content-center align-items-end"
+							href="${pageContext.request.contextPath}/contact"><img
+								style="margin-bottom: 4px;" alt="contact"
+								src="${pageContext.request.contextPath}/assets/images/telephone.png"
+								width="25px" height="25px">Contact</a></li>
+						<li class="nav-item hvr-float-shadow"><a
+							class="nav-link text-black position-relative d-flex justify-content-center align-items-end"
+							id="cart-link" href="${pageContext.request.contextPath}/cart">
+								<img style="margin-bottom: 4px; margin-right: 1px" alt="cart"
+								src="${pageContext.request.contextPath}/assets/images/trolley.png"
+								width="25px" height="25px"> Cart <!--<c:if
 									test="${sessionScope.cartCount > 0}">
 									<p
 										class="badge bg-danger rounded-5 position-absolute top-0 start-0"
@@ -50,7 +69,7 @@
 									</p>
 								</c:if> -->
 						</a></li>
-						<li class="nav-item"><a
+						<li class="nav-item hvr-float-shadow"><a
 							href="${pageContext.request.contextPath}/profile"
 							class="nav-link"> <c:set var="defaultImage"
 									value="${pageContext.request.contextPath}/assets/images/profile.png" />
