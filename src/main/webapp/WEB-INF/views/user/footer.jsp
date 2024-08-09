@@ -16,11 +16,11 @@
 			<img src="${pageContext.request.contextPath}/assets/images/logo.jpg"
 				class="w-25" alt="" />
 			<div>
-				<a class="text-white-50"
+				<a class="text-white-50 hvr-bounce-out"
 					href="https://www.facebook.com/prometheus2254/"><i
-					class="fs-3 bi bi-facebook"></i></a> <a class="text-white-50 mx-3"
+					class="fs-3 bi bi-facebook"></i></a> <a class="text-white-50 mx-3 hvr-bounce-out"
 					href="https://www.instagram.com/prometheus4225"><i
-					class="fs-3 bi bi-instagram"></i></a> <a class="text-white-50"
+					class="fs-3 bi bi-instagram"></i></a> <a class="text-white-50 hvr-bounce-out"
 					href="https://www.linkedin.com/in/chan-ko-min-725106230/"><i
 					class="fs-3 bi bi-linkedin"></i></a>
 			</div>
@@ -31,11 +31,11 @@
 			<h6 class="text-white-50">Menu</h6>
 			<ul class="list-unstyled">
 				<li><a href="${pageContext.request.contextPath}/home"
-					class="text-white-50 text-decoration-none">Home</a></li>
+					class="text-white-50 text-decoration-none hvr-skew-forward">Home</a></li>
 				<li><a href="${pageContext.request.contextPath}/bookings"
-					class="text-white-50 text-decoration-none">Bookings</a></li>
+					class="text-white-50 text-decoration-none hvr-skew-forward">Bookings</a></li>
 				<li><a href="${pageContext.request.contextPath}/contact"
-					class="text-white-50 text-decoration-none">Contact</a></li>
+					class="text-white-50 text-decoration-none hvr-skew-forward">Contact</a></li>
 			</ul>
 			<div>
 				<p class="mb-0 text-white-50">

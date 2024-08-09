@@ -6,7 +6,8 @@
 	<c:param name="title" value="All Products" />
 </c:import>
 <!-- Car Type Start -->
-<div class="my-5">
+<div class="product-bg">
+<div class="py-5">
 	<div class="row m-auto" style="width: 90%">
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb">
@@ -17,7 +18,7 @@
 		</nav>
 		<c:forEach var="car" items="${cars}">
 			<div class="col-3">
-				<div class="card mb-4 p-4" style="width: 350px">
+				<div class="card mb-4 p-4" style="width: 350px; background-color: #dee7ed">
 					<img
 						src="${pageContext.request.contextPath}/assets/images/${car.carImage}"
 						height="180px" class="card-img-top" alt="" />
@@ -37,13 +38,14 @@
 							</p>
 						</div>
 						<a href="${pageContext.request.contextPath}/viewproduct/${car.id}"
-							class="btn btn-outline-primary mt-1">View
+							class="btn btn-grade mt-1">View
 							Product</a>
 					</div>
 				</div>
 			</div>
 		</c:forEach>
 	</div>
+</div>
 </div>
 <!-- Car Type End -->
 <c:import url="footer.jsp" />

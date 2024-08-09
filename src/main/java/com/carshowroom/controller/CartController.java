@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.carshowroom.dao.CarDao;
 import com.carshowroom.dao.CartDao;
+import com.carshowroom.model.Car;
 import com.carshowroom.model.Cart;
 import com.carshowroom.model.CartItemDetails;
 import com.carshowroom.model.User;
@@ -22,15 +24,22 @@ public class CartController {
 
 	@Autowired
 	private CartDao cartDao;
+	private CarDao carDao;
 
 	@Autowired
-	public CartController(CartDao cartDao) {
+	public CartController(CartDao cartDao,CarDao carDao) {
 		this.cartDao = cartDao;
+		this.carDao = carDao;
 	}
 
 	@Autowired
 	public void setCartDao(CartDao cartDao) {
 		this.cartDao = cartDao;
+	}
+	
+	@Autowired
+	public void setCarDao(CarDao carDao) {
+		this.carDao = carDao;
 	}
 	
 	private boolean isAuthenticated(HttpSession session) {
@@ -97,8 +106,8 @@ public class CartController {
 	}
 
 	@PostMapping("/update-cart-quantity")
-	public String updateCartQuantity(@RequestParam("cartId") int cartId, @RequestParam("quantity") int quantity,
-			@RequestParam("action") String action, HttpSession session, Model model) {
+	public String updateCartQuantity(@RequestParam("cartId") int cartId,@RequestParam("carId") int carId, @RequestParam("quantity") int quantity,
+			@RequestParam("action") String action, HttpSession session, Model model, RedirectAttributes ra) {
 		if (!isAuthenticated(session)) {
 			return "redirect:/";
 		}
@@ -112,9 +121,17 @@ public class CartController {
 		} else if ("decrement".equals(action) && quantity > 1) {
 			quantity--;
 		}
-		// Update the quantity in the database
-		cartDao.updateCartQuantity(cartId, quantity);
 		
+		Car car = carDao.findById(carId);
+		if(car.getCount() >= quantity) {
+			// Update the quantity in the database
+			cartDao.updateCartQuantity(cartId, quantity);
+			ra.addFlashAttribute("message", "Car ordered successfully!");
+			//model.addAttribute("message", "Car ordered successfully!");
+		}else {
+			ra.addFlashAttribute("message", "Cannot order, out of stock!");
+		}
+				
 		// Retrieve updated cart items
 		int userId = user.getId();
 		List<CartItemDetails> cartItems = cartDao.getCarsFromCart(userId);
