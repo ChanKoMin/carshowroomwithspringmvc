@@ -129,7 +129,7 @@ public class CartController {
 			ra.addFlashAttribute("message", "Car ordered successfully!");
 			//model.addAttribute("message", "Car ordered successfully!");
 		}else {
-			ra.addFlashAttribute("message", "Cannot order, out of stock!");
+			ra.addFlashAttribute("message", "Cannot add, out of stock!");
 		}
 				
 		// Retrieve updated cart items

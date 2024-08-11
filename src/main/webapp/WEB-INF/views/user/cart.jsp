@@ -6,6 +6,7 @@
 </c:import>
 
 <!-- Car Type Start -->
+<div class="card-bg" style="padding-bottom: 400px">
 	<div class="py-5">
 		<div class="row m-auto" style="width: 90%">
 			<nav aria-label="breadcrumb">
@@ -16,24 +17,24 @@
 				</ol>
 			</nav>
 			<div class="col-1"></div>
-			<c:if test="${not empty message}">
-				<div class="alert alert-danger alert-dismissible fade show"
-					role="alert">
-					<strong>${message}</strong>
-					<button type="button" class="btn-close" data-bs-dismiss="alert"
-						aria-label="Close"></button>
-				</div>
-			</c:if>
 			<c:if test="${not empty cartItems}">
 				<div class="col-10">
-					<table class="table">
+					<c:if test="${not empty message}">
+						<div class="alert alert-danger alert-dismissible fade show"
+							role="alert">
+							<strong>${message}</strong>
+							<button type="button" class="btn-close" data-bs-dismiss="alert"
+								aria-label="Close"></button>
+						</div>
+					</c:if>
+					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th>Product</th>
-								<th>Name</th>
-								<th>Quantity</th>
-								<th class="text-end">Price</th>
-								<th class="text-end">Action</th>
+								<th class="bg-black text-white p-4">Product</th>
+								<th class="bg-black text-white py-4">Name</th>
+								<th class="bg-black text-white py-4">Quantity</th>
+								<th class="bg-black text-white py-4 text-end">Price</th>
+								<th class="bg-black text-white p-4 text-end">Action</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -41,7 +42,7 @@
 								<c:set var="quantity" value="${car.quantity}" />
 								<c:set var="price" value="${car.carPrice}" />
 								<tr>
-									<td><img
+									<td class="px-4"><img
 										src="${pageContext.request.contextPath}/assets/images/${car.carImage}"
 										class="w-25" alt="" /></td>
 									<td class="align-middle">${car.carName}</td>
@@ -68,15 +69,15 @@
 										class="total-price">${price * quantity}</span> <input
 										type="hidden" class="item-price" value="${price}" />
 									</td>
-									<td class="align-middle text-end"><a
+									<td class="px-4 align-middle text-end"><a
 										href="${pageContext.request.contextPath}/remove-item/${car.cartId}"
 										class="btn btn-danger">Remove</a></td>
 								</tr>
 							</c:forEach>
 							<tr>
-								<td class="fw-bold">Total</td>
-								<td colspan="3" class="align-middle text-end fw-bold">$
-									${totalPrice}</td>
+								<td class="p-4 fw-bold">Total</td>
+								<td colspan="4" class="py-4 align-middle text-end fw-bold"
+									style="padding-right: 226px">$ ${totalPrice}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -102,5 +103,6 @@
 			<div class="col-1"></div>
 		</div>
 	</div>
+</div>
 <!-- Car Type End -->
 <c:import url="footer.jsp" />

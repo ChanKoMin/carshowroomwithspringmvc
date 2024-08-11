@@ -7,78 +7,81 @@
 	<c:param name="title" value="Profile" />
 </c:import>
 <!-- Contact Start -->
-<div class="my-5">
-	<div class="row m-auto" style="width: 90%">
-		<div class="w-75 mx-auto">
-			<h5 class="text-center fw-bold mb-5">Your Account Information
-				Details</h5>
-			<c:if test="${not empty updatedSuccessfully}">
-				<div class="alert alert-success alert-dismissible fade show"
-					role="alert">
-					<strong>${updatedSuccessfully}</strong>
-					<button type="button" class="btn-close" data-bs-dismiss="alert"
-						aria-label="Close"></button>
-				</div>
-			</c:if>
-			<div class="row">
-				<div class="col-1"></div>
-				<div class="col-5">
-					<c:set var="defaultImage"
-						value="${pageContext.request.contextPath}/assets/images/profile.png" />
-					<c:choose>
-						<c:when test="${not empty admin.image}">
-							<img class="profile" width="350px" height="350px" style="border-radius:50%"
-								src="${pageContext.request.contextPath}/assets/images/${admin.image}"
-								alt="${admin.name}'s image" />
-						</c:when>
-						<c:otherwise>
-							<img class="profile" width="350px" height="350px"
-								src="${defaultImage}" alt="Default image" />
-						</c:otherwise>
-					</c:choose>
-				</div>
-				<div class="col-5">
-					<div class="row">
-						<div
-							class="d-flex justify-content-between rounded align align-items-center border p-3">
-							<h5 class="mb-0">Name</h5>
-							<h5 class="mb-0">${admin.name}</h5>
-						</div>
+<div style="background-image: linear-gradient(45deg, #93a5cf 0%, #e4efe9 100%);padding-top: 20px; padding-bottom: 250px;">
+	<div class="py-5">
+		<div class="row m-auto" style="width: 90%">
+			<div class="w-75 mx-auto">
+				<h5 class="text-center fw-bold mb-5">Your Account Information
+					Details</h5>
+				<c:if test="${not empty updatedSuccessfully}">
+					<div class="alert alert-success alert-dismissible fade show"
+						role="alert">
+						<strong>${updatedSuccessfully}</strong>
+						<button type="button" class="btn-close" data-bs-dismiss="alert"
+							aria-label="Close"></button>
 					</div>
-					<div class="row my-3">
-						<div
-							class="d-flex justify-content-between rounded align align-items-center border p-3">
-							<h5 class="mb-0">Email</h5>
-							<h5 class="mb-0">${admin.email}</h5>
-						</div>
+				</c:if>
+				<div class="row">
+					<div class="col-1"></div>
+					<div class="col-5">
+						<c:set var="defaultImage"
+							value="${pageContext.request.contextPath}/assets/images/profile.png" />
+						<c:choose>
+							<c:when test="${not empty admin.image}">
+								<img class="profile" width="350px" height="350px"
+									style="border-radius: 50%"
+									src="${pageContext.request.contextPath}/assets/images/${admin.image}"
+									alt="${admin.name}'s image" />
+							</c:when>
+							<c:otherwise>
+								<img class="profile" width="350px" height="350px"
+									src="${defaultImage}" alt="Default image" />
+							</c:otherwise>
+						</c:choose>
 					</div>
-					<div class="row">
-						<div
-							class="d-flex justify-content-between rounded align align-items-center border p-3">
-							<h5 class="mb-0">Password</h5>
-							<h5 class="mb-0">${admin.password}</h5>
+					<div class="col-5">
+						<div class="row">
+							<div
+								class="d-flex justify-content-between rounded align align-items-center border p-3">
+								<h5 class="mb-0">Name</h5>
+								<h5 class="mb-0">${admin.name}</h5>
+							</div>
 						</div>
-					</div>
-					<div class="row my-3">
-						<div
-							class="d-flex justify-content-between rounded align align-items-center border p-3">
-							<h5 class="mb-0">Phone</h5>
-							<h5 class="mb-0">${admin.phone}</h5>
+						<div class="row my-3">
+							<div
+								class="d-flex justify-content-between rounded align align-items-center border p-3">
+								<h5 class="mb-0">Email</h5>
+								<h5 class="mb-0">${admin.email}</h5>
+							</div>
 						</div>
-					</div>
-					<div class="row">
-						<div
-							class="d-flex justify-content-between rounded align align-items-center border p-3">
-							<h5 class="mb-0">Address</h5>
-							<h5 class="mb-0">${admin.address}</h5>
+						<div class="row">
+							<div
+								class="d-flex justify-content-between rounded align align-items-center border p-3">
+								<h5 class="mb-0">Password</h5>
+								<h5 class="mb-0">${admin.password}</h5>
+							</div>
 						</div>
-					</div>
-					<div class="row mt-3">
-						<div class="d-flex justify-content-between">
-							<a class="btn btn-primary"
-								href="${pageContext.request.contextPath}/admin-edit/${admin.id}">Edit</a>
-							<a href="${pageContext.request.contextPath}/admin-logout"
-								class="btn btn-danger">Logout</a>
+						<div class="row my-3">
+							<div
+								class="d-flex justify-content-between rounded align align-items-center border p-3">
+								<h5 class="mb-0">Phone</h5>
+								<h5 class="mb-0">${admin.phone}</h5>
+							</div>
+						</div>
+						<div class="row">
+							<div
+								class="d-flex justify-content-between rounded align align-items-center border p-3">
+								<h5 class="mb-0">Address</h5>
+								<h5 class="mb-0">${admin.address}</h5>
+							</div>
+						</div>
+						<div class="row mt-3">
+							<div class="d-flex justify-content-between">
+								<a class="btn btn-primary"
+									href="${pageContext.request.contextPath}/admin-edit/${admin.id}">Edit</a>
+								<a href="${pageContext.request.contextPath}/admin-logout"
+									class="btn btn-danger">Logout</a>
+							</div>
 						</div>
 					</div>
 				</div>

@@ -27,13 +27,13 @@
 }
 </style>
 </head>
-<body class="position-relative">
+<body class="position-relative bg-login">
 	<div class="w-25 border p-5 position-absolute"
-		style="left: 720px; top: 250px">
+		style="left: 720px; top: 250px; background-color: #f1f5f9">
 		<div>
 			<img src="${pageContext.request.contextPath}/assets/images/logo.jpg"
 				class="logo d-block mx-auto" alt="" />
-			<h3 class="text-center fw-bold">Welcome Back!</h3>
+			<h3 class="text-center fw-bold">Welcome!</h3>
 			<form:form modelAttribute="admin"
 				action="${pageContext.request.contextPath}/login" method="post">
 				<div>
@@ -51,29 +51,11 @@
 				<div class="d-flex justify-content-between align-items-center">
 					<!-- <a href="index.html" class="btn btn-primary">Login</a> -->
 					<button type="submit" class="btn btn-primary">Login</button>
-					<a href="#" class="text-primary">Forgot Password?</a>
-				</div>
-				<div class="text-center mt-3">
 					<a href="${pageContext.request.contextPath}/register"
 						class="text-primary">Create An Account?</a>
 				</div>
 			</form:form>
 		</div>
 	</div>
-	<!--   <script>
-      const loginForm = document.getElementById("loginForm");
-      loginForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
-        localStorage.setItem("email", email);
-        localStorage.setItem("password", password);
-        // if (email === "admin@gmail.com" && password === "admin") {
-        //   window.location.href = "../admin/index.html";
-        // }
-        window.location.href = "${pageContext.request.contextPath}/";
-      });
-    </script>
-    -->
 </body>
 </html>

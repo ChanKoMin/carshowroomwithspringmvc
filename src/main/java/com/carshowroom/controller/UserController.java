@@ -1,16 +1,21 @@
 package com.carshowroom.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.carshowroom.dao.AdminDao;
@@ -24,6 +29,7 @@ import com.carshowroom.model.Car;
 import com.carshowroom.model.Feedback;
 import com.carshowroom.model.Rate;
 import com.carshowroom.model.User;
+import com.carshowroom.util.ImageUploadUtil;
 
 @Controller
 public class UserController {
@@ -33,6 +39,7 @@ public class UserController {
 	private BrandDao brandDao;
 	private CarDao carDao;
 	private FeedbackDao fbDao;
+	private final String imageUploadDir = "Downloads/CarShowroomManagement/src/main/webapp/assets/images/";
 
 	@Autowired
 	public UserController(UserDao userDao, AdminDao adminDao, CarDao carDao, BrandDao brandDao, FeedbackDao fbDao) {
@@ -134,14 +141,14 @@ public class UserController {
 	}
 
 	@RequestMapping("/all-products")
-	public String showAllProductPage(Model m, HttpSession session, RedirectAttributes ra) {
+	public String showAllProductPage(@RequestParam(value = "filter", required = false) String filter,Model m, HttpSession session, RedirectAttributes ra) {
 		if (!isAuthenticated(session)) {
 			ra.addFlashAttribute("message", "Please login first.");
 			return "redirect:/";
 		}
 		User user = (User) session.getAttribute("user");
 		m.addAttribute("user", user);
-		List<Car> cars = carDao.findAll();
+		List<Car> cars = carDao.findAll(filter);
 		m.addAttribute("cars", cars);
 		return "user/allproducts";
 	}
@@ -169,7 +176,7 @@ public class UserController {
 		m.addAttribute("user", user);
 		return "user/contact";
 	}
-
+	
 	@RequestMapping("/profile")
 	public String showProfilePage(Model m, HttpSession session, RedirectAttributes ra) {
 		if (!isAuthenticated(session)) {
@@ -183,29 +190,40 @@ public class UserController {
 		m.addAttribute("user", user);
 		return "user/profile";
 	}
-
-	@PostMapping("/update-profile")
-	public String updateProfile(@RequestParam("name") String name, @RequestParam("email") String email,
-			@RequestParam("password") String password, @RequestParam("contact_number") String contact_number,
-			@RequestParam("address") String address, @RequestParam("image") String image, HttpSession session,
-			Model model) {
-		User user = (User) session.getAttribute("user");
+	
+	@RequestMapping("/user-edit/{id}")
+	public String showUserEditPage(@PathVariable int id, Model m, HttpSession session) {
 		if (!isAuthenticated(session)) {
 			return "redirect:/";
 		}
-		if (user == null) {
+		User usr = (User) session.getAttribute("user");
+		m.addAttribute("user", usr);
+		User user = userDao.findById(id);
+		m.addAttribute("user", user);
+		return "user/edit-profile";
+	}
+
+	@PostMapping("/user-profile/update")
+	public String updateProfile(@RequestParam("image") MultipartFile image ,@ModelAttribute("user") @Valid User user, BindingResult result,
+			RedirectAttributes ra,Model m,HttpSession session) {
+		if (!isAuthenticated(session)) {
 			return "redirect:/";
 		}
-		user.setName(name);
-		user.setEmail(email);
-		user.setPassword(password);
-		user.setContact_number(contact_number);
-		user.setAddress(address);
-		user.setImage(image);
-
-		userDao.update(user); // Update the user in the database
-		session.setAttribute("user", user); // Update the user in the session
-		return "redirect:/profile"; // Redirect to the profile page or wherever appropriate
+		try {
+			// Use the reusable method to save the image
+			String fileName = ImageUploadUtil.saveImage(image, imageUploadDir);
+			// Set the image name in the brand and save
+			user.setImage(fileName);
+			userDao.update(user);
+			ra.addFlashAttribute("updatedSuccessfully", "Profile updated successfully!");
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			m.addAttribute("message", "Failed to upload image: " + e.getMessage());
+		}
+		session.setAttribute("user",user);
+		//m.addAttribute("user", user);
+		return "redirect:/profile";
 	}
 
 	@PostMapping("/post-feedback")

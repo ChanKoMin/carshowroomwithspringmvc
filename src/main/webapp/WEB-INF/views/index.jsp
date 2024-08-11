@@ -54,15 +54,6 @@
 				<div data-aos="fade-up" class="row my-5">
 					<c:forEach var="car" items="${carTypes}">
 						<div class="col-3">
-							<!-- <div class="card mb-4 p-3 bg-body-secondary" style="width: 250px">
-								<img
-									src="${pageContext.request.contextPath}/assets/images/couple.svg"
-									alt="" />
-								<div class="card-body text-center my-3">
-									<a href="${pageContext.request.contextPath}/cartype/${car}"
-										class="btn btn-outline-primary">${car}</a>
-								</div>
-							</div> -->
 							<div class="cards mb-4 p-3">
 								<div class="layer"></div>
 								<div class="content">
@@ -85,73 +76,62 @@
 		<!-- Explore by Car Type End -->
 
 		<!-- Products Start -->
-		<div class="product-bg">
-			<div class="py-5" id="explore">
-				<h2 class="text-center fw-bolder">Products</h2>
-				<div class="d-flex w-25 m-auto my-5">
-					<input type="text" id="carSearch" placeholder="Search cars..."
-						onkeyup="filterCars()" class="form-control form-control-lg">
-				</div>
-				<div id="noResults" class="text-center my-255"
-					style="display: none">No cars found for this search.</div>
-				<div data-aos="fade-up" class="row m-auto my-5" style="width: 90%">
-					<c:forEach var="car" items="${cars}" varStatus="status">
-						<c:if test="${status.index < 8}">
-							<div class="col-3">
-								<div class="card p-4 mb-4 hvr-grow"
-									style="width: 350px; background-color: #dee7ed">
-									<img
-										src="${pageContext.request.contextPath}/assets/images/${car.carImage}"
-										height="180px" class="card-img-top" alt="" />
-									<div class="card-body">
-										<h5 class="card-title fw-bolder">${car.carName}</h5>
-										<p class="card-text text-black-50">
-											${fn:substring(car.carDescription, 0, 80)}...</p>
-										<div class="d-flex card-text justify-content-between">
-											<p class="d-flex align-items-center gap-1">
-												<img
-													src="${pageContext.request.contextPath}/assets/images/calendar.png"
-													width="20px" alt="" /> ${car.carYear}
-											</p>
-											<p class="d-flex align-items-center gap-1">
-												<img
-													src="${pageContext.request.contextPath}/assets/images/dollar.png"
-													width="20px" alt="" /> $${car.carPrice }
-											</p>
-										</div>
-										<a
-											href="${pageContext.request.contextPath}/viewproduct/${car.id}"
-											class="btn btn-grade mt-1">View Product</a>
-									</div>
-								</div>
-							</div>
-						</c:if>
-					</c:forEach>
+		<div class="pb-3 product-bg">
+			<div class="py-3" id="explore">
+				<div class="d-flex justify-content-around align-items-center">
+					<h2 class="text-center fw-bolder">Products</h2>
 					<c:if test="${fn:length(cars) > 8}">
-						<div class="d-flex justify-content-center">
-							<a class="cta"
-								href="${pageContext.request.contextPath}/all-products"> <span>View
-									More</span> <span><svg width="46px" height="25px"
-										viewBox="0 0 66 43" version="1.1"
-										xmlns="http://www.w3.org/2000/svg"
-										xmlns:xlink="http://www.w3.org/1999/xlink">
-        <g id="arrow" stroke="none" stroke-width="1" fill="none"
-											fill-rule="evenodd">
-          <path class="one"
-											d="M40.1543933,3.89485454 L43.9763149,0.139296592 C44.1708311,-0.0518420739 44.4826329,-0.0518571125 44.6771675,0.139262789 L65.6916134,20.7848311 C66.0855801,21.1718824 66.0911863,21.8050225 65.704135,22.1989893 C65.7000188,22.2031791 65.6958657,22.2073326 65.6916762,22.2114492 L44.677098,42.8607841 C44.4825957,43.0519059 44.1708242,43.0519358 43.9762853,42.8608513 L40.1545186,39.1069479 C39.9575152,38.9134427 39.9546793,38.5968729 40.1481845,38.3998695 C40.1502893,38.3977268 40.1524132,38.395603 40.1545562,38.3934985 L56.9937789,21.8567812 C57.1908028,21.6632968 57.193672,21.3467273 57.0001876,21.1497035 C56.9980647,21.1475418 56.9959223,21.1453995 56.9937605,21.1432767 L40.1545208,4.60825197 C39.9574869,4.41477773 39.9546013,4.09820839 40.1480756,3.90117456 C40.1501626,3.89904911 40.1522686,3.89694235 40.1543933,3.89485454 Z"
-											fill="#FFFFFF"></path>
-          <path class="two"
-											d="M20.1543933,3.89485454 L23.9763149,0.139296592 C24.1708311,-0.0518420739 24.4826329,-0.0518571125 24.6771675,0.139262789 L45.6916134,20.7848311 C46.0855801,21.1718824 46.0911863,21.8050225 45.704135,22.1989893 C45.7000188,22.2031791 45.6958657,22.2073326 45.6916762,22.2114492 L24.677098,42.8607841 C24.4825957,43.0519059 24.1708242,43.0519358 23.9762853,42.8608513 L20.1545186,39.1069479 C19.9575152,38.9134427 19.9546793,38.5968729 20.1481845,38.3998695 C20.1502893,38.3977268 20.1524132,38.395603 20.1545562,38.3934985 L36.9937789,21.8567812 C37.1908028,21.6632968 37.193672,21.3467273 37.0001876,21.1497035 C36.9980647,21.1475418 36.9959223,21.1453995 36.9937605,21.1432767 L20.1545208,4.60825197 C19.9574869,4.41477773 19.9546013,4.09820839 20.1480756,3.90117456 C20.1501626,3.89904911 20.1522686,3.89694235 20.1543933,3.89485454 Z"
-											fill="#FFFFFF"></path>
-          <path class="three"
-											d="M0.154393339,3.89485454 L3.97631488,0.139296592 C4.17083111,-0.0518420739 4.48263286,-0.0518571125 4.67716753,0.139262789 L25.6916134,20.7848311 C26.0855801,21.1718824 26.0911863,21.8050225 25.704135,22.1989893 C25.7000188,22.2031791 25.6958657,22.2073326 25.6916762,22.2114492 L4.67709797,42.8607841 C4.48259567,43.0519059 4.17082418,43.0519358 3.97628526,42.8608513 L0.154518591,39.1069479 C-0.0424848215,38.9134427 -0.0453206733,38.5968729 0.148184538,38.3998695 C0.150289256,38.3977268 0.152413239,38.395603 0.154556228,38.3934985 L16.9937789,21.8567812 C17.1908028,21.6632968 17.193672,21.3467273 17.0001876,21.1497035 C16.9980647,21.1475418 16.9959223,21.1453995 16.9937605,21.1432767 L0.15452076,4.60825197 C-0.0425130651,4.41477773 -0.0453986756,4.09820839 0.148075568,3.90117456 C0.150162624,3.89904911 0.152268631,3.89694235 0.154393339,3.89485454 Z"
-											fill="#FFFFFF"></path>
-        </g>
-      </svg> </span>
+						<div class="d-flex justify-content-center align-items-center">
+							<a class="hvr-forward btn btn-view text-center p-3"
+								href="${pageContext.request.contextPath}/all-products"><span
+								class="me-1">View All</span> <img width="15px" height="15px"
+								alt="" class="mb-1"
+								src="${pageContext.request.contextPath}/assets/images/top-right.png">
 							</a>
 						</div>
 					</c:if>
 				</div>
+				<div class="d-flex w-25 m-auto my-2">
+					<input type="text" id="carSearch"
+						placeholder="Search cars..." onkeyup="filterCars()"
+						class="form-control form-control-lg">
+				</div>
+			</div>
+			<div id="noResults" class="text-center my-255" style="display: none">No
+				cars found for this search.</div>
+			<div data-aos="fade-up" class="row m-auto my-5" style="width: 90%">
+				<c:forEach var="car" items="${cars}" varStatus="status">
+					<c:if test="${status.index < 8}">
+						<div class="col-3">
+							<div class="card p-4 mb-4 hvr-grow"
+								style="width: 350px; background-color: #dee7ed">
+								<img
+									src="${pageContext.request.contextPath}/assets/images/${car.carImage}"
+									height="180px" class="card-img-top" alt="" />
+								<div class="card-body">
+									<h5 class="card-title fw-bolder">${car.carName}</h5>
+									<p class="card-text text-black-50">
+										${fn:substring(car.carDescription, 0, 80)}...</p>
+									<div class="d-flex card-text justify-content-between">
+										<p class="d-flex align-items-center gap-1">
+											<img
+												src="${pageContext.request.contextPath}/assets/images/calendar.png"
+												width="20px" alt="" /> ${car.carYear}
+										</p>
+										<p class="d-flex align-items-center gap-1">
+											<img
+												src="${pageContext.request.contextPath}/assets/images/dollar.png"
+												width="20px" alt="" /> $${car.carPrice }
+										</p>
+									</div>
+									<a
+										href="${pageContext.request.contextPath}/viewproduct/${car.id}"
+										class="btn btn-grade mt-1">View Product</a>
+								</div>
+							</div>
+						</div>
+					</c:if>
+				</c:forEach>
 			</div>
 		</div>
 		<!-- Products End -->
@@ -159,18 +139,36 @@
 		<!-- Explore by Company Start -->
 		<div class="company-bg">
 			<div class="py-5 w-75 m-auto">
-				<h2 class="text-center fw-bolder">Explore By Company</h2>
+				<div class="d-flex justify-content-between align-items-center">
+					<h2 class="text-center fw-bolder">Explore By Company</h2>
+					<c:if test="${fn:length(brands) > 8}">
+						<div class="d-flex justify-content-center align-items-center">
+							<a class="hvr-forward btn btn-view text-center p-3"
+								href="${pageContext.request.contextPath}/all-brands"><span
+								class="me-1">View All</span> <img width="15px" height="15px"
+								alt="" class="mb-1"
+								src="${pageContext.request.contextPath}/assets/images/top-right.png">
+							</a>
+						</div>
+					</c:if>
+				</div>
+				<div class="d-flex w-25 m-auto my-5">
+					<input type="text" id="brandSearch" placeholder="Search brands..."
+						onkeyup="filterBrands()" class="form-control form-control-lg">
+				</div>
+				<div id="noBrandResults" class="text-center my-255"
+					style="display: none">No brands found for this search.</div>
 				<div data-aos="fade-up" class="row my-5">
 					<c:forEach var="brand" items="${brands}" varStatus="status">
 						<c:if test="${status.index < 8}">
-							<div class="col-3">
+							<div class="col-3 brand-card">
 								<div class="card p-3 bg-body-secondary mb-4"
 									style="width: 250px; background-color: #dee7ed">
 									<img height="200px"
 										src="${pageContext.request.contextPath}/assets/images/${brand.img}"
 										alt="" />
 									<div class="card-body text-center my-3">
-										<a
+										<a id="brandName"
 											href="${pageContext.request.contextPath}/car-company/${brand.id}"
 											class="btn btn-grad">${brand.name}</a>
 									</div>
@@ -178,31 +176,6 @@
 							</div>
 						</c:if>
 					</c:forEach>
-					<c:if test="${fn:length(brands) > 8}">
-						<div class="d-flex justify-content-center">
-							<a class="hvr-forward btn btn-grad text-center p-3"
-								href="${pageContext.request.contextPath}/all-brands"><span>View
-									More</span> <!--  <span>
-									<svg width="46px" height="25px"
-										viewBox="0 0 66 43" version="1.1"
-										xmlns="http://www.w3.org/2000/svg"
-										xmlns:xlink="http://www.w3.org/1999/xlink">
-        <g id="arrow" stroke="none" stroke-width="1" fill="none"
-											fill-rule="evenodd">
-          <path class="one"
-											d="M40.1543933,3.89485454 L43.9763149,0.139296592 C44.1708311,-0.0518420739 44.4826329,-0.0518571125 44.6771675,0.139262789 L65.6916134,20.7848311 C66.0855801,21.1718824 66.0911863,21.8050225 65.704135,22.1989893 C65.7000188,22.2031791 65.6958657,22.2073326 65.6916762,22.2114492 L44.677098,42.8607841 C44.4825957,43.0519059 44.1708242,43.0519358 43.9762853,42.8608513 L40.1545186,39.1069479 C39.9575152,38.9134427 39.9546793,38.5968729 40.1481845,38.3998695 C40.1502893,38.3977268 40.1524132,38.395603 40.1545562,38.3934985 L56.9937789,21.8567812 C57.1908028,21.6632968 57.193672,21.3467273 57.0001876,21.1497035 C56.9980647,21.1475418 56.9959223,21.1453995 56.9937605,21.1432767 L40.1545208,4.60825197 C39.9574869,4.41477773 39.9546013,4.09820839 40.1480756,3.90117456 C40.1501626,3.89904911 40.1522686,3.89694235 40.1543933,3.89485454 Z"
-											fill="#FFFFFF"></path>
-          <path class="two"
-											d="M20.1543933,3.89485454 L23.9763149,0.139296592 C24.1708311,-0.0518420739 24.4826329,-0.0518571125 24.6771675,0.139262789 L45.6916134,20.7848311 C46.0855801,21.1718824 46.0911863,21.8050225 45.704135,22.1989893 C45.7000188,22.2031791 45.6958657,22.2073326 45.6916762,22.2114492 L24.677098,42.8607841 C24.4825957,43.0519059 24.1708242,43.0519358 23.9762853,42.8608513 L20.1545186,39.1069479 C19.9575152,38.9134427 19.9546793,38.5968729 20.1481845,38.3998695 C20.1502893,38.3977268 20.1524132,38.395603 20.1545562,38.3934985 L36.9937789,21.8567812 C37.1908028,21.6632968 37.193672,21.3467273 37.0001876,21.1497035 C36.9980647,21.1475418 36.9959223,21.1453995 36.9937605,21.1432767 L20.1545208,4.60825197 C19.9574869,4.41477773 19.9546013,4.09820839 20.1480756,3.90117456 C20.1501626,3.89904911 20.1522686,3.89694235 20.1543933,3.89485454 Z"
-											fill="#FFFFFF"></path>
-          <path class="three"
-											d="M0.154393339,3.89485454 L3.97631488,0.139296592 C4.17083111,-0.0518420739 4.48263286,-0.0518571125 4.67716753,0.139262789 L25.6916134,20.7848311 C26.0855801,21.1718824 26.0911863,21.8050225 25.704135,22.1989893 C25.7000188,22.2031791 25.6958657,22.2073326 25.6916762,22.2114492 L4.67709797,42.8607841 C4.48259567,43.0519059 4.17082418,43.0519358 3.97628526,42.8608513 L0.154518591,39.1069479 C-0.0424848215,38.9134427 -0.0453206733,38.5968729 0.148184538,38.3998695 C0.150289256,38.3977268 0.152413239,38.395603 0.154556228,38.3934985 L16.9937789,21.8567812 C17.1908028,21.6632968 17.193672,21.3467273 17.0001876,21.1497035 C16.9980647,21.1475418 16.9959223,21.1453995 16.9937605,21.1432767 L0.15452076,4.60825197 C-0.0425130651,4.41477773 -0.0453986756,4.09820839 0.148075568,3.90117456 C0.150162624,3.89904911 0.152268631,3.89694235 0.154393339,3.89485454 Z"
-											fill="#FFFFFF"></path>
-        </g>
-      </svg> 
-							</span>--> </a>
-						</div>
-					</c:if>
 				</div>
 			</div>
 		</div>
@@ -266,7 +239,11 @@
 <script src="${pageContext.request.contextPath}/assets/js/aos.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/index.umd.js"></script>
 <script>
+
+	// Animate On Scroll
 	AOS.init();
+	
+	// Text Animation with typeit.js
 	new TypeIt("#multipleStrings", {
 		strings : [ "Revolutionize Your Car Shopping Experience.",
 				"Explore Top Brands, Browse Extensive Inventory, and",
@@ -274,25 +251,22 @@
 		speed : 50,
 		waitUntilVisible : true,
 	}).go();
+	
+	// Feedback Form
 	let stars = document.getElementsByClassName("star");
 	let output = document.getElementById("output");
 	function giveFeedback(n) {
-		// Reset all stars to default state
 		for (let i = 0; i < stars.length; i++) {
 			stars[i].className = "star ml";
 		}
-
-		// Set the selected stars to gold
 		for (let i = 0; i < n; i++) {
 			stars[i].className = "star text-warning ml";
 		}
-
-		// Update the rating text
 		output.innerText = n + "/5";
-
-		// Update the hidden input field with the rating value
 		document.getElementById("rating").value = n;
 	}
+	
+	// Car Filter with input
 	function filterCars() {
         const searchQuery = document.getElementById('carSearch').value.toLowerCase();
         const carCards = document.querySelectorAll('.card');
@@ -310,8 +284,27 @@
                 card.parentElement.style.display = 'none'; // Hide the card
             }
             noResult.style.display = found ? 'none' : 'block';
-        });
-        
+        });       
+    }
+	
+	// Brand Filter with input
+	function filterBrands() {
+        const input = document.getElementById('brandSearch');
+        const filter = input.value.toUpperCase();
+        const cards = document.querySelectorAll('.brand-card');
+        const noResults = document.getElementById('noBrandResults');
+        let hasVisibleBrands = false;
+        cards.forEach(card => {
+            const brandNameElement = card.querySelector('.card-body a#brandName');
+            const brandName = brandNameElement.textContent || brandNameElement.innerText;
+            if (brandName.toUpperCase().indexOf(filter) > -1) {
+                card.style.display = ''; 
+                hasVisibleBrands = true;
+            } else {
+                card.style.display = 'none';
+            }
+            noResults.style.display = hasVisibleBrands ? 'none' : 'block';
+        });      
     }
 </script>
 <c:import url="user/footer.jsp" />

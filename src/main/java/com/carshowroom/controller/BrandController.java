@@ -133,7 +133,7 @@ public class BrandController {
 			// Set the image name in the brand and save
 			brand.setImg(fileName);
 			brandDao.update(brand);
-			ra.addFlashAttribute("updatedSuccessfully", "Brand created successfully!");
+			ra.addFlashAttribute("updatedSuccessfully", "Brand updated successfully!");
 			
 		} catch (IOException e) {
 			e.printStackTrace();

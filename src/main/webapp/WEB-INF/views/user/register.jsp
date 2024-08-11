@@ -22,9 +22,9 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/assets/css/style.css" />
 </head>
-<body class="position-relative">
+<body class="position-relative bg-login">
 	<div class="w-25 border p-5 position-absolute"
-		style="left: 720px; top: 50px">
+		style="left: 720px; top: 50px; background-color: #f1f5f9">
 		<div>
 			<img src="${pageContext.request.contextPath}/assets/images/logo.jpg"
 				class="logo d-block mx-auto" alt="" />
@@ -64,7 +64,7 @@
 					class="btn btn-primary my-3 text-uppercase w-100">
 					Register</button>
 				<div class="d-flex justify-content-between align-items-center">
-					<a href="${pageContext.request.contextPath}/login"
+					<a href="${pageContext.request.contextPath}/"
 						class="text-primary">Already have account?</a> <a
 						href="${pageContext.request.contextPath}/"
 						class="text-danger">Sign in</a>

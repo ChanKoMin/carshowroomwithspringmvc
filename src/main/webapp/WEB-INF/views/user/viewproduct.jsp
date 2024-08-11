@@ -112,5 +112,4 @@
 	</div>
 </div>
 <!-- Product Details End -->
-
 <c:import url="footer.jsp"></c:import>

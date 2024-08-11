@@ -12,7 +12,7 @@
 	margin-right: 5px;
 }
 
-.my-255{
+.my-255 {
 	margin-top: 270px;
 	margin-bottom: 270px;
 	font-size: 30px;
@@ -61,6 +61,19 @@
 
 .company-bg {
 	background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
+}
+
+.card-bg {
+	background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.bg-login {
+	background-color: rgb(222, 236, 221);
+	background-color: radial-gradient(circle, rgba(222, 236, 221, 1) 0%, rgba(193, 211, 223, 1) 100%);
+}
+
+.card-bg-color{
+	background-color: #c7d2fe;
 }
 
 .cards {
@@ -170,7 +183,32 @@
 	text-decoration: none;
 }
 
-.input-bg, .input-bg:focus{
+
+.btn-view {
+	background-image: linear-gradient(to right, #1c92d2 0%, #f2fcfe 51%, #1c92d2 100%);
+	margin: 10px;
+	padding: 15px 45px;
+	text-align: center;
+	text-transform: uppercase;
+	transition: 0.5s;
+	background-size: 200% auto;
+	color: black;
+	font-weight: bold;
+	box-shadow: 0 0 20px #eee;
+	border-radius: 10px;
+	display: block;
+}
+
+.btn-view:hover {
+	background-position: right center;
+	/* change the direction of the change here */
+	color: black;
+	text-decoration: none;
+}
+
+
+.input-bg,
+.input-bg:focus {
 	background-color: #e9ecef;
 }
 

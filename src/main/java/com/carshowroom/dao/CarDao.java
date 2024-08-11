@@ -100,9 +100,19 @@ public class CarDao {
 		String sql = "SELECT * FROM cars ORDER BY car_id DESC LIMIT ? OFFSET ?";
 		return jdbcTemplate.query(sql, new CarRowMapper(), pageSize, offset);
 	}
-
+	
 	public List<Car> findAll() {
 		String sql = "SELECT * FROM cars";
+		return jdbcTemplate.query(sql, new CarRowMapper());
+	}
+
+	public List<Car> findAll(String filter) {
+		String sql = "SELECT * FROM cars";
+		if ("INSTOCK".equals(filter)) {
+            sql += " WHERE car_availability = true";
+        } else if ("New Cars".equals(filter)) {
+            sql += " ORDER BY created_at DESC LIMIT 5";
+        }
 		return jdbcTemplate.query(sql, new CarRowMapper());
 	}
 	

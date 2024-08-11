@@ -7,14 +7,15 @@
 	<c:param name="title" value="Profile" />
 </c:import>
 <!-- Contact Start -->
-<div class="py-5" style="background-image: linear-gradient(45deg, #93a5cf 0%, #e4efe9 100%);">
+<div
+	style="background-image: linear-gradient(45deg, #93a5cf 0%, #e4efe9 100%);">
 	<div class="py-5">
 		<div class="row m-auto" style="width: 90%">
 			<div class="w-75 mx-auto">
 				<h5 class="text-center fw-bold mb-5">Edit Your Account Details</h5>
 				<form:form
-					action="${pageContext.request.contextPath}/profile/update"
-					enctype="multipart/form-data" modelAttribute="admin" method="post"
+					action="${pageContext.request.contextPath}/user-profile/update"
+					enctype="multipart/form-data" modelAttribute="user" method="post"
 					class="p-5">
 					<div class="row">
 						<div class="col-2"></div>
@@ -22,18 +23,18 @@
 							<c:set var="defaultImage"
 								value="${pageContext.request.contextPath}/assets/images/profile.png" />
 							<c:choose>
-								<c:when test="${not empty admin.image}">
+								<c:when test="${not empty user.image}">
 									<img class="profile" width="200px" height="200px"
 										style="border-radius: 50%"
-										src="${pageContext.request.contextPath}/assets/images/${admin.image}"
-										alt="${admin.name}'s image" />
+										src="${pageContext.request.contextPath}/assets/images/${user.image}"
+										alt="${user.name}'s image" />
 								</c:when>
 								<c:otherwise>
 									<img class="profile" width="200px" height="200px"
 										src="${defaultImage}" alt="Default image" />
 								</c:otherwise>
 							</c:choose>
-							<form:input path="image" type="file" name="file"
+							<form:input path="image" type="file" name="image"
 								class="form-control mt-4 w-75 input-bg" />
 							<c:if test="${not empty message}">
 								<span class="error">${message}</span>
@@ -60,19 +61,21 @@
 								<form:errors path="password" cssClass="error" />
 							</div>
 							<div class="my-3">
-								<form:label path="phone" for="phonenumber" class="form-label">Phone Number</form:label>
-								<form:input path="phone" type="number" name="phonenumber"
-									id="phonenumber" class="form-control input-bg" />
-								<form:errors path="phone" cssClass="error" />
+								<form:label path="contact_number" for="phonenumber"
+									class="form-label">Phone Number</form:label>
+								<form:input path="contact_number" type="number"
+									name="phonenumber" id="phonenumber" class="form-control input-bg" />
+								<form:errors path="contact_number" cssClass="error" />
 							</div>
 							<div class="">
 								<form:label path="address" for="address" class="form-label">Address</form:label>
 								<form:textarea path="address" name="address"
 									class="form-control input-bg" id="address" cols="30" rows="5" />
+								<form:input path="role" type="hidden" />
 								<form:errors path="address" cssClass="error" />
 							</div>
 							<div class="d-flex mt-3 justify-content-between">
-								<a href="${pageContext.request.contextPath}/admin-profile"
+								<a href="${pageContext.request.contextPath}/profile"
 									class="btn btn-danger">Cancel</a>
 								<button class="btn btn-primary">Save</button>
 							</div>

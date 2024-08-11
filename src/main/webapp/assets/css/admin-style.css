@@ -1,0 +1,22 @@
+* {
+	font-family: "Montserrat", sans-serif;
+	font-style: normal;
+}
+
+.card-bg-color {
+	background-color: #f8fafc;
+}
+
+.home-bg{
+	background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+}
+
+.py-50{
+	padding-top: 70px;
+	padding-bottom: 70px;
+}
+
+.input-bg,
+.input-bg:focus {
+	background-color: #e9ecef;
+}

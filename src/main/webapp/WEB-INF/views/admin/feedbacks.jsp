@@ -6,88 +6,90 @@
 	<c:param name="title" value="Feedbacks" />
 </c:import>
 <!-- Main Content Start -->
-<div class="w-50 mx-auto">
-	<div class="my-4">
-		<h3 class="fw-bold">Feedbacks</h3>
-	</div>
-	<c:choose>
-		<c:when test="${isEmpty}">
-			<h2 class="text-center my-5">There is no Data here, Insert Now.</h2>
-		</c:when>
-		<c:otherwise>
-			<div class="input-group mb-3">
-				<input type="text" class="form-control" id="searchInput"
-					onkeyup="filterTable()" placeholder="Search for Feedbacks">
-				<i class="input-group-text bi bi-search"></i>
-			</div>
-			<table class="table table-hover my-5" id="brandTable">
-				<thead>
-					<tr class="bg-dark">
-						<th class="text-start">Feedbacks</th>
-						<th class="text-center">Rating</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="fb" items="${fbs}">
-						<tr class="feedback-row" data-description="${fb.description}"
-							data-rating="${fb.rate}">
-							<td class="align-middle">${fn:substring(fb.description, 0, 80)}...</td>
-							<td class="text-center align-middle"><c:choose>
-									<c:when test="${fb.rate == 'FIVE' }">
-										<i class="bi bi-star text-success" style="font-size: large"></i>
-										<i class="bi bi-star text-success" style="font-size: large"></i>
-										<i class="bi bi-star text-success" style="font-size: large"></i>
-										<i class="bi bi-star text-success" style="font-size: large"></i>
-										<i class="bi bi-star text-success" style="font-size: large"></i>
-									</c:when>
-									<c:when test="${fb.rate == 'FOUR' }">
-										<i class="bi bi-star text-warning" style="font-size: large"></i>
-										<i class="bi bi-star text-warning" style="font-size: large"></i>
-										<i class="bi bi-star text-warning" style="font-size: large"></i>
-										<i class="bi bi-star text-warning" style="font-size: large"></i>
-									</c:when>
-									<c:when test="${fb.rate == 'THREE' }">
-										<i class="bi bi-star text-warning" style="font-size: large"></i>
-										<i class="bi bi-star text-warning" style="font-size: large"></i>
-										<i class="bi bi-star text-warning" style="font-size: large"></i>
-									</c:when>
-									<c:when test="${fb.rate == 'TWO' }">
-										<i class="bi bi-star text-danger" style="font-size: large"></i>
-										<i class="bi bi-star text-danger" style="font-size: large"></i>
-									</c:when>
-									<c:when test="${fb.rate == 'ONE' }">
-										<i class="bi bi-star text-danger" style="font-size: large"></i>
-									</c:when>
-								</c:choose></td>
+<div style="background-color: #fafaf6; padding-top: 50px; padding-bottom: 380px;">
+	<div class="w-50 mx-auto">
+		<div class="my-4">
+			<h3 class="fw-bold">Feedbacks</h3>
+		</div>
+		<c:choose>
+			<c:when test="${isEmpty}">
+				<h2 class="text-center my-5">There is no Data here, Insert Now.</h2>
+			</c:when>
+			<c:otherwise>
+				<div class="input-group mb-3">
+					<input type="text" class="form-control" id="searchInput"
+						onkeyup="filterTable()" placeholder="Search for Feedbacks">
+					<i class="input-group-text bi bi-search"></i>
+				</div>
+				<table class="table table-light table-hover my-5" id="brandTable">
+					<thead>
+						<tr class="bg-dark">
+							<th class="py-3 text-start">Feedbacks</th>
+							<th class="py-3 text-center">Rating</th>
 						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-			<c:if test="${totalPages > 1}">
-				<ul class="pagination justify-content-center">
-					<c:if test="${currentPage > 1}">
-						<li class="page-item"><a class="page-link"
-							href="?page=${currentPage - 1}&size=${pageSize}">Previous</a></li>
-					</c:if>
-					<c:forEach var="i" begin="1" end="${totalPages}">
-						<c:choose>
-							<c:when test="${i == currentPage}">
-								<li class="page-item"><a class="page-link">${i}</a></li>
-							</c:when>
-							<c:otherwise>
-								<li class="page-item"><a class="page-link"
-									href="?page=${i}&size=${pageSize}">${i}</a></li>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-					<c:if test="${currentPage < totalPages}">
-						<li class="page-item"><a class="page-link"
-							href="?page=${currentPage + 1}&size=${pageSize}">Next</a></li>
-					</c:if>
-				</ul>
-			</c:if>
-		</c:otherwise>
-	</c:choose>
+					</thead>
+					<tbody>
+						<c:forEach var="fb" items="${fbs}">
+							<tr class="feedback-row" data-description="${fb.description}"
+								data-rating="${fb.rate}">
+								<td class="py-3 align-middle">${fn:substring(fb.description, 0, 80)}...</td>
+								<td class="py-3 text-center align-middle"><c:choose>
+										<c:when test="${fb.rate == 'FIVE' }">
+											<i class="bi bi-star text-success" style="font-size: large"></i>
+											<i class="bi bi-star text-success" style="font-size: large"></i>
+											<i class="bi bi-star text-success" style="font-size: large"></i>
+											<i class="bi bi-star text-success" style="font-size: large"></i>
+											<i class="bi bi-star text-success" style="font-size: large"></i>
+										</c:when>
+										<c:when test="${fb.rate == 'FOUR' }">
+											<i class="bi bi-star text-warning" style="font-size: large"></i>
+											<i class="bi bi-star text-warning" style="font-size: large"></i>
+											<i class="bi bi-star text-warning" style="font-size: large"></i>
+											<i class="bi bi-star text-warning" style="font-size: large"></i>
+										</c:when>
+										<c:when test="${fb.rate == 'THREE' }">
+											<i class="bi bi-star text-warning" style="font-size: large"></i>
+											<i class="bi bi-star text-warning" style="font-size: large"></i>
+											<i class="bi bi-star text-warning" style="font-size: large"></i>
+										</c:when>
+										<c:when test="${fb.rate == 'TWO' }">
+											<i class="bi bi-star text-danger" style="font-size: large"></i>
+											<i class="bi bi-star text-danger" style="font-size: large"></i>
+										</c:when>
+										<c:when test="${fb.rate == 'ONE' }">
+											<i class="bi bi-star text-danger" style="font-size: large"></i>
+										</c:when>
+									</c:choose></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+				<c:if test="${totalPages > 1}">
+					<ul class="pagination justify-content-center">
+						<c:if test="${currentPage > 1}">
+							<li class="page-item"><a class="page-link"
+								href="?page=${currentPage - 1}&size=${pageSize}">Previous</a></li>
+						</c:if>
+						<c:forEach var="i" begin="1" end="${totalPages}">
+							<c:choose>
+								<c:when test="${i == currentPage}">
+									<li class="page-item"><a class="page-link">${i}</a></li>
+								</c:when>
+								<c:otherwise>
+									<li class="page-item"><a class="page-link"
+										href="?page=${i}&size=${pageSize}">${i}</a></li>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+						<c:if test="${currentPage < totalPages}">
+							<li class="page-item"><a class="page-link"
+								href="?page=${currentPage + 1}&size=${pageSize}">Next</a></li>
+						</c:if>
+					</ul>
+				</c:if>
+			</c:otherwise>
+		</c:choose>
+	</div>
 </div>
 <!-- Main Content End -->
 <!-- Modal -->
