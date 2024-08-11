@@ -14,7 +14,7 @@
 			<a href="${pageContext.request.contextPath}/add-brand"
 				class="btn btn-primary">Add Brand</a>
 		</div>
-		<c:if test="${not empty createdSuccessfully}">
+		<!--<c:if test="${not empty createdSuccessfully}">
 			<div class="alert alert-success alert-dismissible fade show"
 				role="alert">
 				<strong>${createdSuccessfully}</strong>
@@ -37,7 +37,7 @@
 				<button type="button" class="btn-close" data-bs-dismiss="alert"
 					aria-label="Close"></button>
 			</div>
-		</c:if>
+		</c:if>-->
 
 		<c:choose>
 			<c:when test="${isEmpty}">
@@ -101,7 +101,25 @@
 	</div>
 </div>
 <!-- Main Content End -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+	window.onload = function() {
+		var createdSuccessfully = "${createdSuccessfully}";
+		var updatedSuccessfully = "${updatedSuccessfully}";
+		var deletedSuccessfully = "${deletedSuccessfully}";
+
+		if (createdSuccessfully !== "") {
+			alert(createdSuccessfully);
+		}
+
+		if (updatedSuccessfully !== "") {
+			alert(updatedSuccessfully);
+		}
+
+		if (deletedSuccessfully !== "") {
+			alert(deletedSuccessfully);
+		}
+	}
 	function filterTable() {
 		var input, filter, table, tr, td, i, txtValue;
 		input = document.getElementById("searchInput");
