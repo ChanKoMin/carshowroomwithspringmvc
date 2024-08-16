@@ -24,6 +24,7 @@ public class Car {
 	private String carEngine;
 	private CarTransmission carTransmission;
 	private CarAvailability carAvailability;
+	private int currentInventory;
 	@NotEmpty(message = "Car description is required")
 	private String carDescription;
 	@NotEmpty(message = "Car price is required")
@@ -123,6 +124,14 @@ public class Car {
 
 	public void setCarAvailability(CarAvailability carAvailability) {
 		this.carAvailability = carAvailability;
+	}
+
+	public int getCurrentInventory() {
+		return currentInventory;
+	}
+
+	public void setCurrentInventory(int currentInventory) {
+		this.currentInventory = currentInventory;
 	}
 
 	public String getCarDescription() {

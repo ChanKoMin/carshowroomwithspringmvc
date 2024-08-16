@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.carshowroom.dao.AdminDao;
 import com.carshowroom.dao.BrandDao;
+import com.carshowroom.dao.OrderDao;
 import com.carshowroom.model.Admin;
 import com.carshowroom.model.Brand;
 import com.carshowroom.util.ImageUploadUtil;
@@ -28,12 +29,14 @@ import com.carshowroom.util.ImageUploadUtil;
 public class BrandController {
 	private BrandDao brandDao;
 	private AdminDao adminDao;
+	private OrderDao orderDao;
 	private final String imageUploadDir = "Downloads/CarShowroomManagement/src/main/webapp/assets/images/";
 
 	@Autowired
-	public BrandController(BrandDao brandDao, AdminDao adminDao) {
+	public BrandController(BrandDao brandDao, AdminDao adminDao, OrderDao orderDao) {
 		this.brandDao = brandDao;
 		this.adminDao = adminDao;
+		this.orderDao = orderDao;
 	}
 
 	@Autowired
@@ -44,6 +47,11 @@ public class BrandController {
 	@Autowired
 	public void setAdminDao(AdminDao adminDao) {
 		this.adminDao = adminDao;
+	}
+	
+	@Autowired
+	public void setOrderDao(OrderDao orderDao) {
+		this.orderDao = orderDao;
 	}
 
 	private boolean isAuthenticated(HttpSession session) {
@@ -62,6 +70,8 @@ public class BrandController {
 		Admin admin = adminDao.showAdmin();
 		int totalBrands = brandDao.brandCount();
 		int totalPages = (int) Math.ceil((double) totalBrands / pageSize);
+		int newOrderCount = orderDao.getNewOrderCount();
+		m.addAttribute("newOrderCount", newOrderCount);
 		m.addAttribute("brands", brands);
 		m.addAttribute("admin", admin);
 		m.addAttribute("currentPage", page);
@@ -78,6 +88,8 @@ public class BrandController {
 		Admin adm = (Admin) session.getAttribute("admin");
 		m.addAttribute("admin", adm);
 		Admin admin = adminDao.showAdmin();
+		int newOrderCount = orderDao.getNewOrderCount();
+		m.addAttribute("newOrderCount", newOrderCount);
 		m.addAttribute("brand", new Brand());
 		m.addAttribute("admin", admin);
 		return "admin/add-brand";
@@ -116,6 +128,8 @@ public class BrandController {
 		m.addAttribute("admin", adm);
 		Brand brand = brandDao.findById(id);
 		Admin admin = adminDao.showAdmin();
+		int newOrderCount = orderDao.getNewOrderCount();
+		m.addAttribute("newOrderCount", newOrderCount);
 		m.addAttribute("admin", admin);
 		m.addAttribute("brand", brand);
 		return "admin/edit-brand";

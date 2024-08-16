@@ -23,9 +23,9 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/assets/css/admin-style.css" />
 <style>
-	.error{
-		color : red;
-	}
+.error {
+	color: red;
+}
 </style>
 </head>
 <body>
@@ -41,27 +41,35 @@
 				</a>
 				<div class="">
 					<ul class="d-flex nav align-items-center">
-						<li class="nav-item"><a
+						<li class="nav-item hvr-float-shadow"><a
 							class="nav-link text-black active link-primary"
 							href="${pageContext.request.contextPath}/dashboard">Dashboard</a>
 						</li>
-						<li class="nav-item"><a
+						<li class="nav-item hvr-float-shadow"><a
 							class="nav-link text-black link-primary"
 							href="${pageContext.request.contextPath}/brands">Brands</a></li>
-						<li class="nav-item"><a
+						<li class="nav-item hvr-float-shadow"><a
 							class="nav-link text-black link-primary"
 							href="${pageContext.request.contextPath}/cars">Cars</a></li>
-						<li class="nav-item"><a
+						<li class="nav-item hvr-float-shadow"><a
 							class="nav-link text-black link-primary"
-							href="${pageContext.request.contextPath}/orders">Orders</a></li>
-						<li class="nav-item"><a
+							href="${pageContext.request.contextPath}/orders"> Orders<c:if
+									test="${newOrderCount > 0}">
+									<p
+										class="badge bg-danger rounded-5 position-absolute top-0 end-0"
+										id="order-count">
+										<c:out value="${newOrderCount}" />
+									</p>
+								</c:if>
+						</a></li>
+						<li class="nav-item hvr-float-shadow"><a
 							class="nav-link text-black link-primary"
 							href="${pageContext.request.contextPath}/users">Users</a></li>
-						<li class="nav-item"><a
+						<li class="nav-item hvr-float-shadow"><a
 							class="nav-link text-black link-primary"
-							href="${pageContext.request.contextPath}/feedbacks">Feedbacks</a>
-						</li>
-						<li class="nav-item">
+							href="${pageContext.request.contextPath}/feedbacks">Feedbacks
+						</a></li>
+						<li class="nav-item hvr-float-shadow">
 							<div class="dropdown">
 								<button class="nav-link btn dropdown-toggle" type="button"
 									data-bs-toggle="dropdown" aria-expanded="false">${admin.name}</button>

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.carshowroom.dao.AdminDao;
 import com.carshowroom.dao.FeedbackDao;
+import com.carshowroom.dao.OrderDao;
 import com.carshowroom.model.Admin;
 import com.carshowroom.model.Feedback;
 
@@ -21,16 +22,23 @@ import com.carshowroom.model.Feedback;
 public class FeedbackController {
 	private FeedbackDao fbDao;
 	private AdminDao adminDao;
+	private OrderDao orderDao;
 
 	@Autowired
-	public FeedbackController(FeedbackDao fbDao, AdminDao adminDao) {
+	public FeedbackController(FeedbackDao fbDao, AdminDao adminDao, OrderDao orderDao) {
 		this.fbDao = fbDao;
 		this.adminDao = adminDao;
+		this.orderDao = orderDao;
 	}
 
 	@Autowired
 	public void setAdminDao(AdminDao adminDao) {
 		this.adminDao = adminDao;
+	}
+	
+	@Autowired
+	public void setOrderDao(OrderDao orderDao) {
+		this.orderDao = orderDao;
 	}
 	
 	@PostMapping("/feedback")
@@ -55,6 +63,8 @@ public class FeedbackController {
 		Admin admin = adminDao.showAdmin();
 		int totalFbs = fbDao.fbCount();
 		int totalPages = (int) Math.ceil((double) totalFbs / pageSize);
+		int newOrderCount = orderDao.getNewOrderCount();
+		m.addAttribute("newOrderCount", newOrderCount);
 		m.addAttribute("fbs", fbs);
 		m.addAttribute("admin", admin);
 		m.addAttribute("currentPage", page);

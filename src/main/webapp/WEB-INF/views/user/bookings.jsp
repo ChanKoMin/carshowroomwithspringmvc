@@ -5,7 +5,7 @@
 	<c:param name="title" value="Bookings" />
 </c:import>
 <!-- Bookings Start -->
-<div class="company-bg" style="padding-bottom: 230px">
+<div class="company-bg" style="padding-bottom: 270px">
 	<div class="py-5">
 		<div class="row m-auto" style="width: 90%">
 			<nav aria-label="breadcrumb">

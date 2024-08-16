@@ -52,6 +52,8 @@ public class OrderController {
 		List<AdminOrderDetails> orderDetailsList = orderDao.getOrderDetails(page, pageSize);
 		int totalOrders = orderDao.orderCount();
 		int totalPages = (int) Math.ceil((double) totalOrders / pageSize);
+		int newOrderCount = orderDao.getNewOrderCount();
+		m.addAttribute("newOrderCount", newOrderCount);
 	    m.addAttribute("orderDetailsList", orderDetailsList);
 		m.addAttribute("admin", admin);
 		m.addAttribute("currentPage", page);

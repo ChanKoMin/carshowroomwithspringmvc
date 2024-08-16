@@ -123,11 +123,9 @@ public class CartController {
 		}
 		
 		Car car = carDao.findById(carId);
-		if(car.getCount() >= quantity) {
+		if(car.getCurrentInventory() >= quantity) {
 			// Update the quantity in the database
 			cartDao.updateCartQuantity(cartId, quantity);
-			ra.addFlashAttribute("message", "Car ordered successfully!");
-			//model.addAttribute("message", "Car ordered successfully!");
 		}else {
 			ra.addFlashAttribute("message", "Cannot add, out of stock!");
 		}

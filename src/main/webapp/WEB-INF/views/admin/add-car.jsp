@@ -6,7 +6,8 @@
 <c:import url="header.jsp">
 	<c:param name="title" value="Add Car" />
 </c:import>
-<div style="background-color: #fafaf6; padding-top: 50px; padding-bottom: 50px;">
+<div
+	style="background-color: #fafaf6; padding-top: 50px; padding-bottom: 50px;">
 	<nav aria-label="breadcrumb" class="container mt-5">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a
@@ -93,6 +94,12 @@
 								<option value="INSTOCK">In Stock</option>
 								<option value="UNAVAILABLE">Out of Stock</option>
 							</form:select>
+						</div>
+					</div>
+					<div class="row my-4">
+						<div class="col">
+							<form:input path="currentInventory" type="number"
+								class="form-control" placeholder="Current Inventory" />
 						</div>
 					</div>
 					<div class="row my-4">

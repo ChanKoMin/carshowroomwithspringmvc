@@ -22,6 +22,7 @@ import com.carshowroom.dao.AdminDao;
 import com.carshowroom.dao.BrandDao;
 import com.carshowroom.dao.CarDao;
 import com.carshowroom.dao.FeedbackDao;
+import com.carshowroom.dao.OrderDao;
 import com.carshowroom.dao.UserDao;
 import com.carshowroom.model.Admin;
 import com.carshowroom.model.Brand;
@@ -39,15 +40,17 @@ public class UserController {
 	private BrandDao brandDao;
 	private CarDao carDao;
 	private FeedbackDao fbDao;
+	private OrderDao orderDao;
 	private final String imageUploadDir = "Downloads/CarShowroomManagement/src/main/webapp/assets/images/";
 
 	@Autowired
-	public UserController(UserDao userDao, AdminDao adminDao, CarDao carDao, BrandDao brandDao, FeedbackDao fbDao) {
+	public UserController(UserDao userDao, AdminDao adminDao, CarDao carDao, BrandDao brandDao, FeedbackDao fbDao,OrderDao orderDao) {
 		this.userDao = userDao;
 		this.adminDao = adminDao;
 		this.carDao = carDao;
 		this.brandDao = brandDao;
 		this.fbDao = fbDao;
+		this.orderDao = orderDao;
 	}
 
 	@Autowired
@@ -73,6 +76,11 @@ public class UserController {
 	@Autowired
 	public void setFeedbackDao(FeedbackDao fbDao) {
 		this.fbDao = fbDao;
+	}
+	
+	@Autowired
+	public void setOrderDao(OrderDao orderDao) {
+		this.orderDao = orderDao;
 	}
 
 	private boolean isAuthenticated(HttpSession session) {
@@ -256,6 +264,8 @@ public class UserController {
 		Admin admin = adminDao.showAdmin();
 		int totalUsers = userDao.userCount();
 		int totalPages = (int) Math.ceil((double) totalUsers / pageSize);
+		int newOrderCount = orderDao.getNewOrderCount();
+		m.addAttribute("newOrderCount", newOrderCount);
 		m.addAttribute("users", users);
 		m.addAttribute("admin", admin);
 		m.addAttribute("currentPage", page);

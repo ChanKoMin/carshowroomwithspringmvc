@@ -7,9 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import com.carshowroom.dao.CarDao;
 import com.carshowroom.dao.CartDao;
 import com.carshowroom.dao.OrderDao;
+import com.carshowroom.model.Car;
+import com.carshowroom.model.CarAvailability;
 import com.carshowroom.model.CartItemDetails;
 import com.carshowroom.model.Order;
 import com.carshowroom.model.OrderItem;
@@ -24,6 +29,9 @@ public class UserOrderController {
 
     @Autowired
     private CartDao cartDao;
+    
+    @Autowired
+    private CarDao carDao;
     
     private boolean isAuthenticated(HttpSession session) {
 		return session != null && session.getAttribute("user") != null;
@@ -56,6 +64,16 @@ public class UserOrderController {
         int orderId = orderDao.createOrder(order);
 
         for (CartItemDetails item : cartItems) {
+        	Car car = carDao.findById(item.getCarId());
+        	int newInventory = car.getCurrentInventory() - item.getQuantity();
+        	if(newInventory <= 0) {
+        		car.setCurrentInventory(0);
+        		car.setCarAvailability(CarAvailability.UNAVAILABLE);
+        	}else {
+        		car.setCurrentInventory(newInventory);
+        	}
+        	carDao.update(car);
+        	
             OrderItem orderItem = new OrderItem();
             orderItem.setOrderId(orderId);
             orderItem.setCarId(item.getCarId());

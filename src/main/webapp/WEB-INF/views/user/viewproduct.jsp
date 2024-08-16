@@ -7,7 +7,7 @@
 	<c:param name="title" value="View Product" />
 </c:import>
 <!-- Product Details Start -->
-<div class="" style="background-color:#e2e8f0">
+<div class="" style="background-color: #e2e8f0">
 	<div class="py-5">
 		<div class="row m-auto" style="width: 90%">
 			<nav aria-label="breadcrumb">
@@ -27,7 +27,6 @@
 				</div>
 			</c:if>
 			<div
-				
 				class="d-flex justify-content-between align-items-center shadow p-3 my-3">
 				<h4 class="fw-bold">${car.carName }</h4>
 				<div class="d-flex justify-content-between gap-2 align-items-center">
@@ -47,8 +46,16 @@
 						<input type="hidden" name="userId" value="${user.id}"> <input
 							type="hidden" name="carId" value="${car.id}"> <input
 							type="hidden" id="quantity" name="quantity" min="1" value="1">
-						<button class="btn btn-grad px-3" id="addToCart">Add To
-							Cart</button>
+						<c:choose>
+							<c:when test="${car.carAvailability == 'INSTOCK' }">
+								<button class="btn btn-grad px-3" id="addToCart">Add To
+									Cart</button>
+							</c:when>
+							<c:otherwise>
+								<button class="btn btn-grad px-3 text-white" id="addToCart" disabled>Add
+									To Cart</button>
+							</c:otherwise>
+						</c:choose>
 					</form>
 				</div>
 			</div>
@@ -58,8 +65,9 @@
 						src="${pageContext.request.contextPath}/assets/images/${car.carImage}"
 						class="img-fluid" alt="" />
 				</div>
-				<div class="col-5">
-					<div class="card p-4" style="background-color: #e2e8f0; border:none">
+				<div class="col-6">
+					<div class="card p-4"
+						style="background-color: #e2e8f0; border: none">
 						<h5 class="card-title fw-bold mb-4 text-center">Car
 							Specification</h5>
 						<div class="row">
@@ -79,6 +87,10 @@
 								<div class="row">
 									<div class="col-5 ms-3 fw-bold">Color</div>
 									<div class="col-5 text-end fw-bold">${car.carColor}</div>
+								</div>
+								<div class="row my-4">
+									<div class="col-5 ms-3 fw-bold">Stock</div>
+									<div class="col-5 text-end fw-bold">${car.carAvailability}</div>
 								</div>
 							</div>
 							<div class="col-6">

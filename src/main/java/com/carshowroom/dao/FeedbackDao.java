@@ -3,6 +3,7 @@ package com.carshowroom.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.sql.DataSource;
 
@@ -30,6 +31,7 @@ public class FeedbackDao {
 	public void save(Feedback feedback) {
 		String sql = "INSERT INTO feedbacks (user_id, description, rate) VALUES (?,?,?)";
 		jdbcTemplate.update(sql,feedback.getUserId(),feedback.getDescription(),feedback.getRate().getValue());
+		
 	}
 	
 	public List<Feedback> findAll(int page, int pageSize){

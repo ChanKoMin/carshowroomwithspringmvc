@@ -22,7 +22,7 @@
 </head>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/assets/css/hover-min.css" />
-	<link rel="stylesheet"
+<link rel="stylesheet"
 	href="${pageContext.request.contextPath}/assets/css/owl.carousel.min.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/assets/css/style.css" />
@@ -69,7 +69,7 @@
 										id="cart-count">
 										<c:out value="${sessionScope.cartCount}" />
 									</p>
-								</c:if> -->
+								</c:if>-->
 						</a></li>
 						<li class="nav-item hvr-float-shadow"><a
 							href="${pageContext.request.contextPath}/profile"

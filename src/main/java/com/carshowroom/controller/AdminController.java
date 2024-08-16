@@ -95,6 +95,8 @@ public class AdminController {
 		double totalFeedbacks = fbDao.calculateAverageRating();
 		int totalOrders = orderDao.orderCount();
 		String formattedValue = String.format("%.2f", totalFeedbacks);
+		int newOrderCount = orderDao.getNewOrderCount();
+		m.addAttribute("newOrderCount", newOrderCount);
 		m.addAttribute("admin", admin);
 		m.addAttribute("brand", totalBrands);
 		m.addAttribute("car", totalCars);
@@ -110,6 +112,8 @@ public class AdminController {
 			return "redirect:/";
 		}
 		Admin adm = (Admin) session.getAttribute("admin");
+		int newOrderCount = orderDao.getNewOrderCount();
+		m.addAttribute("newOrderCount", newOrderCount);
 		m.addAttribute("admin", adm);
 		Admin admin = adminDao.showAdmin();
 		m.addAttribute("admin", admin);

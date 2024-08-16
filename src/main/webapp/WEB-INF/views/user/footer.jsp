@@ -4,7 +4,8 @@
 <script
 	src="${pageContext.request.contextPath}/assets/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/owl.carousel.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/assets/js/owl.carousel.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/app.js"></script>
 <script type="text/javascript">
 	//updateItemCount();
@@ -18,11 +19,13 @@
 			<img src="${pageContext.request.contextPath}/assets/images/logo.jpg"
 				class="w-25" alt="" />
 			<div>
-				<a class="text-white-50 hvr-bounce-out"
+				<a class="text-white-50 hvr-bounce-out" target="_blank"
 					href="https://www.facebook.com/prometheus2254/"><i
-					class="fs-3 bi bi-facebook"></i></a> <a class="text-white-50 mx-3 hvr-bounce-out"
+					class="fs-3 bi bi-facebook"></i></a> <a
+					class="text-white-50 mx-3 hvr-bounce-out" target="_blank"
 					href="https://www.instagram.com/prometheus4225"><i
-					class="fs-3 bi bi-instagram"></i></a> <a class="text-white-50 hvr-bounce-out"
+					class="fs-3 bi bi-instagram"></i></a> <a
+					class="text-white-50 hvr-bounce-out" target="_blank"
 					href="https://www.linkedin.com/in/chan-ko-min-725106230/"><i
 					class="fs-3 bi bi-linkedin"></i></a>
 			</div>

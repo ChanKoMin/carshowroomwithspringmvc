@@ -27,10 +27,10 @@ public class CarDao {
 	}
 
 	public void save(Car car) {
-		String sql = "INSERT INTO cars (brand_id,car_name,car_model,car_type,car_year,car_color,car_cylinder,car_engine,car_transmission,car_availability,car_description,car_price,car_image) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO cars (brand_id,car_name,car_model,car_type,car_year,car_color,car_cylinder,car_engine,car_transmission,car_availability,current_inventory,car_description,car_price,car_image) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		jdbcTemplate.update(sql, car.getBrandId(), car.getCarName(), car.getCarModel(), car.getCarType(),
 				car.getCarYear(), car.getCarColor(), car.getCarCylinder(), car.getCarEngine(),
-				car.getCarTransmission().name(), car.getCarAvailability().name(), car.getCarDescription(),
+				car.getCarTransmission().name(), car.getCarAvailability().name(),car.getCurrentInventory() ,car.getCarDescription(),
 				car.getCarPrice(), car.getCarImage());
 	}
 
@@ -40,10 +40,10 @@ public class CarDao {
 	}
 
 	public int update(Car car) {
-		String sql = "UPDATE cars SET brand_id = ?, car_name = ?, car_model = ?, car_type = ?, car_year = ?, car_color = ?, car_cylinder = ?, car_engine = ?, car_transmission = ?, car_availability = ?, car_description = ?, car_price = ?, car_image = ? WHERE car_id = ?";
+		String sql = "UPDATE cars SET brand_id = ?, car_name = ?, car_model = ?, car_type = ?, car_year = ?, car_color = ?, car_cylinder = ?, car_engine = ?, car_transmission = ?, car_availability = ?,current_inventory = ? ,car_description = ?, car_price = ?, car_image = ? WHERE car_id = ?";
 		return jdbcTemplate.update(sql, car.getBrandId(), car.getCarName(), car.getCarModel(), car.getCarType(),
 				car.getCarYear(), car.getCarColor(), car.getCarCylinder(), car.getCarEngine(),
-				car.getCarTransmission().name(), car.getCarAvailability().name(), car.getCarDescription(),
+				car.getCarTransmission().name(), car.getCarAvailability().name(),car.getCurrentInventory() ,car.getCarDescription(),
 				car.getCarPrice(), car.getCarImage(), car.getId());
 	}
 
@@ -65,6 +65,7 @@ public class CarDao {
 				car.setCarEngine(rs.getString("car_engine"));
 				car.setCarTransmission(CarTransmission.valueOf(rs.getString("car_transmission")));
 				car.setCarAvailability(CarAvailability.valueOf(rs.getString("car_availability")));
+				car.setCurrentInventory(rs.getInt("current_inventory"));
 				car.setCarDescription(rs.getString("car_description"));
 				car.setCarPrice(rs.getString("car_price"));
 				car.setCarImage(rs.getString("car_image"));
@@ -88,6 +89,7 @@ public class CarDao {
 			car.setCarEngine(rs.getString("car_engine"));
 			car.setCarTransmission(CarTransmission.valueOf(rs.getString("car_transmission")));
 			car.setCarAvailability(CarAvailability.valueOf(rs.getString("car_availability")));
+			car.setCurrentInventory(rs.getInt("current_inventory"));
 			car.setCarDescription(rs.getString("car_description"));
 			car.setCarPrice(rs.getString("car_price"));
 			car.setCarImage(rs.getString("car_image"));

@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.carshowroom.dao.AdminDao;
 import com.carshowroom.dao.BrandDao;
 import com.carshowroom.dao.CarDao;
+import com.carshowroom.dao.OrderDao;
 import com.carshowroom.model.Admin;
 import com.carshowroom.model.Car;
 import com.carshowroom.util.ImageUploadUtil;
@@ -33,14 +34,16 @@ public class CarController {
 	private CarDao carDao;
 	private BrandDao brandDao;
 	private AdminDao adminDao;
+	private OrderDao orderDao;
 	private final String imageUploadDir = "Downloads/CarShowroomManagement/src/main/webapp/assets/images/";
 
 
 	@Autowired
-	public CarController(CarDao carDao, BrandDao brandDao, AdminDao adminDao) {
+	public CarController(CarDao carDao, BrandDao brandDao, AdminDao adminDao, OrderDao orderDao) {
 		this.carDao = carDao;
 		this.brandDao = brandDao;
 		this.adminDao = adminDao;
+		this.orderDao = orderDao;
 	}
 
 	@Autowired
@@ -56,6 +59,11 @@ public class CarController {
 	@Autowired
 	public void setAdminDao(AdminDao adminDao) {
 		this.adminDao = adminDao;
+	}
+	
+	@Autowired
+	public void setOrderDao(OrderDao orderDao) {
+		this.orderDao = orderDao;
 	}
 
 	private boolean isAuthenticated(HttpSession session) {
@@ -74,6 +82,8 @@ public class CarController {
 		Admin admin = adminDao.showAdmin();
 		int totalCars = carDao.carCount();
 		int totalPages = (int) Math.ceil((double) totalCars / pageSize);
+		int newOrderCount = orderDao.getNewOrderCount();
+		m.addAttribute("newOrderCount", newOrderCount);
 		m.addAttribute("cars", cars);
 		m.addAttribute("admin", admin);
 		m.addAttribute("currentPage", page);
@@ -90,6 +100,8 @@ public class CarController {
 		Admin adm = (Admin) session.getAttribute("admin");
 		m.addAttribute("admin", adm);
 		Admin admin = adminDao.showAdmin();
+		int newOrderCount = orderDao.getNewOrderCount();
+		m.addAttribute("newOrderCount", newOrderCount);
 		m.addAttribute("admin", admin);
 		m.addAttribute("car", new Car());
 		m.addAttribute("brands", brandDao.findAll());
@@ -133,6 +145,8 @@ public class CarController {
 		m.addAttribute("admin", adm);
 		Car car = carDao.findById(id);
 		Admin admin = adminDao.showAdmin();
+		int newOrderCount = orderDao.getNewOrderCount();
+		m.addAttribute("newOrderCount", newOrderCount);
 		m.addAttribute("admin", admin);
 		m.addAttribute("car", car);
 		return "admin/view-car";
@@ -147,6 +161,8 @@ public class CarController {
 		m.addAttribute("admin", adm);
 		Car car = carDao.findById(id);
 		Admin admin = adminDao.showAdmin();
+		int newOrderCount = orderDao.getNewOrderCount();
+		m.addAttribute("newOrderCount", newOrderCount);
 		m.addAttribute("admin", admin);
 		m.addAttribute("car", car);
 		return "admin/edit-car";
@@ -193,7 +209,6 @@ public class CarController {
                 deleteImageFile(car.getCarImage());
                 int orderCount = carDao.countOrdersByCarId(id);
     		    if (orderCount > 0) {
-    		    	System.out.println("Cannot delete car.");
     		        ra.addFlashAttribute("message", "Cannot delete car. There are existing orders associated with this car.");
     		        return "redirect:/cars";
     		    }
