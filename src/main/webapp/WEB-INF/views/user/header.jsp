@@ -23,8 +23,6 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/assets/css/hover-min.css" />
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/assets/css/owl.carousel.min.css" />
-<link rel="stylesheet"
 	href="${pageContext.request.contextPath}/assets/css/style.css" />
 </head>
 <body class="d-flex flex-column h-100">

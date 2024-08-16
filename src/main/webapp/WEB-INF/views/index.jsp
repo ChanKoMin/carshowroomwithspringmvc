@@ -92,9 +92,8 @@
 					</c:if>
 				</div>
 				<div class="d-flex w-25 m-auto my-2">
-					<input type="text" id="carSearch"
-						placeholder="Search cars..." onkeyup="filterCars()"
-						class="form-control form-control-lg">
+					<input type="text" id="carSearch" placeholder="Search cars..."
+						onkeyup="filterCars()" class="form-control form-control-lg">
 				</div>
 			</div>
 			<div id="noResults" class="text-center my-255" style="display: none">No
@@ -239,7 +238,6 @@
 <script src="${pageContext.request.contextPath}/assets/js/aos.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/index.umd.js"></script>
 <script>
-
 	// Animate On Scroll
 	AOS.init();
 	

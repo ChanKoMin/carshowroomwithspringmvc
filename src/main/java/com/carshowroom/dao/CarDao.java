@@ -144,6 +144,12 @@ public class CarDao {
 	    String sql = "SELECT COUNT(*) FROM order_items WHERE car_id = ?";
 	    return jdbcTemplate.queryForObject(sql, Integer.class, carId);
 	}
+	
+	@SuppressWarnings("deprecation")
+	public List<Car> relatedCars(String carType, int carId){
+		String sql = "SELECT * FROM cars WHERE car_type = ? AND car_id != ? LIMIT 4";
+		return jdbcTemplate.query(sql, new Object[] {carType,carId}, new CarRowMapper());
+	}
 
 
 }

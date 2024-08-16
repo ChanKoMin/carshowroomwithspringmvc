@@ -84,6 +84,13 @@
 			</div>
 		</div>
 		<div class="row my-3">
+			<div
+				class="col-12 d-flex justify-content-between rounded align align-items-center border p-3">
+				<h5 class="mb-0">Current Inventory</h5>
+				<h5 class="mb-0">${car.currentInventory}</h5>
+			</div>
+		</div>
+		<div class="row my-3">
 			<div class="col-12 rounded border p-3">
 				<h5 class="mb-0 text-start">${car.carDescription}</h5>
 			</div>

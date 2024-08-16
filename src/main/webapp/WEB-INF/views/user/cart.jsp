@@ -19,14 +19,14 @@
 			<div class="col-1"></div>
 			<c:if test="${not empty cartItems}">
 				<div class="col-10">
-					<c:if test="${not empty message}">
+					<!--<c:if test="${not empty message}">
 						<div class="alert alert-danger alert-dismissible fade show"
 							role="alert">
 							<strong>${message}</strong>
 							<button type="button" class="btn-close" data-bs-dismiss="alert"
 								aria-label="Close"></button>
 						</div>
-					</c:if>
+					</c:if>-->
 					<table class="table table-hover">
 						<thead>
 							<tr>
@@ -105,4 +105,13 @@
 	</div>
 </div>
 <!-- Car Type End -->
+<script>
+window.onload = function() {
+	var message = "${message}";
+
+	if (message !== "") {
+		alert(message);
+	}
+}
+</script>
 <c:import url="footer.jsp" />

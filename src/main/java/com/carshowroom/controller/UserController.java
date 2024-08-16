@@ -144,7 +144,9 @@ public class UserController {
 		User user = (User) session.getAttribute("user");
 		m.addAttribute("user", user);
 		Car car = carDao.findById(id);
+		List<Car> relatedCars = carDao.relatedCars(car.getCarType(), car.getId());
 		m.addAttribute("car", car);
+		m.addAttribute("relatedCars", relatedCars);
 		return "user/viewproduct";
 	}
 

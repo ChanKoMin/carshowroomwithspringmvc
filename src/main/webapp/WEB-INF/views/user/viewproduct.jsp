@@ -18,14 +18,14 @@
 					</li>
 				</ol>
 			</nav>
-			<c:if test="${not empty createdSuccessfully}">
+			<!--<c:if test="${not empty createdSuccessfully}">
 				<div class="alert alert-success alert-dismissible fade show"
 					role="alert">
 					<strong>${createdSuccessfully}</strong>
 					<button type="button" class="btn-close" data-bs-dismiss="alert"
 						aria-label="Close"></button>
 				</div>
-			</c:if>
+			</c:if>-->
 			<div
 				class="d-flex justify-content-between align-items-center shadow p-3 my-3">
 				<h4 class="fw-bold">${car.carName }</h4>
@@ -52,8 +52,8 @@
 									Cart</button>
 							</c:when>
 							<c:otherwise>
-								<button class="btn btn-grad px-3 text-white" id="addToCart" disabled>Add
-									To Cart</button>
+								<button class="btn btn-grad px-3 text-white" id="addToCart"
+									disabled>Add To Cart</button>
 							</c:otherwise>
 						</c:choose>
 					</form>
@@ -120,8 +120,36 @@
 				<h5 class="fw-bold">Description</h5>
 				<p class="text-secondary lh-lg">${car.carDescription}</p>
 			</div>
+			<div class="my-2">
+				<h6 class="fw-bold">Related Cars</h6>
+				<div class="row pt-2">
+					<c:forEach var="relatedCar" items="${relatedCars}">
+						<div class="col-3">
+							<div class="card" style="width: 300px; padding: 20px; background-color: #e2e8f0">
+								<img
+									src="${pageContext.request.contextPath}/assets/images/${relatedCar.carImage}"
+									class="mx-auto" width="170px" alt="...">
+								<div class="card-body">
+									<p class="card-text">${relatedCar.carName}</p>
+									<a
+										href="${pageContext.request.contextPath}/viewproduct/${relatedCar.id}"
+										class="btn btn-primary">View Product</a>
+								</div>
+							</div>
+						</div>
+					</c:forEach>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
 <!-- Product Details End -->
+<script>
+window.onload = function() {
+	var createdSuccessfully = "${createdSuccessfully}";
+	if (createdSuccessfully !== "") {
+		alert(createdSuccessfully);
+	}
+}
+</script>
 <c:import url="footer.jsp"></c:import>
