@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <c:import url="header.jsp">
 	<c:param name="title" value="Contact" />
 </c:import>
@@ -17,8 +18,9 @@
 			</nav>
 			<div class="w-50 mx-auto border p-3" style="background-color: #dee7ed; border-radius: 10px;">
 				<h5 class="text-center fw-bold my-2">Get In Touch With Admins</h5>
-				<form action="" method="post" class="p-5">
+				<form action="${pageContext.request.contextPath}/contact" method="post" class="p-5">
 					<div class="">
+						<input type="hidden" name="userId" value="${user.id}"/>
 						<label for="email" class="form-label">Email</label> <input
 							type="email" name="email" id="email" class="form-control input-bg"
 							value="${user.email}" readonly />

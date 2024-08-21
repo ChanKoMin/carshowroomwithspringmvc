@@ -69,6 +69,9 @@
 							class="nav-link text-black link-primary"
 							href="${pageContext.request.contextPath}/feedbacks">Feedbacks
 						</a></li>
+						<li class="nav-item hvr-float-shadow"><a
+							class="nav-link text-black link-primary"
+							href="${pageContext.request.contextPath}/contacts">Contact</a></li>
 						<li class="nav-item hvr-float-shadow">
 							<div class="dropdown">
 								<button class="nav-link btn dropdown-toggle" type="button"

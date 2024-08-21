@@ -180,6 +180,52 @@
 		</div>
 		<!-- Explore by Company End -->
 
+		<!-- Testimonials Start -->
+
+		<div class="" style="background-image: linear-gradient(to top, #fdcbf1 0%, #fdcbf1 1%, #e6dee9 100%);">
+			<div class="py-5 w-75 m-auto">
+				<h2 class="text-center mt-4 fw-bolder" style="margin-bottom: 90px">What
+					Our Customers Say</h2>
+				<div class="row">
+					<c:forEach var="test" items="${testimonials}">
+						<div class="col-4">
+							<div class="card position-relative mb-5"
+								style="width: 25rem; background-color: #efefef;">
+								<div class="d-flex position-absolute"
+									style="top: -50px; left: 140px;">
+									<c:set var="defaultImage"
+										value="${pageContext.request.contextPath}/assets/images/profile.png" />
+									<c:choose>
+										<c:when test="${not empty test.userImage }">
+											<img alt="" width="100px" height="100px" class="hvr-grow"
+												style="border-radius: 50%;"
+												src="/CarShowroomManagement/assets/images/${test.userImage}">
+										</c:when>
+										<c:otherwise>
+											<img alt="" width="100px" height="100px" class="hvr-grow"
+												style="border-radius: 50%;" src="${defaultImage}">
+										</c:otherwise>
+									</c:choose>
+								</div>
+								<div class="card-body mt-5" style="padding: 40px;">
+									<div class="card-text position-relative">
+										<img alt="" class="position-absolute"
+											style="left: -27px; top: -8px" width="20px" height="20px"
+											src="${pageContext.request.contextPath}/assets/images/quote-start.png">${test.description}
+									</div>
+								</div>
+								<div class="card-footer" style="padding-right: 40px;">
+									<h6 class="fw-bold text-end">${test.userName}</h6>
+								</div>
+							</div>
+						</div>
+					</c:forEach>
+				</div>
+			</div>
+		</div>
+
+		<!-- Testimonials End -->
+
 		<!-- Feedback Start -->
 		<div
 			style="background-image: linear-gradient(45deg, #93a5cf 0%, #e4efe9 100%);">
