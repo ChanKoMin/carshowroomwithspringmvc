@@ -151,5 +151,8 @@ public class CarDao {
 		return jdbcTemplate.query(sql, new Object[] {carType,carId}, new CarRowMapper());
 	}
 
-
+	public void decreaseInventory(int carId, int quantity) {
+		String sql = "UPDATE cars SET current_inventory = current_inventory - ? WHERE car_id = ?";
+		jdbcTemplate.update(sql,quantity,carId);
+	}
 }

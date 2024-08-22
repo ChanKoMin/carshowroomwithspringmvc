@@ -13,20 +13,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.carshowroom.dao.AdminDao;
+import com.carshowroom.dao.CarDao;
 import com.carshowroom.dao.OrderDao;
 import com.carshowroom.model.Admin;
 import com.carshowroom.model.AdminOrderDetails;
+import com.carshowroom.model.Order;
 import com.carshowroom.model.OrderItemDetails;
 
 @Controller
 public class OrderController {
 	private AdminDao adminDao;
 	private OrderDao orderDao;
+	private CarDao carDao;
 
 	@Autowired
-	public OrderController(AdminDao adminDao,OrderDao orderDao) {
+	public OrderController(AdminDao adminDao,OrderDao orderDao,CarDao carDao) {
 		this.adminDao = adminDao;
 		this.orderDao = orderDao;
+		this.carDao = carDao;
 	}
 
 	@Autowired
@@ -37,6 +41,11 @@ public class OrderController {
 	@Autowired
 	public void setOrderDao(OrderDao orderDao) {
 		this.orderDao = orderDao;
+	}
+	
+	@Autowired
+	public void setCarDao(CarDao carDao) {
+		this.carDao = carDao;
 	}
 	
 	private boolean isAuthenticated(HttpSession session) {

@@ -98,7 +98,12 @@
 				</div>
 			</c:if>
 			<c:if test="${empty cartItems}">
-				<h2 class="text-center">Your cart is empty.</h2>
+				<div class="d-flex flex-column align-items-center mt-5">
+					<img alt="" class="" width="200px" src="${pageContext.request.contextPath}/assets/images/empty-cart.png">
+					<h2 class="text-center">Your Cart is <span style="color: red">Empty!</span></h2>
+					<p>Must add items on the cart before you proceed to checkout.</p>
+					<a href="${pageContext.request.contextPath}/home" class="btn btn-primary text-uppercase"><i class="bi bi-bag me-1"></i>Return to shop</a>
+				</div>
 			</c:if>
 			<div class="col-1"></div>
 		</div>
@@ -106,12 +111,12 @@
 </div>
 <!-- Car Type End -->
 <script>
-window.onload = function() {
-	var message = "${message}";
+	window.onload = function() {
+		var message = "${message}";
 
-	if (message !== "") {
-		alert(message);
+		if (message !== "") {
+			alert(message);
+		}
 	}
-}
 </script>
 <c:import url="footer.jsp" />

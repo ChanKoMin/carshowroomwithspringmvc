@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -59,6 +60,11 @@ public class OrderDao {
 //            }
 //        });
 //    }
+	
+	public Order getOrderById(int orderId) {
+        String sql = "SELECT * FROM orders WHERE order_id = ?";
+        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Order.class), orderId);
+    }
 
 	public List<AdminOrderDetails> getOrderDetails(int page, int pageSize) {
 		int offset = (page - 1) * pageSize;
@@ -82,12 +88,12 @@ public class OrderDao {
 		jdbcTemplate.update(sql, status, orderId);
 	}
 
-	@SuppressWarnings("deprecation")
-	public AdminOrderDetails getOrderDetailsById(int orderId) {
+	@SuppressWarnings({ "deprecation"})
+	public List<AdminOrderDetails> getOrderDetailsById(int orderId) {
 		String sql = "SELECT o.order_id, o.user_id, oi.car_id, u.email AS user_email, c.car_name, c.car_image, oi.quantity,oi.price, (oi.price * oi.quantity) AS total_price_per_item, o.total_price FROM orders o JOIN order_items oi ON o.order_id = oi.order_id JOIN cars c ON oi.car_id = c.car_id JOIN users u ON o.user_id = u.id WHERE o.order_id = ?";
 		//String sql = "SELECT o.order_id, o.user_id,oi.car_id,u.email AS user_email,c.car_name, c.car_image,oi.quantity, (oi.price * oi.quantity) AS total_price_per_item, o.total_price FROM orders o JOIN order_items oi ON o.order_id = oi.order_id JOIN cars c ON oi.car_id = c.car_id JOIN users u ON o.user_id = u.id WHERE o.order_id = ?";
 
-		return jdbcTemplate.queryForObject(sql, new Object[] { orderId }, (rs, rowNum) -> {
+		return jdbcTemplate.query(sql, new Object[] { orderId }, (rs, rowNum) -> {
 			AdminOrderDetails orderDetails = new AdminOrderDetails();
 			orderDetails.setOrderId(rs.getInt("order_id"));
 			orderDetails.setUserId(rs.getInt("user_id"));

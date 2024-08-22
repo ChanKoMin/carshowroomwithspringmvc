@@ -6,15 +6,15 @@
 	<c:param name="title" value="Contact" />
 </c:import>
 <!-- Main Content Start -->
-<div style="background-color: #fafaf6; padding-top: 50px; padding-bottom: 380px;">
-	<div class="w-50 mx-auto">
+<div style="background-color: #fafaf6; padding-top: 50px; padding-bottom: 500px;">
+	<div class="w-75 mx-auto">
 		<div class="my-4">
 			<h3 class="fw-bold">Contact</h3>
 		</div>
 		<table class="table table-light table-hover my-5" id="brandTable">
 					<thead>
 						<tr class="bg-dark">
-							<th class="py-3">User Name</th>
+							<th class="py-3">Username</th>
 							<th class="py-3">Email</th>
 							<th class="py-3">Message</th>
 						</tr>
@@ -24,7 +24,7 @@
 							<tr>
 								<td>${contact.userName}</td>
 								<td>${contact.email}</td>
-								<td style="overflow: scroll">${contact.message}</td>
+								<td>${contact.message}</td>
 							</tr>
 						</c:forEach>
 					</tbody>

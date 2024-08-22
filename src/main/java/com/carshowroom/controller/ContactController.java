@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.carshowroom.dao.AdminContactDao;
 import com.carshowroom.dao.AdminDao;
+import com.carshowroom.dao.OrderDao;
 import com.carshowroom.model.Admin;
 import com.carshowroom.model.AdminContact;
 
@@ -18,11 +19,13 @@ import com.carshowroom.model.AdminContact;
 public class ContactController {
 	private AdminDao adminDao;
 	private AdminContactDao actDao;
+	private OrderDao orderDao;
 	
 	@Autowired
-	public ContactController(AdminDao adminDao,AdminContactDao actDao) {
+	public ContactController(AdminDao adminDao,AdminContactDao actDao,OrderDao orderDao) {
 		this.adminDao = adminDao;
 		this.actDao = actDao;
+		this.orderDao = orderDao;
 	}
 	
 	@Autowired
@@ -33,6 +36,11 @@ public class ContactController {
 	@Autowired
 	public void setAdminContactDao(AdminContactDao actDao) {
 		this.actDao = actDao;
+	}
+	
+	@Autowired
+	public void setOrderDao(OrderDao orderDao) {
+		this.orderDao = orderDao;
 	}
 
 	private boolean isAuthenticated(HttpSession session) {
@@ -47,6 +55,8 @@ public class ContactController {
 		Admin adm = (Admin) session.getAttribute("admin");
 		Admin admin = adminDao.showAdmin();
 		List<AdminContact> admcontact = actDao.findAll();
+		int newOrderCount = orderDao.getNewOrderCount();
+		m.addAttribute("newOrderCount", newOrderCount);
 		m.addAttribute("admin", adm);
 		m.addAttribute("admin", admin);
 		m.addAttribute("admcontact", admcontact);
