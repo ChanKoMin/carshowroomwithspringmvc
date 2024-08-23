@@ -49,7 +49,12 @@
 
 		<c:choose>
 			<c:when test="${isEmpty}">
-				<h2 class="text-center my-5">There is no Data here, Insert Now.</h2>
+				<div class="d-flex flex-column align-items-center justify-content-center" style="height: 615px;">
+					<img alt="" width="170px"
+						src="${pageContext.request.contextPath}/assets/images/transport.png">
+					<h2 class="text-center my-5">There
+						is no Car here, <a href="${pageContext.request.contextPath}/add-car" class="text-decoration-none">Insert Now.</a></h2>
+				</div>
 			</c:when>
 			<c:otherwise>
 				<div class="input-group mb-3">
@@ -57,7 +62,7 @@
 						onkeyup="filterTable()" placeholder="Search for Car.."> <i
 						class="input-group-text bi bi-search"></i>
 				</div>
-				<table class="table bg-light table-hover my-5" id="brandTable">
+				<table class="table table-hover my-5" id="brandTable">
 					<thead>
 						<tr>
 							<th class="text-center">Image</th>

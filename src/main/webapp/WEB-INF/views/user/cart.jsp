@@ -48,7 +48,7 @@
 									<td class="align-middle">${car.carName}</td>
 									<td class="align-middle">
 										<form
-											class="border rounded-4 w-75 text-center d-flex justify-content-around bg-primary align-items-center"
+											class="border rounded-4 text-center d-flex justify-content-around bg-primary align-items-center"
 											action="${pageContext.request.contextPath}/update-cart-quantity"
 											method="post" class="d-inline">
 											<input type="hidden" name="cartId" value="${car.cartId}" />
@@ -77,7 +77,7 @@
 							<tr>
 								<td class="p-4 fw-bold">Total</td>
 								<td colspan="4" class="py-4 align-middle text-end fw-bold"
-									style="padding-right: 226px">$ ${totalPrice}</td>
+									style="padding-right: 175px">$ ${totalPrice}</td>
 							</tr>
 						</tbody>
 					</table>

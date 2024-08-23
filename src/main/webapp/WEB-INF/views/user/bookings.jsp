@@ -16,7 +16,8 @@
 						Bookings</li>
 				</ol>
 			</nav>
-			<div class="">
+			<c:if test="${not empty orderItemsDetails}">
+				<div class="">
 				<table class="table table-hover w-75 mx-auto">
 					<thead>
 						<tr>
@@ -47,6 +48,14 @@
 					</tbody>
 				</table>
 			</div>
+			</c:if>
+			<c:if test="${empty orderItemsDetails}">
+				<div class="d-flex flex-column align-items-center mt-5">
+					<img alt="" class="" width="200px" src="${pageContext.request.contextPath}/assets/images/book-now.png">
+					<p>You don't have a booking here, make a reservation today!</p>
+					<a href="${pageContext.request.contextPath}/home" class="btn btn-primary text-uppercase">Book Now</a>
+				</div>
+			</c:if>
 		</div>
 	</div>
 </div>

@@ -41,7 +41,12 @@
 
 		<c:choose>
 			<c:when test="${isEmpty}">
-				<h2 class="text-center my-5">There is no Data here, Insert Now.</h2>
+				<div class="d-flex flex-column align-items-center justify-content-center" style="height: 615px;">
+					<img alt="" width="170px"
+						src="${pageContext.request.contextPath}/assets/images/brand-line-icon.png">
+					<h2 class="text-center my-5">There
+						is no Brand here, <a href="${pageContext.request.contextPath}/add-brand" class="text-decoration-none">Insert Now.</a></h2>
+				</div>
 			</c:when>
 			<c:otherwise>
 				<div class="input-group mb-3">

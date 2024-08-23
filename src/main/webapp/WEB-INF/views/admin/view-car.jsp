@@ -5,7 +5,7 @@
 <c:import url="header.jsp">
 	<c:param name="title" value="View Car" />
 </c:import>
-<div style="background-color: #fafaf6; padding-top: 10px; padding-bottom: 50px;">
+<div style="background-color: #f7f7f7; padding-top: 10px; padding-bottom: 50px;">
 	<nav aria-label="breadcrumb" class="container mt-5">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a
@@ -14,71 +14,67 @@
 		</ol>
 	</nav>
 	<!-- Main Content Start -->
-	<div class="w-50 text-center mx-auto p-5">
+	<div class="w-75 text-center mx-auto p-5">
 		<img
 			src="${pageContext.request.contextPath}/assets/images/${car.carImage}"
 			class="w-50" alt="" />
 		<div class="row">
 			<div
-				class="col-5 d-flex justify-content-between rounded align align-items-center border p-3">
+				class="col-6 d-flex justify-content-between rounded align align-items-center border p-3">
 				<h5 class="mb-0">Name</h5>
 				<h5 class="mb-0">${car.carName}</h5>
-			</div>
-			<div class="col-2"></div>
+			</div>			
 			<div
-				class="col-5 d-flex justify-content-between rounded align align-items-center border p-3">
+				class="col-6 d-flex justify-content-between rounded align align-items-center border p-3">
 				<h5 class="mb-0">Model</h5>
 				<h5 class="mb-0">${car.carModel}</h5>
 			</div>
 		</div>
 		<div class="row my-3">
 			<div
-				class="col-5 d-flex justify-content-between rounded align align-items-center border p-3">
+				class="col-6 d-flex justify-content-between rounded align align-items-center border p-3">
 				<h5 class="mb-0">Type</h5>
 				<h5 class="mb-0">${car.carType}</h5>
 			</div>
-			<div class="col-2"></div>
+			
 			<div
-				class="col-5 d-flex justify-content-between rounded align align-items-center border p-3">
+				class="col-6 d-flex justify-content-between rounded align align-items-center border p-3">
 				<h5 class="mb-0">Year</h5>
 				<h5 class="mb-0">${car.carYear}</h5>
 			</div>
 		</div>
 		<div class="row">
 			<div
-				class="col-5 d-flex justify-content-between rounded align align-items-center border p-3">
+				class="col-6 d-flex justify-content-between rounded align align-items-center border p-3">
 				<h5 class="mb-0">Colour</h5>
 				<h5 class="mb-0">${car.carColor}</h5>
 			</div>
-			<div class="col-2"></div>
 			<div
-				class="col-5 d-flex justify-content-between rounded align align-items-center border p-3">
+				class="col-6 d-flex justify-content-between rounded align align-items-center border p-3">
 				<h5 class="mb-0">Cylinder</h5>
 				<h5 class="mb-0">${car.carCylinder}</h5>
 			</div>
 		</div>
 		<div class="row my-3">
 			<div
-				class="col-5 d-flex justify-content-between rounded align align-items-center border p-3">
+				class="col-6 d-flex justify-content-between rounded align align-items-center border p-3">
 				<h5 class="mb-0">Engine</h5>
 				<h5 class="mb-0">${car.carEngine}</h5>
 			</div>
-			<div class="col-2"></div>
 			<div
-				class="col-5 d-flex justify-content-between rounded align align-items-center border p-3">
+				class="col-6 d-flex justify-content-between rounded align align-items-center border p-3">
 				<h5 class="mb-0">Transmission</h5>
 				<h5 class="mb-0">${car.carTransmission}</h5>
 			</div>
 		</div>
 		<div class="row my-3">
 			<div
-				class="col-5 d-flex justify-content-between rounded align align-items-center border p-3">
+				class="col-6 d-flex justify-content-between rounded align align-items-center border p-3">
 				<h5 class="mb-0">Availability</h5>
 				<h5 class="mb-0">${car.carAvailability}</h5>
 			</div>
-			<div class="col-2"></div>
 			<div
-				class="col-5 d-flex justify-content-between rounded align align-items-center border p-3">
+				class="col-6 d-flex justify-content-between rounded align align-items-center border p-3">
 				<h5 class="mb-0">Price</h5>
 				<h5 class="mb-0">$${car.carPrice}</h5>
 			</div>

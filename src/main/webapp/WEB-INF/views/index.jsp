@@ -103,7 +103,7 @@
 					<c:if test="${status.index < 8}">
 						<div class="col-3">
 							<div class="card p-4 mb-4 hvr-grow"
-								style="width: 350px; background-color: #dee7ed">
+								style="width: 350px; background-color: #f7f7f7">
 								<img
 									src="${pageContext.request.contextPath}/assets/images/${car.carImage}"
 									height="180px" class="card-img-top" alt="" />

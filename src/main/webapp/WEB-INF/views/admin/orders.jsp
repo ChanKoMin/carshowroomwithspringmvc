@@ -13,7 +13,12 @@
 		</div>
 		<c:choose>
 			<c:when test="${isEmpty}">
-				<h2 class="text-center my-5">There is no Order here.</h2>
+				<div class="d-flex flex-column align-items-center justify-content-center" style="height: 615px;">
+					<img alt="" width="170px"
+						src="${pageContext.request.contextPath}/assets/images/received.png">
+					<h2 class="text-center my-5">There
+						is no Order here.</h2>
+				</div>
 			</c:when>
 			<c:otherwise>
 				<div class="input-group mb-3">
